@@ -1,0 +1,103 @@
+\section{Vector Spaces}
+
+\subsection{Vector spaces and subspaces}
+
+\textbf{Vector space}
+Set of vectors with vector addition and scalar multiplication, satisfying the following properties.\\
+\begin{itemize}
+	\item Associativity of vector addition.
+	\item Commutativity of vector addition.
+	\item Identity element of vector addition.
+	\item Inverse elements of vector addition.
+	\item Compatibility of scalar multiplication with field multiplication. i.e., $a(b\mathbf{v}) = ab(\mathbf{v})$
+	\item Identity element of scalar multiplication.
+	\item Distributivity of scalar multiplication w.r.t. vector addition. i.e., $a(\mathbf{u} + \mathbf{v}) = a\mathbf{u} + a\mathbf{v}$
+	\item Distributivity of scalar addition w.r.t. vector multiplication. i.e. $(a + b)\mathbf{v} = a\mathbf{v} + b\mathbf{v}$
+\end{itemize}
+
+If $S$ and $P$ are two vector spaces, $S \cup P$ need not be a vector space, but $S \cap P$ is a vector space.
+
+
+\textbf{Subspace}
+$Q \subseteq P$ is a subspace of $P$, if it satisfies the following property in addition to all the properties of a vector space.
+\begin{itemize}
+	\item $\textbf{a} \in Q$ and $\textbf{b} \in Q$ $\implies$ $\textbf{a} + \textbf{b} \in Q$.	
+	\item $\textbf{a} \in Q$ $\implies $ $c\textbf{a} \in Q$ for all scalar c.
+\end{itemize}
+
+
+\subsection{Solving $Ax = b$[Revisited]}
+
+Augmented matrix $[A|b]$ $\rightarrow$ Row operation leading to echelon form.\\
+\textbf{Pivot elements} First non-zero element in a row with a column of zeroes below it.\\
+\textbf{Rank} = number of pivot elements.\\
+\textbf{Free columns} = Columns without pivot elements.\\
+\textbf{Null space:} of a matrix $A$, is the set of all $x$ that satisfies $Ax = 0$.\\
+\textbf{General solution:} $x = x_p + x_n$, where $x_n$ is a vector from the nullspace of A.\\
+The existence and number of solutions depends on the rank of $A$ and that of the augmented matrix $[A|b]$.\\
+
+
+\subsection{Linear independence, basis and dimension}
+
+\textbf{Linear indepenedence:} A set of vectors $v_1, v_2, \cdots, v_k$ are said to be linearly independent iff\\
+$c_1v_1 + c_2v_2 + \cdots + c_kv_k$ $\Rightarrow$ $c_1 = c_2 = \cdots = c_k$.
+
+\vspace{6pt}
+
+\framebox{Columns of $A$ are linearly independent iff $N(A) = \{\textbf{0}\}$}
+
+\textbf{Spanning a vector space:} $W = \{w_1, w_2, \cdots, w_k\}$ is said to span a vector space $V$, if for all $v \in V$,, $\exists$ $c_1, c_2, \cdots, c_k \in \mathbb{R}$ such that $v = c_1w_1 + c_2w_2 + \cdots + c_kw_k$
+
+\textbf{Basis:} Basis of a vector space is a set of vectors with the following two properties.\\
+\begin{itemize}
+	\item The vectors in the set are linearly independent.
+	\item They span the vector space.
+\end{itemize}
+
+\textbf{Dimension of a vector space:} Number of basis vectors.
+
+\subsection{Four fundamental subspaces}
+For a matrix $A$ of dimensions $m \times n$ and rank $r$.
+\begin{itemize}
+	\item Column space of A, $C(A)$: Smallest subspace containing the columns of A.\\
+	$C(A) \subseteq \mathbb{R}^m$.\\
+	Dimension of $C(A)$ is $r$.
+	\item Row space of A, $R(A)$: Smallest subspace containing the rows of A.\\
+	$R(A) \subseteq \mathbb{R}^n.$\\ 
+	Dimension of $R(A)$ is $r$.
+	\item Null space of A, $N(A)$: Set of all $x$ such that $Ax = 0$.\\
+	$N(A) \subseteq \mathbb{R}^n$.\\
+	Dimension of $N(A)$ is $n-r$.
+	\item Null space of $A^T$, $N(A^T)$: Set of all $x$ such that $A^Tx = 0$.\\
+	$N(A^T) \subseteq \mathbb{R}^m$.\\
+	Dimension of $N(A^T)$ is $m-r$.
+\end{itemize}
+
+\textbf{Relationship between the subspaces:}
+\begin{itemize}
+	\item $C(A) \perp N(A^T)$ and $C(A) \cup N(A^T) = \mathbb{R}^m$.
+	\item $R(A) \perp N(A)$ and $R(A) \cup N(A) = \mathbb{R}^n$.
+\end{itemize}
+
+
+\subsection{Linear Transformation}
+
+\textbf{Linear Transformation:} A transformation $T$ that converts a vector $u$ to $v (= T(x))$, is a linear transformation if it satisfies the following properties.
+\begin{itemize}
+	\item $T(0) = 0$.
+	\item $T(u + v) = T(u) + T(v)$
+	\item $T(au) = aT(u)$
+\end{itemize}
+
+
+\textbf{Important notes:}
+\begin{itemize}
+\item Every matrix multiplication to a vector is a linear transformation.
+\item Every linear transformation can be represented by a matrix multiplication.
+\item NOTE: The transformation matrix need not be a square matrix.
+\item If $Ax$ / $T(x)$ is known for all the basis of the vector space, then it is known for all the vectors in vector space.
+\end{itemize}
+
+\textbf{Examples of linear transformation}:\\
+Scaling, Rotation, Reflection, Projection, Differentiation and Integration.\\
+

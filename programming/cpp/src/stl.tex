@@ -1,0 +1,297 @@
+\section{Data structures}
+
+\subsection{Pair}
+Eg: \texttt{pair<int, int> x = {1,2};}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{x.first} & Returns 1. \\
+\texttt{x.second} & Returns 2.
+\end{tabularx}
+
+\subsection{Tuple}
+Fixed length collection of heterogenous values.\\
+Eg: \texttt{tuple<int, string, double> t;}\\
+
+\textbf{Operations related to tuple}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{get<i>} & Return $i^th$ value of t. Eg: \texttt{get<0>(t);}.\\
+\texttt{make\_tuple()} & Returns tuple out of individual values.\\
+& Eg: \texttt{make\_tuple(5, "Paul", 23.4)}.\\
+\texttt{tie()} & Unpacking tuple.\\
+& Eg: \\
+& \texttt{tie(n, s, x) = t;}\\
+& \texttt{tie(n, std::ignore, x) = t;}\\
+\end{tabularx}
+
+\subsection{Vectors}
+
+\textbf{Definiton:}\\
+\texttt{vector<T> v;} 
+
+\textbf{Element access}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{operator[]}	& \\
+\texttt{v.back()} & Last element \\
+\texttt{v.front()} & First element \\
+\end{tabularx}
+
+
+\textbf{Modifiers}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{v.push\_back(5)} & Add \texttt{5} to the vector. Simillar to push in stack data structure.\\
+\texttt{v.insert()} & Inserts elements / range in \texttt{v}.\\
+& Eg: Append \texttt{u} to \texttt{v}.\\
+& \texttt{v.insert(v.end(), u.begin(), u.end());}\\
+\texttt{v.emplace} & \texttt{v.emplace\{iterator pos, Args\}}. New element is constructed in place using \texttt{Args} and inserted at pos.\\
+\texttt{v.emplace\_back} & \texttt{v.emplace\_back\{Args\}}. New element is constructed in place using \texttt{Args} and inserted at the end.\\
+& \textcolor{red}{IMPORTANT: Note the differences between pushback, insert, emplace and emplaceback}.\\
+\texttt{v.pop\_back()} & Remove element on top of the stack.\\
+\texttt{v.erase()} & Remove element / range from \texttt{v}.\\
+\texttt{v.clear()} & Clears all the elements in \texttt{v}.\\
+\end{tabularx}
+
+\textbf{Capacity}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{v.size()} & Returns the size of the vector.\\
+\texttt{v.capacity()} & Current memory allocated to \texttt{v} in terms of number of elements.\\
+\texttt{v.max\_size()} & Maximum memory available for \texttt{v}.\\
+\texttt{v.reserve()} & Reserve a minimum size for v. Does not affect v.size().\\
+\texttt{v.shrink\_to\_fit()} & Shrink the capacity to fit the size.\\
+\texttt{v.empty()} & Test if \texttt{v} is empty.\\
+\end{tabularx}
+
+\vspace*{8pt}
+\texttt{tie} Can be used to unpack a vector.\\
+\textit{Example:} \texttt{tie(a, b, c) = v;}\\
+
+
+\vfill \null
+\columnbreak
+
+\subsection{String}
+
+A \texttt{string} is like a vector of characters.
+
+\textbf{Definition:}\\
+\texttt{string s = "Hello";}
+
+\textbf{String operations:}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{a + b} & Concatenate.\\
+\texttt{s.append(t)} & append \texttt{t} to \texttt{s}.\\
+\texttt{s.compare(t)} & returns \texttt{0} if \texttt{s == t}, returns $< 0$ if $s \prec t$, else returns $> 0$.\\
+\texttt{s.substr(start, len)} & Select a substring. \\
+\texttt{s.find(str2)} & find first occurence of \texttt{str2}. \\
+\texttt{s.find(str2, pos)} & Find first occurence of \texttt{str2} by searching from the positon \texttt{pos}.
+\end{tabularx}
+
+\subsection{Set}
+\textbf{Definition}\\
+\texttt{set<type> s;}\\
+\texttt{multiset<type> s;}\\
+\texttt{unordered\_set<type> s;}\\
+\texttt{unordered\_multiset<type, hasher> s;}\\
+\texttt{hasher}: Refer Custom Hash Function.\\
+
+
+\textbf{Set operations}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{s.insert(item);} & \\
+\texttt{s.erase(item);} & \\
+\texttt{s.count(item);} & \\
+\texttt{s.find(item);} & Returns the iterator that points to \texttt{item}.\\
+\texttt{s.insert()} & Inserts elements in s.\\
+& Eg: Insert elements from t to s.\\
+& \texttt{v.insert(v.end(), u.begin(), u.end());}\\
+\texttt{s.size()} & \\
+& Not availabe for \texttt{unordered\_set}  and \texttt{unordered\_multiset}.\\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{s.lower\_bound(x)} & Returns iterator to the smallest element that is larger than or equal to x.\\
+\texttt{s.upper\_bound(x)} & Returns iterator to the smallest element that is larger than x.\\
+\end{tabularx}
+
+\textcolor{red}{NOTE: erase method remove all instances of the item in the multiset.}
+
+\subsection{Bit set}
+
+\textbf{Definiton}\\
+\texttt{bitset<size> s;}\\
+Examples:\\
+\texttt{bitset<5> s;}
+\texttt{bitset<5> s(string("1100110"));}\\
+\textbf{Operations on Bit set:}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{a \& b} & Bitwise AND.\\
+\texttt{a | b} & Bitwise OR.\\
+\texttt{a \^ b} & Bitwise EXOR.\\
+\texttt{~a} & Bitwise negation.\\
+\end{tabularx}
+
+\subsection{Map}
+
+\texttt{map} : Balanced binary tree.\\
+\texttt{unordered\_map}: Hash list.\\
+
+\textbf{Definition:}\\
+\texttt{map<type1, type2> m;}\\
+Eg: \texttt{map<string, int> m;}\\
+\texttt{unordered\_map<type1, type2, hasher> m;}\\
+\texttt{hasher}: Refer Custom Hash Function.\\
+
+\textbf{Operations on map}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{m["banana"]} & Retrive value associated with \texttt{banana}.\\
+\texttt{m.count("banana")} & Return 1 if the key is present else 0.\\
+\texttt{m.size();} & \\
+\end{tabularx}
+
+\subsection{Stack}
+Eg: \texttt{stack<int> s;}\\
+
+\begin{tabularx}{\linewidth}{lX}
+s.push(5) & \\
+s.top() & \\
+s.pop() & \\
+\end{tabularx}
+
+\subsection{Queue}
+Eg: \texttt{queue<int> q;}\\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{q.push(5)} & Adds element to the end.\\
+\texttt{q.pop()} & Removes first element.\\
+\texttt{q.front()} & Returns first element.\\
+\texttt{q.empty()} & True if q is empty.\\
+\end{tabularx}
+
+\subsection{Dequeue}
+Eg: \texttt{dequeue<int> d;}\\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{d.push\_back(5)} & Add to the top.\\
+\texttt{d.push\_front(2)} & Add to the bottom.\\
+\texttt{d.pop\_back()} & Remove from the top.\\
+\texttt{d.pop\_front()} & Remove from the bottom.\\
+\end{tabularx}
+
+
+\subsection{Heap}
+\textbf{Format:}\\
+\textbf{Constructing a heap:}\\
+
+\vspace{-6pt}
+
+\begin{verbatim}
+make_heap(iterator f, iterator s);
+make_heap(iterator f, iterator s, comp);
+\end{verbatim}
+
+\vspace{-12pt}
+
+\begin{verbatim}
+pop_heap(iterator f, iterator s);
+pop_heap(iterator f, iterator s, comp);
+\end{verbatim}
+
+\vspace{-12pt}
+
+\begin{verbatim}
+push_heap(iterator f, iterator s);
+push_heap(iterator f, iterator s, comp);
+\end{verbatim}
+
+NOTE:\\
+\texttt{f} points to the first element and \texttt{s} points next to the second element.\\
+\texttt{f} and \texttt{s} can be pointers when the heap is constructed over a array.
+
+\textbf{Compare function:}\\
+
+\vspace{-6pt}
+
+\begin{verbatim}
+bool compare(x, y){
+	return(x < y); // For max heap
+	return(x > y); // For min heap
+}
+\end{verbatim}
+
+\vfill\null
+\columnbreak
+
+\begin{minipage}{\linewidth}
+
+\subsection{Priority queue}
+\textbf{Format:}\\
+\texttt{priority\_queue(type, vector<type>, compare)}\\
+\textbf{Max priority queue [Default]}\\
+Eg: \texttt{priority\_queue<int> q;}\\
+\textbf{Min priority queue}\\
+\texttt{priority\_queue<int, vector<int>, greater<int>> q;}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{q.push(3)} & \\
+\texttt{q.top()} & Returns the largest element.\\
+\texttt{q.pop()} & Removes the largest element.
+\end{tabularx}
+
+\vspace{6pt}
+
+\textbf{Compare function for priority queues}
+
+
+\begin{verbatim}
+class compare{
+public:
+    bool operator()(const T& x, const T& y) const {
+        return(x < y); // Max priority queue.
+        // return(x > y); // Min priority queue.
+    }
+}
+\end{verbatim}
+
+\subsection{Iterators}
+Iterators are like pointers but more specific to a collection.\\
+Not applicable for \texttt{unordered\_set}, \texttt{unordered\_map} and \texttt{priority\_queue}.\\
+
+Example definition: \\
+\texttt{vector<int>::iterator it;}\\
+\texttt{set<string>::iterator it;}\\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{s.begin()} & Returns iterator pointing to the first element in the collection.\\
+\texttt{s.end()} & Returns iterator pointing next to the last element in the collection.
+\end{tabularx}
+
+\textbf{Iterating over a map:}\\
+Here \texttt{*it} is a \texttt{pair} of the key and value.
+Eg: \texttt{pair<string, int> p = *it;}\\
+Eg:
+\begin{verbatim}
+    map<string, int>::iterator it = m.begin();
+    // Accessing key and value
+    string key = it->first;
+    int value = it->second;
+\end{verbatim}
+
+\subsection{Representing graphs}
+
+\subsection{Adjacency list}
+Eg:\\
+\texttt{vector<int> adj[N]}// Unweighted graph.\\
+\texttt{vector<pair<int,int>> adj[N]}// Weighted graph.\\
+
+\subsection{Adjacency matrix}
+
+Eg: \texttt{int adj[N][N];}
+
+\subsection{Edge list}
+
+Eg:\\
+\texttt{vector<pair<int,int>> edges}Unweighted graph.\\
+\texttt{vector<tuple<int,int,int>> edges} // Weighted graph.\\
+
+\end{minipage}

@@ -1,0 +1,53 @@
+\section{Networking}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{wget \textit{url}} & Download file from http or ftp.\\
+\texttt{-- accept, -A "..."} & Only download files matching this criteria. Eg "*.fastq"\\
+\texttt{-- reject, -R} & Similar to above\\
+\texttt{--no-directory, -nd} & Don't download directory structure.Only files.\\
+\texttt{--recursive, -r} & \\
+\texttt{--no-parent, -np} & Don't move above parent directory. This is important to avoid downloading unnecessary data.\\
+\texttt{-O} & Output filename.\\
+\texttt{-e robots=off} & To not want wget to follow '\texttt{robot.txt}'.\\
+& See: \href{https://stackoverflow.com/a/11124664}{This answer} \\
+\hline
+\end{tabularx}
+
+\textcolor{red}{Other options: --limit-rate, --user=user, --ask-password}\\
+
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{curl \textit{url} > file} & Redirect output to file.\\
+\texttt{curl -O <file>} & download to file.\\
+\texttt{-L,--location} & Download ultimate page and not the redirect page.\\
+\hline
+\end{tabularx}
+Curl can also download form SFTP and SCP. Also checkout RCurl and pycurl.
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{rsync} & Usage: \texttt{rsync source destination}.\\
+\texttt{-r} & Recursive to copy directories. Book doesn't use this. But I had to use this when I use \texttt{rsync} with pendirve.\\
+\texttt{-a} & Enable archive mode.\\
+\texttt{-z} & Enable file transfer compression.\\
+\texttt{-v} & Make progress verbose.\\
+\texttt{-e ssh} & If one of the directory is in remote host then have to use this option.Eg: \texttt{\$ rsync -e ssh ./dir/ url:/home/...}\\
+\hline
+\end{tabularx}
+Trailing slash in the source in \texttt{rsync} is meaningful. Eg \texttt{rsync ./dir/} copies the contents of dir wherease \texttt{rsync ./dir} copies the entire directory. Rsync is use to synchronize directories but if you want to just copy one file then scp is enough. eg :\\ \texttt{\$ scp file url:/home/...}\\
+\textcolor{red}{Checkout Aspera Connect, ncbi sra-toolkit}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{shasum} & Calculate checksum using SHA-1. Can be used to find checksum of many files and store the result in a text file. Eg: \texttt{shasum *.fa > chksm.sha}\\
+\texttt{-c} & Validate the files. Eg: \texttt{shasum -c chksm.sha}.\\
+\texttt{sum} & Checksum program used by Ensemble.\\
+\texttt{diff -u} & Outputs a diff file that shows difference between two files. Eg: \texttt{diff -u file1 file2}\\
+\hline
+\end{tabularx}
+
+\vfill \null
+\columnbreak
+

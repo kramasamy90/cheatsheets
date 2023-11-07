@@ -1,0 +1,128 @@
+\section{Matrices and Gaussian Eliminations}
+
+\subsection{Geometry of linear equations}
+
+Matrix representation: $Ax = b$ \\%
+
+\begin{itemize}
+\item \textit{Row picture}: Lines in a ($\mathbb{R}^2$) or planes ($\mathbb{R}^3$).
+\item \textit{Column picture}: $b$ is linear combination of the columns of A. $\therefore$ $b$ is in the column space of A. 
+\end{itemize}
+
+\textbf{Singular case:} No solution or infinite solution.\\
+
+\subsection{Gaussian Elimination}
+\begin{itemize}
+	\item Apply row operations and row exchange to convert the system of linear equations to triangular form.
+	\item Use back substitution to solve the system.
+\end{itemize}
+
+\textcolor{red}{Row operations  preserve the nullspace and rowspace of $A$,\\ but this normally alters the eigenvalues.}
+
+\subsubsection{Gaussian elimination in matrix form}
+
+\begin{itemize}
+	\item Each row operation on $A$ can be represented as a matrix multiplication on A. If a triangular form $U$ is obtained by three row operations on A, each of them can be represented by matrices, say $G, F$ and $E$.\\
+	Then, $G \times F \times E \times A = U$.
+	\item The product of $G, F$ and $E$ would be a lower triangular matrix (L). The matrix $A$ can be written as $PA = LU$. $L$ can be found by keeping track of the row operations. $P$ is a permutation matrix.
+	\item $LU$ can also be written as $LDU$ by splitting $U$ to $DU$. $D$ is a diagonal matrix containing the pivot elements.
+\end{itemize}
+
+\subsection{Matrix multiplication}
+
+\subsubsection{5 ways to multiply matrices}
+
+Given, $A \times B = C$\\
+
+\begin{itemize}
+\item Standard.
+\item Each column of $C$ is a linear combination of columns of A.\\
+	$\begin{bmatrix}
+		Ab_1 & \cdots & A b_n 
+	\end{bmatrix}$
+	, where $b_i$s are columns of $B$. 
+\item Each row of $C$ is a linear combination of rows of B.\\
+	$\begin{bmatrix}
+		a_1B\\
+		\vdots\\
+		a_nB
+	\end{bmatrix}$
+	, where $a_i$s are rows of $A$.
+\item $\sum_{i=1}^{n} [ca_i] \times [rb_i]$\\
+Where, $ca_i$ and $rb_i$ are $i$-th column and row of $A$ and $B$, respectively.
+\item Multiplying Blocks of matrix. Eg:\\
+	$
+	\begin{bmatrix}
+		A_1 & A_2\\
+		A_3 & A_4
+	\end{bmatrix}	
+	\times
+	\begin{bmatrix}
+		B_1 & B_2\\
+		B_3 & B_4
+	\end{bmatrix}	
+	=
+	\begin{bmatrix}
+		C_1 & C_2\\
+		C_3 & C_4
+	\end{bmatrix}	
+	$\\
+$A_i, B_i$ and $C_1$ are blocks of the matrices $A, B$ and $C$. The blocks are treated as a single entity and multiplied like a normal matrix. Eg:
+$C_1 = A_1B_1 + A_2B_3$\\
+\textcolor{red}{Last approach would be useful for proving matrix theorems by inductions.}
+\end{itemize}
+
+\subsubsection{Properties}
+
+\begin{itemize}
+	\item Associative: $(AB)C = A(BC)$.
+	\item Distributive: $A(B+C) = AB + AC$; $(B+C)D = BD + CD$.
+	\item \textbf{NOT} commutative: Usually $EF \neq FE$.
+	\item $AB = 0 \centernot\implies A=0 \text( or ) B=0$.\\
+	\item $AC = AD \centernot\implies C = D$\\
+	\item Let $A, B, C$ be $n\times n$ matrices. Then:\\
+	\item If $rank(A) = n$ and $AB = AC$, then $B=C$.\\
+	\item If $rank(A) = n$, then $AB=0 \implies B = 0$. If $AB = 0$ but $A \neq 0$ and $B \neq 0$, then $rank(A) < n$ and $rank(B) <n$.
+\end{itemize}
+
+
+
+
+
+\subsection{Inverse and Transpose of a Matrix}
+If the system of equations is non-singular, then it could be solved by using inverse of $A$.
+\begin{itemize}
+\item $A^{-1}$ is inverse of $A$ $\Leftrightarrow$ $A^{-1}A = A^{-1}A = I$.
+\item If $A^{-1}$ exist, then A is invertible or non-singular matrix.
+\end{itemize}
+
+\subsubsection{Properties}
+
+\begin{itemize}
+\item A square matrix is singular or not invertible if:
+	\vspace{-6pt}
+	\begin{itemize}
+	\item Its determinant is $0$.
+	\item Dimension(Column Space) $<$ Matrix dimension.\\
+	\textit{Proof (by contradiction):} $\exists x \neq 0, \ni Ax = 0$.\\ 
+	Assuming $A^{-1}$ exists $\Rightarrow$ $A^{-1}Ax = A^{-1}0 \Rightarrow x = 0$. 
+	\end{itemize}
+
+\item If $A$ is invertible, then the one and only solution to $Ax = b$ is $x = A^{-1}b$
+\item $(AB)^{-1} = B^{-1}A^{-1}$
+\item $(AB)^T = B^TA^T$
+\item $(A^{-1})^T = (A^T)^{-1}$
+\item For any rectangular matrix $R$, $RR^T$ and $R^TR$ is symmetric.
+\item A symmetric matrix could be decomposed to $LDL^T$.
+\end{itemize}
+
+\subsubsection{Finding inverse by Gauss-Jordan elimination}
+
+
+Start with augmented matrix. Achieve upper triangular matrix on the left part and then identity matrix by row operations:\\
+\vspace{-4pt}
+\begin{center}
+\framebox{$[A|I] \longrightarrow [U|X] \longrightarrow [I|A^{-1}]$
+}
+\end{center}
+

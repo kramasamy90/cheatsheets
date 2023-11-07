@@ -1,0 +1,96 @@
+\section{Control Flow }
+
+\begin{minipage}{\linewidth}
+
+\begin{tabularx}{\linewidth}{l|X}
+    \hline\\
+    \textbf{If-else} & \texttt{if (\textit{expression})} \\ &
+    \texttt{\qquad \textit{statement}} \\ &
+    \texttt{else if (\textit{expression})} \\ &
+    \texttt{\qquad \textit{statement}} \\ &
+    $\vdots$\\ &
+    \texttt{else} \\ &
+    \texttt{\qquad \textit{statement}}\\
+
+    \hline
+
+    \textbf{Switch} & \texttt{switch (\textit{expression})}\\
+    & \texttt{\{}\\
+    & \texttt{\qquad case \textit{const-expr}: \textit{statements}; break;}\\
+    & \texttt{\qquad case \textit{const-expr}: \textit{statements}; break;}\\
+    & \texttt{\qquad default: \textit{statements}; break;} \\
+    & \texttt{\}}\\
+
+    & Without break statement the execution will \textit{fall through} all the cases.\\
+    & \texttt{This can be used as:} \\
+    %
+    & \texttt{switch (\textit{expression})}\\
+    & \texttt{\{} \\
+    & \hspace{10pt} \\
+    & \texttt{\qquad case 1: case 2: case 3:}\\
+    & \texttt{\qquad \qquad group = 0;}\\
+    & \texttt{\qquad \qquad break;}\\
+    & \texttt{\qquad case 4: case 5:}\\
+    & \texttt{\qquad \qquad group = 1;}\\
+    & \texttt{\qquad \qquad break;}\\
+    & \texttt{\qquad default:} \\
+    & \texttt{\qquad \qquad group = -1;}\\
+    & \texttt{\qquad \qquad break;}\\
+    & \texttt{\}}\\
+    \hline\\
+    \textbf{While} & \texttt{while (\textit{expression})}\\
+    & \texttt{\qquad \textit{statement}}\\
+    \hline \\
+    \textbf{For} & \texttt{for (expr1; expr2; expr3)}\\
+    & \texttt{\qquad \textit{statement}} \\
+    & This for loop is equivalent to:\\
+    & \texttt{expr1;}\\
+    & \texttt{while (expr2)} \\
+    & \texttt{\{}\\
+    & \texttt{\qquad statements;}\\
+    & \texttt{\qquad expr3;}\\
+    & \texttt{\{}\\
+    \hline\\
+    \textbf{Do While} & \texttt{do}\\
+    & \texttt{\qquad \textit{statement}}\\
+    & \texttt{while (\textit{expression});}\\
+    \hline\\
+    \textbf{Break} & \texttt{break} : Exit the the loop or control.\\
+    & \texttt{Works for \texttt{while, for, do while} and \texttt{switch}}\\
+    \hline
+\end{tabularx}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+\begin{tabularx}{\linewidth}{l|X}
+
+    \textbf{Continue} & \texttt{continue}: Continue next iteration.\\
+    & Works for \texttt{while, for, do while}\\
+    & If \texttt{switch} is within a loop and if \texttt{continue} is used inside \texttt{switch} and if it is executed, then the loop skips to next loop.\\
+    \hline\\
+
+    \hline\\
+    \textbf{Goto and label} & Example:\\
+    & \texttt{if (disaster)}\\
+    & \texttt{\{}\\
+    & \texttt{\qquad goto error;}\\
+    & \texttt{\}}\\
+    & $\cdots$\\
+    & \texttt{error:}\\
+    & \texttt{\{}\\
+    & \texttt{\qquad \textit{statement}}\\
+    & \texttt{\}}\\
+    \hline
+\end{tabularx}
+
+\begin{mdframed}[backgroundcolor=blue!20]
+    \textbf{Shorter alternative for \texttt{if-else} statement:}
+
+    \texttt{x = <cond-expr> ? <out-if-true> : <out-if-false>;}\\
+    Eg: \texttt{char is\_pos = (n > 0) ? 'y' : 'n';}\\
+\end{mdframed}
+
+\end{minipage}
+
+\vfill \null
+\columnbreak

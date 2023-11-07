@@ -1,0 +1,89 @@
+\section{Unix data tools}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{echo} & Process and print whatever follows.\\
+\texttt{echo -e} & enable backslash escapes like \texttt{\textbackslash \textbackslash, \textbackslash t, \textbackslash n} \\
+\texttt{cat} & Takes standard input or input from file and gives standard output. \\
+\texttt{cat -n} & Output with line numbers.\\
+\texttt{>, >>} & Write and append, respectively, standard output to a file. \\
+\texttt{2>, 2>>} & Write and append standard error to a file. \\
+\texttt{2>\&1} & Redirects std.err to std.out.\\
+\texttt{<} & Take input.\\
+\texttt{|} & Pipe \\
+\texttt{tee} & Eg: \texttt{prog1 in.txt | tee intermediate.txt | prog > result.txt}\\
+\texttt{/dev/null} & Fake file, black box.\\ 
+\texttt{head -n x} & Print first x lines.Default: 10 lines.\\
+\texttt{tail -n y} & Print last y lines.\\
+\texttt{wc} & Word count. Outputs number of words, lines and characters.\\
+\texttt{wc -l} & Outputs only number of lines.\\
+\texttt{tr} & Translate. Eg: \texttt{tr ':' '\textbackslash t'}.\\
+\hline
+\texttt{less} & Pager. Commonly used commands: \\
+\keys{Space} & Next page.\\
+\keys{b} & Previous page.\\
+\keys{g} & First line.\\
+\keys{G} & Last line.\\
+\keys{j} & Down (One line at a time).\\
+\keys{k} & Up (One line at a time).\\
+\texttt{/<pattern>} & Search down for a pattern.\\
+\texttt{?<pattern>} & Search up for pattern.\\
+\keys{n} & Repeat last search downward.\\
+\keys{N} & Repeat last search upward.\\
+\hline
+\texttt{cut} & To extract specific columns.\\
+\texttt{-f x} & Extract columns x.\\
+\texttt{-f x-z} & Extract range of columns.\\
+\texttt{-f w,x-z} & Extract w and x-z. Cut cannot reorder column.\\
+\texttt{-d} & Specify delimiter eg: \texttt{-d","}. Default delimiter is tab. \\
+\texttt{column -t} & To visualize columns of data. Usually data is piped to \texttt{column -t}.\\
+\texttt{-s}& Specify delimiter using \texttt{-s","}. Default: tab.\\
+\hline
+
+\end{tabularx}
+
+%\vfill \null
+%\columnbreak
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{grep} & Use as \texttt{grep "<pattern>" file}. Quotation around the patter is not necessary but it is safe. If the pattern contains quote then use single quotes eg: \texttt{grep '...".."..'}.\\
+\texttt{-i} & Case insensitive.\\
+\texttt{-E} & To use regular expressions in grep.\\
+\texttt{\^} & Look for pattern in the beginning of line. Eg: \texttt{"\^{}\#"}\\
+\texttt{-w} & Matches the entire word surrounded by space.\\
+\texttt{-v} & Returns only lines that do not match the pattern.\\
+\texttt{-o} & Return the exact matching pattern.\\
+\texttt{-c} & Count how many lines match a pattern.\\
+\texttt{-B1} & Print one line of context before the matching line.\\
+\texttt{-A2} & Print two lines of context after the matching line.\\
+\texttt{-C} & Context before and after the matching line.(\textcolor{red}{Doesn't work?})\\
+\hline
+
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{sort} & Sorts alphanumerically by line.\\
+\texttt{-ka,b} & Sorts w.r.t to columns a to b.\\
+\texttt{-k2,2n} & Treats columns 2 as numeric and sorts w.r.t to columns 2.\\
+\texttt{-t} & Specify delimiter eg: \texttt{-t","}. Default = tab.\\
+\texttt{-s} & Stable sort. Do not reorder lines in file if the sort rank is equal.\\
+\texttt{-c} & Check if the file is already sorted. \\
+\texttt{-r} & Reverse sort.\\
+\texttt{-V} & Understands numbers inside string. Eg \texttt{chr22}.\\
+\texttt{-S} & Specify memory to be used. \\
+ & Eg: \texttt{-S 2G \# Use 2 GB}, \\ 
+ & \hspace{13pt} \texttt{-S 50\% \# Use 50\% of memory}. \\
+\texttt{--parallel} & to use parallel processing.\\
+\hline
+\texttt{uniq} & Usually used along with sort as : \texttt{sort ...| uniq}.\\
+\texttt{-i} & Case insensitive.\\
+\texttt{-c} & Count occurences next to the unique lines.\\
+\texttt{-d} & Return line with duplicates.\\
+\hline
+\texttt{join} & Combine data based on a common column. Eg: \texttt{join -1 a -2 b file1 file2}. \texttt{a} and \texttt{b} represent two columns common to file1 and file2. \\
+\texttt{-a} & If some elements of common column are missing from one file. Use this flag to show all elements of common column from superset file. \\
+\hline
+
+\end{tabularx}
+
+\textcolor{red}{Checkout hexdump}

@@ -1,0 +1,242 @@
+\section{Libraries}
+Usually in Linux, the library header files are stored in \texttt{/usr/include}\\
+\textcolor{red}{NOTE:} Use \verb!#include <bits/stdc++.h>! to include all standard libraries.\\
+
+\subsection{Character class tests: \texttt{<cctype>}}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{isalpha(c)} &\\
+\texttt{isupper(c)} &\\
+\texttt{islower(c)} &\\
+\texttt{isdigit(c)} &\\
+\texttt{isalnum(c)} & \\
+\texttt{isspace(c)} & \texttt{true} for ASCII codes: 9-13 \& 32.\\
+\texttt{toupper(c)} &\\
+\texttt{tolower(c)} &\\
+\end{tabularx}
+
+\subsection{String functions: \texttt{<cstring>}}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{strcat(s,t)} & Concatenate \texttt{t} to end of \texttt{s}\\
+\texttt{strncat(s,t,n)}  & \\
+\texttt{strcmp(s,t)} & \\
+\texttt{strncmp(s,t,n)} & \\
+\texttt{strcpy(s,t)} & Copy \texttt{t} to \texttt{s}\\
+\texttt{strncpy(s,t,n)} & \\
+\texttt{strlen(s)} & \\
+\texttt{strchr(s,c)} & Return pointer to first \texttt{c}\\
+\texttt{strchr(s,c)} & Return pointer to last \texttt{c}\\
+\end{tabularx}
+
+
+\subsection{Mathematical function: \texttt{<cmath>}}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{sin(x)} & \\
+\texttt{asin(x)} & \\
+\texttt{hsin(x)} & \\
+\texttt{exp(x)} & \\
+\texttt{log(x)} & \\
+\texttt{log10(x)} & \\
+\texttt{pow(x,y)} & $x^y$\\
+\texttt{sqrt(x)} & \\
+\texttt{ceil(x)} & \\
+\texttt{floor(x)} & \\
+\texttt{abs(x)} & Abs. val. of x. Returns integers types. \\
+\texttt{fabs(x)} & Absolute value of x. Returns \texttt{double}\\
+\texttt{frexp} & \texttt{frexp(int x, int *exp)}. Returns significand ($y$) in the range $[0.5, 1)$ and the stores the exponent in exp, such that $x = y * e^{exp}$\\
+\texttt{ldexp} & \texttt{ldexp(double y, int exp)}.	Inverse of \texttt{frexp}.\\
+\texttt{modf} & \texttt{double modf(x, double *ip)}. Splits \texttt{x} into integer and fractional parts. Returns the fractional part and stores integer parts at \texttt{ip}. \\ 
+\texttt{fmod(x,y)} & Floating point remainder of $x/y$ with the same sign as x.
+\end{tabularx}
+
+\subsection{Utility Functions: \texttt{<cstdlib>}}
+
+\texttt{system(char *s)}\\
+\qquad Run system commands.\\
+\qquad Eg: \texttt{system("date")}\\
+
+
+\subsubsection{String <-> numbers}
+
+\begin{center}
+    \textbf{String to numbers}
+\end{center}
+\textbf{From C library}
+\texttt{int atoi(char *s)}.\\ 
+Variants: \texttt{atof}, \texttt{atol}, \texttt{atod} \\
+
+\textbf{From C++ library}
+\texttt{int stoi(string s, size\_t *p = 0, int base = 10)}.\\
+Variants: \texttt{stol}, \texttt{stod}, \texttt{stof}, \texttt{stold}\\
+Eg:\\
+\begin{verbatim}
+   int n = stoi("1234"); // n = 1234.
+   int n = stoi("12", 0, 16); // n = 18.
+   int n = stoi("A", 0, 16); // n = 10.
+\end{verbatim}
+
+\begin{center}
+    \textbf{Number to string}
+\end{center}
+
+\texttt{to\_string}
+Eg: \texttt{string s = to\_string(1234);}\textbackslash\textbackslash s = "1234".\\
+
+
+\subsubsection{Memory management}
+
+\begin{itemize}
+	
+\item \texttt{void *calloc(size\_t nobj, size\_t size)}\\
+Return pointer to array of \texttt{nobj} of size \texttt{size}.\\
+\textbf{The space is initialized to 0.}
+
+\item \texttt{void *malloc(size\_t size)}\\
+Returns pointer to an object of size \texttt{size}.\\
+The space is uninitialized.\\
+
+\item \texttt{void *realloc(void *p, size\_t size)}\\
+Change size of the object pointed to by p to \texttt{size}.\\
+Return pointer to new space.\\
+
+\item \texttt{free (void *p)}\\
+Deallocates space point to by \texttt{p}.\\
+
+\end{itemize}
+
+\subsubsection{Memory management in C++}
+\begin{itemize}
+\item \texttt{void* operator new(size)}	\\
+Eg: \texttt{myClass* p1 = new myClass;} \\
+\texttt{myClass* p1 = new(sizeof(myClass));}\\
+\item \texttt{void delete(void* ptr)}\\
+Eg: \texttt{delete p1;} 
+\texttt{delete(p1);} 
+\end{itemize}
+
+\subsubsection{limits}
+\textbf{Examples:}
+\begin{itemize}
+\item \texttt{numeric\_limits<int>::min()}
+\item \texttt{numeric\_limits<int>::max()}
+\item \texttt{numeric\_limits<double>::min()}
+\item \texttt{numeric\_limits<double>::infinity()}
+\end{itemize}
+
+\subsection{Algorithms}
+
+\subsubsection{Sort and search}
+\textbf{Search and sort from C}
+\begin{itemize}
+	\item \texttt{void *bsearch(const void *key, const void *base, \\
+	size\_t n, size\_t size, \\
+	int (*cmp) (const void *keyal, const void *datum))}\\
+	Searches \texttt{base[0]} $\cdots$ \texttt{base[n-1]} for \texttt{key}.\\
+	Comparison function must return negative if its first argument (search key) is less than its second argument (a table entry) and so on. 
+
+	\item \texttt{qsort(void *base, size\_t n, size\_t size, \\
+	int (*cmp)(const *void, const *void))}
+\end{itemize}
+\textbf{Search and sort from C++}\\
+
+\begin{mdframed}[backgroundcolor=blue!20]
+\textbf{Compare functions:}
+\vspace{-8pt}
+\begin{verbatim}
+	bool compare(x, y){
+	    return(x strictly precedes y)
+	}
+\end{verbatim}	
+\end{mdframed}
+
+In all the below, a could be an iterator or a pointer and all of them can use custom  compare functions.\\
+
+\begin{itemize}
+\item y = \texttt{lower\_bound(a, a+n, x)}\\
+Returns an iterator to the first element whose value is $\geq$ x.\\
+\item y = \texttt{upper\_bound(a, a+n, x)}\\
+Returns an iterator to the first element whose value is $>$ x.\\
+\item y = \texttt{equal\_range(a, a+n, x)}\\
+Returns a pair of iterators pointing to the upper bound and lower bound of x.\\
+\item y = \texttt{equal\_range(a, a+n, x, compare\_function)}\\
+Returns a pair of iterators pointing to the upper bound and lower bound of x.\\
+\item \texttt{sort(it1, it2, compare\_function);}
+\item \texttt{stable\_sort(it1, it2, compare\_function);}
+\item \texttt{is\_sorted(it1, it2, compare\_function);}
+\item \texttt{is\_sorted\_until(it1, it2, compare\_function);}\\
+Returns the iterator to the element until which the array is sorted.\\
+\item \texttt{find\_if(start\_it, end\_it, func)}\\
+Returns iterator to the first element in the range \texttt{[start\_it, end\_it)} for which \texttt{func} returns true.
+\item \texttt{find\_if\_not(start\_it, end\_it, func)}\\
+Returns iterator to the first element in the range \texttt{[start\_it, end\_it)} for which \texttt{func} returns false.
+\end{itemize}
+
+
+\subsubsection{Min Max}
+\begin{itemize}
+\item \texttt{max(a, b, comp);} \texttt{min(a, b, comp);}
+\item \texttt{max(\{a1, a2, a3\}, comp);} \texttt{min(\{a1, a2, a3\}, comp);}
+\item \texttt{max\_element(a, a+n, comp);}\\
+Returns the iterator for the largest element in a. If there are multiple largest element, returns the iterator/pointer for the first one.
+\item \texttt{min\_element(a, a+n, comp);}\\
+\end{itemize}
+
+\subsubsection{Merge}
+\begin{itemize}
+\item \texttt{merge(InputIterator F1, InputIterator L1, InputIterator F2, InputIterator L2, OutputIterator R);} \\
+Returns the iterator to the end of output.
+\item \texttt{set\_intersection} Arguments and output are the same as that for \texttt{merge}.
+\item \texttt{set\_union} Arguments and output are the same as that for \texttt{merge}.
+\item \texttt{set\_difference} Arguments and output are the same as that for \texttt{merge}.
+\item \texttt{set\_symmetric\_difference} Arguments and output are the same as that for \texttt{merge}.
+\end{itemize}
+
+\subsubsection{Hash Function}
+Usage:\\
+\texttt{hash<T> h;}\\
+Eg:
+\begin{verbatim}
+    hash<int> h; size_t x = h(10);
+    hash<string> h; size_t x = h("hello");
+\end{verbatim}
+
+The standard hash function can be used for user defined types by combining hash values.
+Two strategies for combining hash values are:
+\begin{itemize}
+    \item Simple: just use XOR: \texttt{h1 \^ h2}.
+    \item Used by Boost(?):\\
+    \texttt{h2 \^= h2 + 0x9e3779b9 + (h1<<6) + (h1>>2);}\\
+    0x9e3779b9 is a prime number.\\
+    See: https://stackoverflow.com/a/2595226/5607735\\
+    \textcolor{red}{How efficient is this for a smaller prime number that can be committed to memory.}
+\end{itemize}
+
+\textbf{Custom hash function.}
+Custom hash function for a user defined type can be defined as follows:
+\begin{verbatim}
+   class CustomHash {
+    size_t operator (const pair<string, string>) const {
+        hash<string> hasher;
+        auto h1 = hasher(p.first);
+        auto h2 = hasher(p.second);
+        return h1 ^ h2;
+    }
+}; 
+\end{verbatim}
+
+This can be used for custom types in unordered\_map and unordered\_set.
+
+\subsubsection{Others}
+
+\begin{itemize}
+\item \texttt{swap(T\& a, T\&b);}\\
+\item \texttt{reverse(Iterator first, Iterator last);}
+\item \texttt{next\_permutation(a.begin(), a.end());}\\
+\item \texttt{prev\_permutation(a.begin(), a.end());}\\
+\item \texttt{random\_shuffle(a.begin(), a.end());}\\
+Gives the next permutation for a given vector of integers.
+\end{itemize}
+
+\vfill \null
+\columnbreak 
+
+

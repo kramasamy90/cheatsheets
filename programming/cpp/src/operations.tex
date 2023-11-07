@@ -1,0 +1,66 @@
+\section{Arithemetic and logical operation}
+
+    \begin{tabularx}{\linewidth}{l|lX}
+        \hline\\
+        & Operators & Associativity \\
+        \hline \\
+        1 & \texttt{() [] -$>$} \textbf{.} & left to right\\
+        2 & \texttt{! $\tilde{}$ ++ -- + - * \& (type) sizeof} & right to left\\
+        3 & \texttt{* / \%}(reminder) & left to right\\
+        4 & \texttt{+ -} & left to right \\
+        5 & \texttt{$<<$ $>>$} & left to right \\
+        6 & \texttt{$<$ $<=$ $>$ $>=$}  & left to right\\
+        7 & \texttt{== !=} & left to right\\
+        8 & \texttt{\&} & left to right \\
+        9 & \texttt{\^} & left to right \\
+        10 & \texttt{|} & left to right\\
+        11 & \texttt{\&\&} & left to right\\
+        12 & \texttt{||} & left to right \\
+        13 & \texttt{?:} & left to right \\
+        14 & \texttt{= += -= *= /= \%= \&= \^{}= |= $<<$= $>>$=} & right to left\\
+        15 & \texttt{,} & left to right\\
+        \hline
+    \end{tabularx}
+
+    \subsection{Explanation for selected operators}
+
+        \begin{itemize}
+            \item \texttt{->} and \textbf{.}\\
+            See \textbf{Structures}.
+            \item \textbf{Casting}\\
+            Changes the type of a variable.\\
+            Eg:  \texttt{float a = (int) 3/2;}// \texttt{a} is 1.0.\\
+            \item \textbf{sizeof}\\
+            \texttt{sizeof num;} // Give size of the variable num.\\
+            \texttt{sizeof (int)} // Gives size of int, i.e. 4.\\
+            \item \textbf{Bitwise operators}
+            \begin{itemize}
+            \item \texttt{>>}\\
+            Eg: \texttt{a = b >> 1} //Shift \texttt{b} bitwise to the right by 1 bit.\\
+            Fill left most bits with the original left most bit.
+            \item \texttt{<<}\\
+            Eg: \texttt{a = b << n} //Shift \texttt{b} bitwise to the left by n bits.\\
+            Fill right most bits with zero.
+        \end{itemize}
+
+        Others:\\
+        \begin{tabularx}{\linewidth}{l|X}
+            \hline
+            \texttt{\&} & Bitwise AND\\
+            \texttt{$\mid$} & Bitwise inclusive OR\\
+            \texttt{\^} & Bitwise EXOR\\
+            \texttt{\~} & Bitwise NOT\\
+            \hline
+        \end{tabularx}
+
+
+        \item \textbf{Comma operator}
+        \begin{itemize}
+            \item \texttt{expr1,expr2}\\
+            Use sparingly, Eg: \texttt{i++,j--}\\
+            \item \texttt{x = (Conditional expresion)? \textit{expr1}: \textit{expr2}}\\
+            \texttt{x =expr1} if \texttt{Conditional expression} is true, else \texttt{x = expr2}.
+        \end{itemize}
+
+        \end{itemize}
+

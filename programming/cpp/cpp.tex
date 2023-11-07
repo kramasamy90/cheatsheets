@@ -1,0 +1,85 @@
+\input{src/preamble.tex}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+\begin{tabular}{c}
+\Large{\textbf{The C++ programming language}}\\
+\today
+Ramasamy Kandasamy\\
+\end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{src/compile_debug.tex}
+
+\vfill\null
+\columnbreak
+
+\input{src/preprocessor_directive.tex}
+
+\vfill\null
+\columnbreak
+
+% \input{src/memory_layout.tex}
+
+\input{src/variables_constants.tex}
+
+\input{src/operations.tex}
+
+\input{src/control_flow.tex}
+
+\input{src/functions.tex}
+
+
+\input{src/pointers_arrays.tex}
+
+% Structures, unions and typedefs.
+\input{src/structures.tex}
+
+% Lambda functions.
+\input{src/lambda.tex}
+
+% Bit operations.
+\input{src/bit_operations.tex}
+\vfill\null
+\pagebreak
+
+% IO.
+\input{src/io.tex}
+
+% C standard library.
+\input{src/cstl.tex}
+
+% C++ standard library.
+\input{src/stl.tex}
+
+\input{src/snippets.tex}
+
+\input{src/mistakes.tex}
+
+\input{src/nomenclature.tex}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{multicols*}
+
+\end{document}
+
+%\texttt{echo text} & Std.out. of \texttt{text}. \texttt{text} can also contain expression in \$()\\ 
+%\texttt{\~{}/.profiles} \\
+%\texttt{\~{}/.bashrc} \\

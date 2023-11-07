@@ -1,0 +1,376 @@
+\section{Eigen values and eigen vectors}
+
+\subsection{Introduction}
+\begin{center}
+\framebox{Solve: $Ax = \lambda x$}
+\end{center}
+
+This give: $(A -\lambda I)x = 0$\\
+For a non-zero solution $x$ must lie in the nullspace of $A - \lambda I$. Therefore $det(A-\lambda I) = 0$\\
+This equation gives rise to a $n$ dimensional polynomial equation in $\lambda$(\textbf{Characteristic equation}). Solving this gives eigen values.\\
+Eigen vectors corresponding to each Eigen value form a vector space.
+
+\textbf{Algebraic multiplicity($M_{\lambda}$):} Order of the eigenvalue in the characteristic  equation.\\
+\textbf{Geometric multiplicity($m_{\lambda}$):} Dimension of the eigenspace corresponding to the eigenvalue $\lambda$.\\ 
+$m_{\lambda} \leq M_{\lambda}$
+
+\begin{mdframed}[backgroundcolor=gray!20]
+\textbf{Theorem:}
+\begin{itemize}
+\item $\sum \lambda_i = tr(A)$	
+\item $\prod \lambda_i = det(A)$
+\item For a triangular matrix the Eigen values are along the diagonal.
+\item If $Ax = \lambda x$, then $A^kx = \lambda ^k x$.
+\end{itemize}
+\end{mdframed}
+
+\subsection{Diagonalization}
+
+If a $n \times n$ matrix $A$ has $n$ independent eigen vectors then, it can be written as follows: 
+$$A = S\Lambda S^{-1} $$ 
+where, each column of S is one of the eigenvectors of $A$ ($e_i$)\\
+$S = 
+\begin{bmatrix}
+\vdots & \vdots & \cdots & \vdots\\
+x_1 & x_2 & \cdots & x_n\\
+\vdots & \vdots & \cdots & \vdots\\
+\end{bmatrix}
+$\\
+and $\Lambda$ is a diagonal matrix with corresponding eigen values in the diagonal.\\
+$\Lambda = 
+\begin{bmatrix}
+\lambda_1 & 0 & \cdots & 0\\
+0 & \lambda_2 & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & \lambda_n\\
+\end{bmatrix}
+$\\
+
+
+
+\textbf{Proof:}\\
+
+$AS = 
+\begin{bmatrix}
+\lambda_1 x_1 & \cdots & \lambda_n x_n\\	
+\end{bmatrix}
+= S\Lambda
+$\\
+$\implies A = S\Lambda S^{-1}$
+
+\vspace{6pt}
+
+\textbf{Corollary: Powers of $A$}\\
+$A^n = S\Lambda ^n S^{-1}$
+
+\begin{mdframed}[backgroundcolor=blue!10,linecolor=blue]
+\begin{center}
+\textbf{Caley-Hamilton's theorem.}	
+\end{center}
+\begin{theorem}[]
+$A$ satisfies it's own characteristic equation.
+\begin{proof}
+\hspace{5pt}\\
+Substitute $A = S\Lambda S^{-1}$ in $(A -\lambda_1 I)(A - \lambda_2 I)\cdots(A - \lambda_n I)$.
+\end{proof}
+\end{theorem}
+\end{mdframed}
+
+
+
+\subsection{Difference equations and powers $A^k$}
+\textbf{Difference equations}
+$$u_{k+1} = Au_k$$
+In some sense difference equations are analogous to differential equations.
+
+\subsubsection{Examples}
+
+\textbf{Fibonacci numbers}\\
+
+$F_{k+2} = F_{k+1} + F_k$\\
+
+Let, 
+$
+u_k = 
+\begin{bmatrix}
+F_{k+1}\\
+F_k
+\end{bmatrix}
+$
+then, difference representation of Fibonacci sequence would be:\\
+$
+u_{k+1} = 
+\begin{bmatrix}
+1 & 1 \\
+1 & 0
+\end{bmatrix}
+\begin{bmatrix}
+F_{k+1}\\
+F_k	
+\end{bmatrix}
+= Au_k
+$\\
+The solution to this difference equation, $u_{k+1} = Au_k$ is \\
+\begin{center}
+\framebox{$u_k = A^ku_0$}
+\end{center}
+If $A$ can be diagonalized then $u_k = S\Lambda^kS^{-1}u_0$. \\
+
+\vspace{6pt}
+
+\textbf{Markov matrices}\\
+Markov matrix is similar to the above examples along with the following two properties:\\
+\begin{enumerate}
+\item Each column of Markov matrix adds to 1.
+\item The numbers outside and inside can never become negative.
+\end{enumerate}
+$u_{k+1} = Au_k$  and the solution is $u_k = A^ku_0$\\
+If A can be diagonalized, then $u_k = S\Lambda^kS^{-1}u_0$.
+\textit{Steady state}($u_{\infty}$): $Au_{\infty} = u_{\infty}$.
+
+\textit{Properties of a Markov matrix A:}\\
+\begin{enumerate}
+\item $\lambda_1= 1$ is an eigenvalue of $A$.
+\item Its eigenvector $x_1$ is nonnegative and $Ax_1 = x_1$.
+\item The other eigenvalues satisfy $|\lambda_1| \leq 1$.
+\item If $A$ or any power of a $A$ has all positive entries, these other $|\lambda_i|$ are below 1. 
+\item The solution $A^ku_0$ approaches a multiple of $x_1$ which is the steady state $u_{\infty}$.
+\end{enumerate}
+
+
+
+
+\textbf{Stability of $u_{k+1} = Au_k$}\\
+
+The difference equation $u_{k+1} = Au_k$ is:\\
+\begin{itemize}
+\item \textit{stable} if all eigenvalues satisfy $|\lambda_i| < 1$.
+\item \textit{neutrally stable} if some $|\lambda_i| = 1$ and all other $|\lambda_i| < 1$.
+\item \textit{unstable} if at least one $|\lambda_i| > 1$.
+\end{itemize}
+
+
+\subsection{Differential equations and $e^{At}$}
+\subsubsection{System of differential equations}
+Matrices are useful to solve a system of differential equations.\\
+Eg:
+\begin{align*}
+\frac{du_1}{dt} &= a_{11}u_1 + a_{12}u_2 + \cdots + a_{1n}u_n\\
+\frac{du_2}{dt} &= a_{21}u_1 + a_{22}u_2 + \cdots + a_{2n}u_n\\
+&\vdotswithin{=}\\
+\frac{du_n}{dt} &= a_{n1}u_1 + a_{n2}u_2 + \cdots + a_{nn}u_n\\
+\end{align*}
+
+This system in matrix notation is $\frac{du}{dt} = Au$, where\\
+$A = 
+\begin{bmatrix}
+a_{11} & \cdots & a_{1n}\\
+\vdots & & \vdots\\
+a_{n1} & \cdots & a_{nn}	
+\end{bmatrix}
+$
+
+\textit{Solution:}\\
+$$u(t) = e^{At}u(0)$$
+\textcolor{red}{Is the above solution valid if $A$ is not diagonalizable.}\\
+\textit{Proof:}
+If $A$ is diagonalizable then let $v = S^{-1}u$, where $S$ is the eigenvector matrix of A. Using eigenvector matrix the system of linear equations is decoupled.\\ 
+\begin{align*}
+\therefore S\frac{dv}{dt} &= ASv\\
+\implies \frac{dv}{dt} &= S^{-1}ASv = \Lambda v\\
+v(t) &= e^{\Lambda t}v(0)\\
+u(t) &= Se^{\Lambda t}S^{-1}u(0) = e^{At}u(0)\\
+\end{align*}
+where $e^{At}$ is the exponential of the matrix $A$.\\
+
+
+
+
+\subsubsection{Matrix exponential}
+
+\textbf{Matrix exponential} is defined as follows:\\
+$$e^{At} = I + At + \frac{(At)^{2}}{2} + \cdots + \frac{(At)^n}{dt} + \cdots$$\\
+
+This series \textbf{always converges} and has the following properties:\\
+\begin{itemize}
+\item $(e^{As})(e^{At}) = e^{A(s+t)}$\\
+\item $(e^{At})(e^{-At}) = I$\\
+\item $\frac{d}{dt}(e^{At}) = Ae^{At}$
+\item If $A$ can be diagonalized, $A = S\Lambda S^{-1}$, then $du/dt = Au$ has the solution $u(t) = e^{At}u(0)$.\\
+\item $e^{At}$ is never singular.\\
+\textit{Proof 1:} If $\lambda$ is an eigenvalue of $A$, then $e^{\lambda t}$ is the corresponding eigenvalue of $e^{At}$, which is never 0.\\
+\textit{Proof 2:} $det(e^{At}) = e^{\lambda_1 t}e^{\lambda_2 t}\cdots e^{\lambda_n t} = e^{trace(At)} \neq 0$.
+\end{itemize}
+
+
+\subsubsection{Stability of differential equations}
+Behaviour of $u(t)$ as $t \to \infty$:
+The differential equation $du/dt = Au$ is:\\
+\begin{itemize}
+\item \textbf{stable:} and $e^{At} \to 0$ whenever, all $Re(\lambda_i) < 0$.	
+\item \textbf{neutrally stable:} when all $Re(\lambda_i) < 0$ and $Re(\lambda_1) = 0$.
+\item \textbf{unstable:} and $e^{At}$ is unbounded if any eigenvalue has $Re(\lambda_i) > 0$.
+\end{itemize}
+These results are true even if $A$ is not diagonalizable.
+
+
+\subsection{Complex matrices}
+
+\textbf{Length of a vector:} $\|x\| = |x_1| + |x_2| + \cdots + |x_n|$\\
+
+\subsubsection{Hermitian (and symmetric) matrices}
+
+\textbf{Conjugate transpose:} $\overline{A}^T = A^H$ (Read as A Hermitian) has entries $(A^H)_{ij} = \overline {A_{ji}}$
+
+\textbf{Hermitian matrices:} $A$ is Hermitian iff $A^H = A$.\\
+
+\textbf{Theorem:} If $A = A^H$ then $\forall$ $x$, $x^HAx$ is real.\\
+\textit{Proof:} $(x^HAx)^H = x^HA^Hx = x^HAx$.\\
+
+\textbf{Theorem:} If $A = A^H$ then all the eignevalues are real.\\
+\textit{Proof:} $x^HAx = \lambda x^Hx$. LHS is real and $x^Hx$ is real, therefore $\lambda$ is real.\\
+
+\textbf{Theorem:} Eigenvectors of Hermitian matrices that come from two different eigenvalues are orthogonal.\\
+\textit{Proof:} \\
+Let, $Ax = \lambda x$ and $Ay = \mu y$\\
+$\lambda x^Hy = (Ax)^Hy = x^HAy = x^H \mu y \implies x^Hy = 0, \because \lambda \neq \mu$\\
+
+\textbf{Orthonormal matrices:} $QQ^T = I$.
+
+\textbf{Theorem (Spectral theorem):} A real symmetric matrix can be factored into \framebox{$A = Q\Lambda Q^T$}. Its orthonormal eigenvectors are in the columns of $Q$.
+
+\subsubsection{Unitary matrices}
+
+\framebox{$U^HU = I$}\\
+Multiplication by $U$ has no effect on inner products, angles and lengths.\\
+\textbf{Property 1:}\\
+\begin{itemize}
+\item $(Ux)^T(Uy) = x^TU^TUy = x^Ty$\\
+\item $\|Ux\|^2 = x^HU^HUx = x^Hx = \|x\|^2$
+\end{itemize}
+\textbf{Property 2:}\\
+For every eigenvalue($\lambda$) of $U$, $|\lambda| = 1$\\
+
+\textbf{Property 3:}\\
+Eigen vectors corresponding different eigenvalues are orthogonal.\\
+Let, $Ux = \lambda x$ and $Uy = \mu y$.\\
+$x^Hy = (Ux)^H(Uy) = (\lambda x)^H(\mu y) = \overline{\lambda}\mu x^Hy$\\
+By property-2 $\overline{\lambda}\lambda = 1, \therefore \overline{\lambda}\mu \neq 1$\\
+$\implies x^Hy = 0$.
+
+\vspace{6pt}
+
+\framebox{If $A$ is Hermitian then $K =  iA$ is skew-Hermitian.}\\
+
+\textbf{Theorem:} Eigenvalues of $K$ are purely imaginary.\\
+
+\subsubsection{Fourier matrix}
+\textcolor{red}{THE FOLLOWING IS INCOMPLETE}\\
+
+
+$$F_n =
+\begin{bmatrix}
+1 & 1 & 1 & \cdots & 1\\
+1 & \omega & \omega^2 & \cdots & \omega^{n-1}\\
+1 & \omega^2 & \omega^4 & \cdots & \omega^{2(n-1)}\\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & \omega^{n-1} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)^2}\\
+\end{bmatrix}
+$$
+
+
+\subsection{Similarity transformation}
+\textbf{Definition:} $A$ and $B$ are similar if $\exists M \ni B= M^{-1}AM$.\\
+Going from one to another is known as \textbf{similarity transformations}.\\
+
+\vspace{6pt}
+In the case where $M = S$, $M^{-1}AM$ becomes the diagonal matrix $\Lambda$. This is the best case scenario. But other $M$'
+s are also useful. Usually $M$ is chosen such that, $M^{-1}AM$ is easier to work with than $A$.
+\vspace{6pt}
+
+\textbf{Theorem:} Suppose $B = M^{-1}AM$, then $A$ and $B$ have the same eigenvalues.\\
+\textit{Proof:} $Ax = \lambda x \implies B(M^{-1}x) = \lambda (M^{-1}x)$\\
+$M^{-1}x$ is the eigenvector of $B$ corresponding to $\lambda$.
+\vspace{6pt}
+
+\subsubsection{Change of Basis = Similarity transformation}
+
+Every linear transformation is represented by a matrix. Similar matrices represent the same transformation $T$ with respect to different basis.\\
+\begin{tabularx}{\linewidth}{lllX}
+$[T]_{\text{V to V}}$ 	& $= [I]_{\text{v to V}}$ & $[T]{\text{v to v}}$ & $[I]_{\text{V to v}}$\\
+$B$ & $=M^{-1}$ & $A$ & $M$
+\end{tabularx}
+
+\subsubsection{Triangular forms with unitary M}
+
+\textbf{Shcur's lemma:}\\
+There is a unitary matrix $M = U$ such that $U^{-1}AU = T$ is triangular. The eigenvalues of A appear along the diagonal of this similar matrix $T$.
+
+
+\subsubsection{Diagonalizing Hermitian matrices}
+
+\textbf{Theorem:}\\
+If $A = A^H$ This triangular form $T$, is a diagonal matrix.\\
+\textit{Proof:} $(U^{-1}AU)^H = U^HA^H(U^{-1})^H = U^{-1}AU \implies T = T^H$.
+
+\vspace{6pt}
+
+\textbf{Spectral theorem:}\\
+Every real symmetric matrix can be diagonalized by an orthogonal matrix $Q$. Every Hermitian matrix can be diagonalized by a unitary matrix $U$:\\
+\begin{center}
+\begin{tabular}{rccc}
+(real) & $Q^{-1}AQ = \Lambda$ & or & $A = Q\Lambda Q^T$\\
+(complex) & $U^{-1}AU = \Lambda$ & or & $A = U\Lambda U^H$
+\end{tabular}
+\end{center}
+
+\vspace{6pt}
+
+\textbf{Normal matrices} \\
+The matrix $N$ is normal if it commutes with $N^H$: $NN^H = N^HN$.
+
+
+\vspace{6pt}
+
+\textbf{Theorem:}\\
+A triangular matrix $T$ that is normal must be diagonal\\
+\textit{Proof:}\\
+Tip: Use induction and multiplication by blocks.\\
+For details see: \url{https://math.stackexchange.com/a/2538528/633346}
+
+
+
+\vspace{6pt}
+
+\textbf{Theorem:}\\
+$T = U^{-1}AU$ is diagonal if and only if $A$ is a normal matrix.\\
+\textit{Proof:}\\
+If $A$ is normal, \\
+$TT^H = U^{-1}AUU^HA^HU = U^{-1}AA^HU = U^{-1}A^HAU = U^HA^HUU^{-1}AU = T^HT \implies T$ is diagonal.
+
+\subsubsection{Jordan form}
+
+\textbf{Theorem:} If $A$ has $s$ independednt eigenvectors, it is simillar to a matrix with $s$ blocks.\\
+$$
+\text{\textbf{Jordan form }}
+J = M^{-1}AM =
+\begin{bmatrix}
+J_1 & & \\
+& \ddots & \\
+& & J_s\\
+\end{bmatrix}
+$$
+
+Each Jordan block is a triangular matrix that has only a single eigenvalue ($\lambda_i$) along the diagonal corresponding to only one eigenvector. For each missing eigenvector there will be a $1$ just above the diagonal.
+
+
+$$
+\text{Jordan block }
+J_i = 
+\begin{bmatrix}
+\lambda_i & 1 & & \\
+& \lambda_i &  \cdot & \\
+& & \cdot & 1\\
+& & & \lambda_i
+\end{bmatrix}
+$$

@@ -1,0 +1,54 @@
+\section{Pre-processor directives}
+
+\begin{minipage}{\linewidth}
+Pre-processor directive always start with a '\texttt{\#}'.
+
+\begin{itemize}
+    \item \texttt{\#include \textit{filename}}\\
+    Replace with contents of \textit{filename}\\
+
+    \begin{itemize}
+        \item files with double quotes: \texttt{\# include "file.h"}\\
+            First pre-processor looks for \texttt{file.h} in the same directory as the source file and then in pre-configured list of standard system directories.
+        \item files with angle bracket: \texttt{\# include <stdio.h>}\\
+            The pre-processor looks only in the pre-configured list of standard system directories.
+        \item Additional directories can be include
+    \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+
+    \item \texttt{\#define NAME \textit{replacement text}} \\
+    \texttt{NAME} is replaced with \texttt{\textit{replacement text}} \\
+    \item \texttt{\#define \textit{token}(arg1,arg2) \textit{statement}} \\
+    Defining a macro. Eg: \\
+    \texttt{\#define max(A,B) ((A) > (B) ? (A) : (B))}
+    \item \texttt{\#undef NAME} \\
+    Nullifies existing definition of \texttt{NAME}. Used to ensure a routine is a function.\\
+    \item \texttt{\#if}, \texttt{\#elif},\texttt{\#else}, \texttt{\#endif}\\
+    Eg-1:\\
+    \texttt{\#if !define(HDR)}\\
+    \texttt{\#define HDR}\\
+    \texttt{/*contents of hrd.h*/}\\
+    \texttt{\#endif}\\
+    NOTE: \texttt{define()} after \texttt{\#if} returns \texttt{1} if its argument is already defined.\\ 
+    Here \texttt{\#define HDR} is first line of \texttt{hrd.h} and this file is included only if it was not already included.
+    Eg-2:\\
+    \texttt{\#if SYSTEM == SYSV }\\
+    \qquad \texttt{\#define HDR "sysv.h"}\\
+    \texttt{\#elif SYSTEM == BSD}\\
+    \qquad \texttt{\#define HDR "bsd.h"}\\
+    \texttt{\#elif SYSTEM == MSDOS}\\
+    \qquad \texttt{\#define HDR "msdos.h"}\\
+    \texttt{\#else}\\
+    \qquad \texttt{\#define HDR "default.h"}\\
+    \texttt{\#endif}\\
+    \item \texttt{\#ifdef}  and \texttt{\#ifndef}\\
+    Test whether a name is already defined.\\
+    Eg-1 in above point can be replaced by:
+    \texttt{\#ifndef HDR}\\
+    \texttt{\#define HDR}\\
+    \texttt{/*contents of hdr.h*/ }\\
+    \texttt{\#endif}\\
+\end{itemize}
+\end{minipage}

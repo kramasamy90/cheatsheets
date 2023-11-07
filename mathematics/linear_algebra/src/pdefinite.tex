@@ -1,0 +1,121 @@
+\section{Positive definite matrices}
+
+\textbf{Definition:}\\
+A $n \times n$ symmetric matrix $A$ is positive-definite if $\forall$ $x \neq 0, \in \mathbb{R}^n$ $x^TAx > 0$.
+
+\vspace{6pt}
+
+
+\textbf{Test for positive definiteness}
+Each of the following test is a necessary and sufficient condition for a matrix to be positive definite.
+\begin{enumerate}
+\item $x^TAx > 0$ for all nonzero vectors $x$.\\
+Definition.
+\item All eigenvalues of $A$ satisfy $\lambda_i > 0$.\\
+\textit{Proof:} $x^TAx = \lambda x^Tx = \lambda \|x\|^2$\\
+Converse: Every $\forall y > 0,  \in \mathbb{R}^n$, $y = a_1x_1 + \cdots + a_nx_n$\\
+$Ay = a_1\lambda_1 + \cdots + a_n\lambda_1$\\
+$y^TAy = a_1^2 \lambda_1 + \cdots + a_n^2 \lambda_n > 0$
+\item All the upper left submatrices $A_k$ have positive determinants.\\
+Clue:
+$
+x^TAx = 
+\begin{bmatrix}
+x_k^T & 0	
+\end{bmatrix}
+\begin{bmatrix}
+A_k & * \\
+* & * 
+\end{bmatrix}
+\begin{bmatrix}
+x_k\\
+0
+\end{bmatrix}
+= x_k^TA_kx_k
+$
+
+\item All the pivots (without row exchanges) satisfy $d_k > 0$.\\
+\textcolor{red}{\textit{Proof: Incomplete}}
+
+\end{enumerate}
+
+\vspace{6pt}
+
+
+\textbf{Theorem: Another test for positive definiteness}\\
+The symmetric matrix $A$ is positive definite if and only if:\\
+$\exists$ $R$ with independent columns $\ni$ $A = R^TR$.
+
+\vspace{6pt}
+
+\subsubsection{Positive semidefinite Matrices}
+
+The tests for semidefinite matrices will relax to allow zeros.\\
+\textbf{Definition:}\\
+$\forall$ $x$ $x^TAx \geq 0$
+
+
+\textbf{Test for positive semi definiteness}
+
+\begin{itemize}
+\item $\forall x \neq 0$ $x^TAx \geq 0$.	
+\item All eigenvalues satisfy $\lambda_i \geq 0$.
+\item No principal submatrices of $A$ have negative determinants.
+\item No pivots are negative.
+\item $\exists$ $R$, possibly with dependent columns such that $A = R^TR$.
+
+\end{itemize}
+
+
+
+\subsection{Singular value decomposition}
+Any $m \times n$ matrix $A$ can be decomposed in to:\\
+
+\begin{center}
+\framebox{$A = U\Sigma V^T$}	
+\end{center}
+$\Sigma$: Diagonal matrix, $m\times n$. This diagonal matrix has eignevalues form $A^TA$, not from A.\\
+The positive entries $\sigma_1, \sigma_2, \cdots, \sigma_s$, form the first $r$ diagonal elements of $\Sigma$. These elements are called \textbf{singular values}. The remainder of entries in $\Sigma$ is 0.\\
+\vspace{6pt}
+$U$: Orthogonal matrix, $m \times m$.\\
+The columns of $U$ are the eigenvectors of $A^TA$.
+\vspace{6pt}
+$V$: Orthogonal matrix, $n \times n$.\\
+The columns of $V$ are the eigenvectors of $AA^T$.
+\vspace{6pt}
+
+\textbf{Remark 1}\\
+For positive definite matrices, $\Sigma$ is $\Lambda$ and $U\Sigma V^T$ is identical to $Q\Lambda Q^T$.
+
+\vspace{6pt}
+
+\textbf{Remark 2}\\
+$U$ and $V$ give orthonormal bases for all four fundamental subspaces. \\
+\begin{tabularx}{\linewidth}{lcrX}
+first & $r$ & columns of $U$: & \textbf{column space} of $A$\\
+last & $m-r$ & columns of $U$: & \textbf{left nullspace} of $A$\\
+first & $r$ & columns of $V$: & \textbf{row space} of $A$\\
+last & $n-r$ & columns of $V$: & \textbf{nullspace} of $A$\\
+\end{tabularx}
+
+
+\vspace{6pt}
+
+\textbf{Remark 3}\\
+$Av_j = \sigma_ju_j$ or $AV = U\Sigma$
+
+
+
+\vspace{6pt}
+
+\textbf{Remark 4}\\
+Eigenvectors of $AA^T$ and $A^TA$ goes into columns of $U$ and $V$.\\
+$AA^T = (U\Sigma V^T)(V\Sigma^T U^T) = U\Sigma\Sigma^T U^T$, and,\\
+$A^TA =  V\Sigma^T\Sigma V^T$.\\
+
+
+
+
+\vfill\null
+\pagebreak
+

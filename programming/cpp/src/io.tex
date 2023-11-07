@@ -1,0 +1,195 @@
+\section{Input output}
+
+\subsection{File Access}
+
+Format:\\
+
+\texttt{FILE *fp;}\\
+\texttt{FILE *fopen(char *name, char *mode);}\\
+\texttt{int fclose(FILE *fp);}\\
+\texttt{fp = fopen(name, mode);}\\
+
+Allowable modes include:\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{"r"} & read.\\
+\texttt{"w"} & write.\\
+\texttt{"a"} & append.\\
+\texttt{"b"} & binary files: \texttt{"rb"}, \texttt{"wb"}, \texttt{"ab"}.\\
+\end{tabularx}
+NOTE: \textcolor{red}{Difference between \texttt{rb} and \texttt{r} etc:}\\
+While using just \texttt{"r"} might work in writing binary files, it might cause trouble due misinterpretation of special characters like LF and CR. See: \url{https://stackoverflow.com/q/2174889/5607735} 
+
+\subsubsection{Standard I/O}
+Can be treated in the same way as file pointer.\\
+\texttt{stdin}, \texttt{stdout}, \texttt{stderr}\\
+
+\subsection{Reading and writing a file}
+\begin{verbatim}
+size_t fread{const void* ptr, size_t size,/
+size_t count, FILE* stream};
+
+size_ t fwrite{const void* ptr, size_t size,/
+size_t count, FILE* stream};
+\end{verbatim}
+
+\subsection{Character I/O}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{getchar} & Takes input from standard input.\\
+& \texttt{int getchar()}\\
+& Equivalent to \texttt{getc(stdin)}\\
+\texttt{putchar} & Output to standard output.\\
+& \texttt{int putchar(int)}\\
+& Equivalent to \texttt{putc(c), stdout}\\
+\texttt{getc} & \texttt{int getc(FILE *fp)}, Eg: \texttt{getc(stdin)}\\
+\texttt{putc} & \texttt{int putc(int c, FILE *fp)}\\
+\texttt{ungetc} & \\
+\end{tabularx}
+
+\subsection{Line I/O}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{gets} & Reads until \texttt{EOF}.\\
+& \texttt{gets} deletes terminal \textbackslash \texttt{n}\\
+\texttt{puts} & Writes line to stdout.\\
+& \texttt{puts} adds terminal \textbackslash \texttt{n}\\
+\texttt{fgets} & \texttt{char *fgets(char *line, int maxline, FILE *fp)}\\
+\texttt{fputs} & \texttt{int *fputs(char *line, FILE *fp)}\\
+\texttt{getline} & Eg: \texttt{getline(cin, s)}. Where \texttt{s} is a string.
+\end{tabularx}
+
+\begin{mdframed}
+\textbf{\textcolor{red}{NOTE: Never use \texttt{gets}}}\\
+\texttt{gets} does not check for buffer overrun, and keeps reading until it encouters new line or \texttt{EOF}.
+\textcolor{red}{It has been used to break computer security.}
+\end{mdframed}
+
+\vfill \null
+
+\subsection{\texttt{printf} and \texttt{scanf}}
+\subsubsection{Conversion formats for \texttt{printf} and \texttt{scanf}}
+\begin{tabularx}{\linewidth}{c|X}
+\hline 
+\textbf{Character} & \textbf{Argument type; Printed as}\\
+\hline
+\texttt{d,i} & int; decimal number\\
+\texttt{o} & int; unsigned octal number (without leading zero)\\
+\texttt{x,X} & int: unsigned hexadecimal number (without a leading 0x or 0X), using \texttt{abcdef} or \texttt{ABCDEF}.\\
+\texttt{u} & int; unsigned decimal number.\\
+\texttt{zu} & \texttt{size\_t}.\\
+\texttt{c} & int; single character.\\
+\texttt{s} & char *; Print string, scan word.\\
+& \textcolor{red}{NOTE: \texttt{scanf} reads only a word and not the entire string.}\\
+\texttt{f} & double; [-]\textit{m.dddddd}.\\
+\texttt{e,E} & double; [-]\textit{m.dddddd}$\pm$\textit{xx}, or [-]\textit{m.dddddd}$\pm$\textit{xx}.\\
+\texttt{g,G} & double; \%e or \%E if exponent is $<$ -4 or $>=$ precision, else use \%f.\\
+\texttt{p} & void *; pointer.\\
+\texttt{\%} & no argument; Print \%.\\
+\hline
+\end{tabularx}
+
+Between \% and conversion character there may be in order:\\
+\begin{itemize}
+\item Minus sign: Left justification.
+\item Number: Minimum field width.
+\item Period: Separates field width from precision.
+\item Number: Precision. \\
+	For float: number of digits after decimal.\\
+	For int: minimum number of digits.\\
+	For string: maximum number of characters to be printed.\\ 
+\item h: for short integer.
+	l: for long integer.\\
+\end{itemize}
+
+
+\subsubsection{Formatting rules}
+Examples
+\begin{tabularx}{\linewidth}{lX}
+& \textbf{Wildcard}\\
+\textcolor{red}{\%*d} & Here precision can be specified dynamically. Eg: \\
+& \texttt{printf("\%*d", 6, foo);}, this is equivalent to \texttt{printf("\%6d",foo);}\\
+& \textbf{Integers}\\
+\%d & print as decimal integer.\\
+\%6d & print as decimal integer, at least 6 characters wide.\\
+& \textbf{Floating point numbers}\\
+\%6f & print as floating point.\\
+\%.2f & print as floating point, 2 characters after decimal point.\\
+\%6.2f & print as floating point, at least 6 characters wide and 2 characters after decimal point.\\
+& \textbf{String:} example \texttt{hello, world} (12 chars).\\
+\texttt{:\%s:} & \texttt{:hello,\textvisiblespace world:}\\
+\texttt{:\%10s:} & \texttt{:hello,\textvisiblespace world:}\\
+\texttt{:\%.10s:} & \texttt{:hello,\textvisiblespace wor:}\\
+\texttt{:\%-10s:} & \texttt{:hello,\textvisiblespace world:}\\
+\texttt{:\%.15s:} & \texttt{:hello,\textvisiblespace world:}\\
+\texttt{:\%-15s:} & \texttt{:hello, world\textvisiblespace\textvisiblespace\textvisiblespace:} \\
+\texttt{:\%15 .10s:} & \texttt{:\textvisiblespace\textvisiblespace\textvisiblespace\textvisiblespace\textvisiblespace hello, wor:}\\
+\texttt{:\%-15 .10s:} & \texttt{:hello,\textvisiblespace wor\textvisiblespace\textvisiblespace\textvisiblespace\textvisiblespace\textvisiblespace:}\\
+\end{tabularx}
+
+\subsubsection{Printf and variants}
+
+\begin{itemize}
+\item \texttt{int printf(char *format, arg1, arg2, $\cdots$);}\\
+Print output to stdout.
+\item \texttt{int sprintf(char *string, char *format arg1, arg2, $\cdots$);}\\
+Print output to \texttt{string}.
+\item \texttt{int fprintf(FILE *fp, char *format arg1, arg2, $\cdots$);}\\
+Print output to file pointed by the file pointer \texttt{fp}.
+\end{itemize}
+
+\textbf{Example}:\\
+\texttt{printf("\%s\textbackslash n", string\_var);}\\
+\texttt{printf("\%s", "hello, world");}\\
+\texttt{printf("square of n is \%d\textbackslash n", n\_square);}\\
+
+\subsubsection{Scanf and variants}
+
+\begin{itemize}
+\item \texttt{int scanf(char *format, arg1, arg2, $\cdots$);}\\
+Scan input from \texttt{stdin}.
+\item \texttt{int sscanf(char *string, char *format arg1, arg2, $\cdots$);}\\
+Scan input from string.
+\item \texttt{int fscanf(FILE *fp, char *format arg1, arg2, $\cdots$);}\\
+Scan input from the file pointed by the file pointer \texttt{fp}.
+\end{itemize}
+
+\textcolor{red}{NOTE1: unlike printf, in scanf the variable are pointers.}\\
+\textcolor{red}{NOTE2: In \texttt{scanf} \texttt{\%s} reads a word and not the entire string.}\\
+\textcolor{red}{Also see:} \textcolor{blue}{\url{https://stackoverflow.com/a/1248017/5607735}}\\
+
+\textbf{Examples:}
+\vspace{-6pt}
+\begin{verbatim}
+scanf("%d", &n);	
+sscanf(string, "%d", &n);	
+fscanf(fp, "%d", &n);	
+\end{verbatim}
+
+\subsection{\texttt{cin} and \texttt{cout}}
+
+	\begin{tabularx}{\linewidth}{lX}
+		\texttt{cin} & Read input until space, or tab or LF.\\
+		\texttt{cout} & Output.\\
+	\end{tabularx}
+\vspace{-8pt}
+	\begin{mdframed}[backgroundcolor=blue!20]
+		\textbf{NOTE:}\\
+			\textbullet\ Use the following to increase speed ot I/O.
+\vspace{-8pt}
+			\begin{verbatim}
+				ios_base::sync_with_stdio(false);
+			cin.tie(nullptr); cout.tie(nullptr);	
+		\end{verbatim}
+\vspace{-8pt}
+		\textbullet\ Use \texttt{cin.ignore()} after \texttt{cin} and before using \texttt{getline}.
+	\end{mdframed}
+
+\subsection{Miscellaneous}
+
+\texttt{int fflush(FILE *stream)}\\
+Causes any buffered but unwritten data to be written. The effect is undefined on an input stream.\\
+\texttt{int fclose(FILE *stream)}\\
+Flushes any unwritten data for \texttt{stream}, discardes any unread buffered input.
+
+\vfill\null
+\columnbreak
+
+

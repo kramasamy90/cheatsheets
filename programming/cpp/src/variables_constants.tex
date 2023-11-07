@@ -1,0 +1,74 @@
+\section{Variables and Constants}
+
+\subsection{Variable types}
+\begin{tabularx}{\linewidth}{lllX}
+Type & Location & memory location & Scope\\
+\hline
+\texttt{Global} & Outside functions & data/bss & Global\\
+\texttt{Static} & Outside functions & data/bss & Source file\\
+\texttt{Static} & Inside a function & data/bss & Local\\
+\texttt{Local} & Inside a function & stack & Local\\
+\texttt{Register$^\#$} & Inside a function$^*$ & register & Local\\
+\hline
+\end{tabularx}
+$^*$ causes error if declared in global space.\\
+$^\#$ This is not strict. The compiler might choose not to keep the variable in register.
+
+\subsection{Variable declaration and initialization}
+\begin{itemize}
+\item Eg: \texttt{int num;}
+Local or global depending on context.
+\item Eg: \texttt{static int num;}
+Static variable.
+\item Eg: \texttt{const int num;}
+Causes error if \texttt{num} is modified.
+\end{itemize}
+\subsection{Data types}
+\textbf{Major variable types}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{char} & 1 byte.\\
+\texttt{short int} & 2 bytes.\\
+\texttt{int} & 4 bytes.\\
+\texttt{long int} & 4 to 8 bytes.\\
+\texttt{long long int} & 8 bytes.\\
+\texttt{\_\_int128\_t} & 16 bytes, not part of standard definition, but is supported by g++.\\ 
+\texttt{float} & 4 bytes.\\
+\texttt{double} & 8 bytes.\\
+\texttt{long double} & 80 bit floating point supported by g++.\\
+\texttt{size\_t} & unsigned type.\\
+\end{tabularx}
+Their actual size might vary depending on the system.\\
+
+\textbf{Modifiers for variable types}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{unsigned} & With int and char.\\
+\texttt{signed} & With int and char.\\
+\end{tabularx}
+
+
+\subsection{Constants}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{1234} & \texttt{int}\\
+\texttt{1234567890L} & \texttt{long int}. \textcolor{red}{When should I use L?}\\
+\texttt{010} & Octal $\equiv$ 8.\\
+\texttt{0x10} & Hexadecimal $\equiv$ 16.\\
+\texttt{0b10} & Binary $\equiv$ 2. Binary format is not part of standard C, but is supported by gcc.\\
+'x' & Character constant, has an integer value.\\
+'\textbackslash ooo' & Specify ASCII code of the character in octal.\\
+'\textbackslash xhh' & Specify ASCII code of the character in hexadecimal.\\
+\end{tabularx}
+
+\textbf{Escape sequences:}\\
+ \texttt{\textbackslash a, \textbackslash b, \textbackslash f, \textbackslash n, \textbackslash r, \textbackslash t, \textbackslash v, \textbackslash \textbackslash, \textbackslash ?, \textbackslash ', \textbackslash "}.
+
+\textbf{Enumeration constants}: List of constant integers.\\
+
+\begin{itemize}
+\item Eg: \texttt{enum ans \{NO, YES\};}\\
+By defaults integers are assigned from 0.
+\item Eg: \texttt{enum days \{MON=1,TUE,WED,THU,FRI,SAT,SUN\};}\\
+Here, \texttt{MON} is assigned 1, and by default, \texttt{TUE} is 2. 
+\item Eg: \texttt{enum months \{JAN =1, FEB, APR=4,MAY\};}\\
+Here, \texttt{MAY} is 5.
+\end{itemize}

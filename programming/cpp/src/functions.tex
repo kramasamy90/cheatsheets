@@ -1,0 +1,57 @@
+\section{Functions}
+
+\subsection{\texttt{int main} function: command line arguments}
+
+\texttt{main(int argc, char *argv[])}\\
+\texttt{\{}\\
+\qquad \texttt{$\cdots$}\\
+\texttt{\}}
+
+\begin{tabularx}{\linewidth}{l|X}
+\texttt{argc} & Number of arguments including the program name. \\
+\texttt{argv[0]} & Pointer to program name.\\
+& \textcolor{red}{NOTE: \texttt{argv[0] represents name of the compiled program and not the source file and how it is called eg: \texttt{a.out} vs \texttt{./a.out}}}\\
+\texttt{argv[i]} & Pointer to i$^{th}$ argument.\\
+\texttt{argv[argc - 1]} & Pointer to last argument. \\
+\end{tabularx}
+
+
+
+
+\subsection{Function definition}
+\texttt{\textit{type function\_name}(\textit{argument list})}\\
+\texttt{\{}\\
+\qquad \texttt{\textit{statements}}\\
+\qquad \texttt{$ \cdots $}\\
+\qquad \texttt{return \textit{expression}}\\
+\texttt{\}}
+
+eg:\\
+
+\texttt{int foo(int num, int cars[],char *pn)}\\
+\texttt{\{}\\
+\qquad \texttt{\textit{statements}}\\
+\qquad \texttt{$ \cdots $}\\
+\qquad \texttt{return \textit{expression}}\\
+\texttt{\}}
+
+\subsection{Function declaration}
+
+\textbf{Implicit declaration}:\\
+The function is assumed to return \texttt{int}. Nothing is assumed about the arguments.\\
+\textbf{Explicit declaration}:\\
+Examples:\\
+\texttt{int foo(int, int [], int *);}\\
+\texttt{int foo(int x, int y[], int *p);}\\
+Explicit declaration is not necessary if the function is defined before \texttt{main()}.\\
+
+\subsection{Passing functions as arguments}
+Example: passing \texttt{foo2} to \texttt{foo}.\\
+\textbf{Declaration:}\\
+\texttt{int foo(int x, int (*foo2)(int y));}\\
+\textbf{Usage:}\\
+\texttt{foo(x, foo2);}\\
+\textcolor{red}{Also see:}\textit{7.7 Pointers to functions} 
+\vfill \null
+\columnbreak
+

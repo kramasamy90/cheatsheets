@@ -1,0 +1,837 @@
+\section{File compression}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\hline
+\texttt{tar} & Tape archive\\
+\texttt{-cf} & To make tar file form a directory \texttt{tar -cf dir.tar /dir}. \texttt{-c} alone does not work for me (Why?), so use \texttt{-cf}\\
+\texttt{-tf} & View contents of an archive.\\
+\texttt{-tvf} & View contents, verbose.\\
+\texttt{-xf} & extract.\\
+\hline
+
+\texttt{zip -r} & Compress. \texttt{zip -r file.zip /dir}\\
+\texttt{unzip -l}  & View contents. \texttt{unzip -l file.zip}\\
+\texttt{unzip} & Decompress. \texttt{unzip file.zip}\\
+\hline
+
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{gzip} & Eg: \texttt{gzip filename}. \texttt{gzip} can only compress a file and not a directory. To compress a directory first make a .tar file and then compress that.\\
+\texttt{gunzip} & To unzip .gz files.\\
+\texttt{-c} & Output to standard output. \\
+& Eg: \texttt{gzip -c file1 >  file.gz}. Eg: \texttt{gzip -c file2 >> file.gz}. and \texttt{gunzip -c}.\\
+\texttt{bzip2} & Works like gzip. Higher compression, but slow. File extension \texttt{.bz2}\\
+\hline
+
+\end{tabularx}
+
+Checkout \texttt{compress}/\texttt{uncompress}. Also: \texttt{zgrep}, \texttt{zcat}, \texttt{zless}, \texttt{zdiff} etc.
+
+
+
+\section{Awk}
+
+Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f file.awk input.txt}.\\ Record = row. Column = fields. \\
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{-F} & Input field separator. Eg: \texttt{awk -F"," input.txt}. Defaule field separator = tab.\\
+\texttt{-f} & Take input from file. Eg: awk -f file.awk input.txt.\\
+\texttt{(...) \&\& (...)} &  Use logical operators. See below.\\
+\texttt{\$n ~ /.../} & Use regular expression between slashes.\\
+\texttt{/.../,/.../} & Specify range. Works only with regex (with double slash) .\\
+\texttt{BEGIN\{...\}} & Eg: \texttt{awk 'BEGIN\{...\} ... \{...\} END\{...\}'}\\
+\texttt{END\{...\}} & \\
+\hline
+\end{tabularx}
+\textbf{Awk operations:} \texttt{+,-,*,/,\%,\^{}}. \\
+\texttt{a ... b}. Replace "\texttt{...}" : \texttt{==,!=,<,>,<=,>=,\~{},!\~{},\&\&,||,!a}\\
+\textbf{Field separators:} FS,RS,OFS, ORS.\\
+\textbf{Awk variables:} NF, NR (Record number accumulates between files.), FNR(Resets record number after every files.).\\
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\textbf{Example awk script file}\\
+\texttt{awk -f script.awk plasmids.tsv}\\
+\texttt{BEGIN\{FS="\textbackslash t";OFS="\textbackslash t";x=0\}}\\
+\texttt{/[Cc]re/\{}\\
+\texttt{x+=1;}\\
+\texttt{print x,\$1,\$2\}}\\
+\texttt{END\{print "There are " x "plasmids with Cre"\}}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\textcolor{red}{Checkout BioAwk}.\\
+\textcolor{red}{Checkout control flow}.\\
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\section{Sed}
+
+\texttt{sed 's/\textit{target}/\textit{replacement}/\textit{flag}'}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-e} & to Chain commands.Eg: \texttt{sed -e 's/:/\t/' -e 's/-/\t/'}.\\
+\texttt{-E} & Use extended POSIX.\\
+\texttt{g} & Global flag. Usually sed replaces only the first occurrence  in a sentence. Use global flag to replace all occurences.\\
+\texttt{i} & To make the search case insensitive.\\
+\end{tabularx}
+
+%\hspace{10pt}\\
+%\hspace{10pt}\\
+%\hspace{10pt}\\
+
+%\pagebreak
+
+\section{Regular Expression}
+
+\textbf{Single character meta characters}
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{.} & Match any single character.\\
+\texttt{[ ]} & Match any single character between \texttt{[]}. Eg: \texttt{[at]} match "a" or "t".\\
+\texttt{[\^{}]} & Match any single charcter except on between \texttt{[]}.\\
+\texttt{[0-9]} & Any number between 0 and 9. Eg: \texttt{0-3a-cz]} equals \texttt{[123abcz]}.\\
+\texttt{(...)} & Grouping. eg: \texttt{(AT)+} or \texttt{(GLY ) \{2,\}}.\\
+\hline
+
+\end{tabularx}
+
+
+\textbf{Quantifiers}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{?} & Match preceding character zero or one time. \\
+\texttt{*} & Match zero or more time.\\
+\texttt{+} & Match one or more time.\\
+\texttt{\{n\}} & Match n times.\\
+\texttt{\{n,\}} & Match atleast n times.\\
+\texttt{\{a,b\}} & Match atleast a times, atmost b times.\\
+
+\hline
+
+\end{tabularx}
+
+\textbf{Anchors}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{\^{}} & Match the start of a line.\\
+\texttt{\$} & Match end of a line.\\
+\texttt{\textbackslash $<$} & Match beginning of word.\\
+\texttt{\textbackslash $>$} & Match at the end of word.\\
+\texttt{\textbackslash b} & Match either beginning or end of word.\\
+\texttt{\textbackslash B} & Match any character not at the beginning or end. \\
+
+\hline
+
+\end{tabularx}
+
+\textbf{Character class}
+
+[:alnum:], [:digit:], [:alpha:], [:upper:], [:lower:], [:blank:], [:space:], [:punct:] and [:print:].\\
+
+Use backslash as escape character. \\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\textbackslash s} & white space character. What it includes depends on the flavour of regex.\\
+\texttt{\textbackslash d} & Add digits.\\
+\texttt{\textbackslash w} & Word character, matches \texttt{[A-Za-z0-9\_]}\\
+\end{tabularx}
+\texttt{|} as OR logical operator: \texttt{(GLY|GLN)}.
+\texttt{"one and|or two"} is equal to \texttt{"(one and)|(or two)"}.\\
+\texttt{"one (and|or) two"} is "one and two" or "one or two".\\
+
+\textbf{Back references:} () : Memorizes the match for regular expression within parenthesis. Use \texttt{\textbackslash n} to recall nth match.
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\vfill\null
+\columnbreak
+
+\section{Vim}
+
+\textbf{Motion}
+Usage: \texttt{<num> <motion>}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{h l} & One character left or right.\\
+\texttt{j k} & One line up or down.\\
+\texttt{w b} & One word forward or backwarks.\\
+\texttt{e} & Simillar to w but keeps the cursor at the end of the word.\\
+\texttt{0} & Cursor to the begining of the sentence.\\
+\texttt{\$} & Moves cursor to the end of the sentences.\\
+\texttt{G} & End of the file.\\
+\texttt{gg} & First line.\\
+\texttt{H} & Top of screen.\\
+\texttt{M} & Middle of screen.\\
+\texttt{L} & Botom of screen.\\
+\texttt{<num>G} & Go to line \texttt{<num>}.\\
+\keys{\texttt{Ctrl}} + \texttt{f} & One screen forward.\\
+\keys{\texttt{Ctrl}} + \texttt{b} & One screen backward.\\
+\keys{\texttt{Ctrl}} + \texttt{G} & View position in the file.\\
+\keys{\texttt{Ctrl}} + \texttt{O} & Go to where you came from .\\
+\keys{\texttt{Ctrl}} + \texttt{I} & Opposite of \keys{\texttt{Ctrl}} + \keys{\texttt{O}}\\
+\texttt{\%} & Go to the corresponding opening or closing parenthesis.\\
+\hline\\
+
+\end{tabularx}
+
+\textbf{Operators}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{i} & INSERT mode\\
+\texttt{a} & append, goes to insert mode\\
+\texttt{a} & append from the end of the line.\\
+\texttt{v} & visual selection, selection is stored in clipboard\\
+\texttt{o} & open a line below\\
+\texttt{O} & open a line above\\
+\keys{\texttt{Esc}} & Go to command mode\\
+\texttt{d} & delete and also cut, $\equiv$ \keys{\texttt{Ctrl}} + \keys{\texttt{X}}\\
+\texttt{dd} & delete whole sentence\\
+\texttt{x} & delete character under the cursor\\
+\texttt{r} & replace the character under the cursor\\
+\texttt{R} & replace until \keys{\texttt{Esc}} \\
+\texttt{c} & change: works equivalent to \texttt{d} followed by \texttt{i}\\
+\texttt{y} & yank, copy\\
+\texttt{p} & paste\\
+\texttt{u} & undo most recent edit\\
+\texttt{U} & undo all the changes in the line\\
+\keys{\texttt{Ctrl}} + \keys{\texttt{R}} & Redo\\
+\hline
+
+\end{tabularx}
+
+\textbf{Copy, paste, bookmark}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{:xmy} & Move line \texttt{x} below line \texttt{y}.\\
+\texttt{:x,ymz} & Moves lines between and including \texttt{x} and \texttt{y} below line \texttt{z}.\\
+\texttt{:xty} & Copy line \texttt{x} below line \texttt{y}.\\
+\texttt{:x,ytz} & Copy lines between and including \texttt{x} and \texttt{y} below line \texttt{z}.\\
+\texttt{ma} & Set bookmark at current line. \texttt{a} $\in$ [a-z].\\
+\texttt{'a} & Jump to bookmark \texttt{a}.\\
+\texttt{:'a,'bco'c} & Copy lines between and including bookmarks \texttt{a} and \texttt{b} below bookmark c.\\
+\texttt{:'a,'bco'z} & Copy lines between and including bookmarks \texttt{a} and \texttt{b} below line z.\\
+\hline\\
+\end{tabularx}
+
+\textbf{Search and replace}\\
+
+\begin{tabularx}{\linewidth}{lX}
+:/REGEX & Find regular expression.\\
+n & next search target\\
+N & Previous search target\\
+:s/target/replace & Simillar to sed. Replaces target only in the current sentence and only once.\\
+:s/target/replace/g & Replaces at all instance in the current sentence.\\
+:\%s/target/replace/g & Replaces through the entire file.\\
+:\%s/target/replace/gc & Ask for confirmation at each instance.\\
+
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\textbf{Save, write and Exit}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{:q} & quit\\
+\texttt{:q!} & quit without saving\\
+\texttt{:w} & save the current file\\
+\texttt{:wq} or \texttt{:x} & save and quite \\
+\texttt{:w \textit{file}} & write to \textit{file}.\\
+\texttt{:xyw \textit{file}} & write lines between and including lines \texttt{x} and \texttt{y} to \textit{file}.\\
+\texttt{:!} & Execute shell command. Eg: \texttt{:!pwd}\\
+\hline\\
+
+\end{tabularx}
+
+\textbf{\texttt{:set}}\\
+Usage: \texttt{:set \textit{option}}. Eg: \texttt{:set ic}
+\begin{tabularx}{\linewidth}{lX}
+ic & Case-insensititve search\\
+hls & Highlight search\\
+number & Show line number \\
+\end{tabularx}
+To turnoff the option use no. Eg \texttt{:set noic} to turnoff \texttt{ic}\\
+\begin{tabularx}{\linewidth}{lX}
+\hline\
+\end{tabularx}
+\textbf{Etc}
+
+\keys{Ctrl} + \keys{D} for command completion.\\
+\keys{Tab} for filename completion.\\
+For further setting: \texttt{$\sim$/.vimrc} \\
+\textbf{Help}:\\
+\keys{F1}\\
+\texttt{:help}\\
+\texttt{:help w}\\
+\texttt{:help user-manual}\\
+
+\textbf{Default settings:}
+Set default settings in \texttt{~/.vimrc} \\
+Create this file if it does not exist. \\
+Example \texttt{.vimrc} file:\\
+
+\begin{mdframed}
+\texttt{syntax on}\\
+\texttt{colorscheme desert}\\
+\texttt{set number}\\
+\texttt{set hls}
+
+\end{mdframed}
+
+\vfill\null
+
+\columnbreak
+
+\section{Shell scripting}
+\subsubsection{Modifying PATH}
+Add a directory to path: Append one of the following files.\\
+\texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}\\
+with the following line:\\
+\texttt{PATH=\$PATH:\textit{<directory>}}\\
+Eg: \texttt{PATH=\$PATH:\$HOME/scripts}\\
+
+%\textcolor{blue}{NOTE: the above line could used in a terminal and the modification of PATH variable is valid only during the session, alternatively when it is used within a script the modification is valid only within the script and for example not in the terminal where the script is run.}\\
+
+
+\subsubsection{Header}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\#!/bin/bash} & Shebang\\
+\texttt{set -e} & Terminates script if there is non-zero exit status.\\
+\texttt{set -o pipefail} & If a program in the pipe fails the entire pipe returns non-zero exit status.\\
+\texttt{set -u} & Terminates for undefined variables.\\
+\end{tabularx}
+
+\subsubsection{Variables}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{sample="CNTRL"} & Assignment, no space around "\texttt{=}"\\
+\texttt{echo \$sample} & \\
+\texttt{echo \$\{sample\}\_aln} & Use curly braces while concatenating a variable with additional text.\\
+\texttt{mkdir "\$\{sample\}\_aln}" & Quoting variables prevents commands from interpreting spaces and special variables.\\
+\texttt{echo \$\{\#sample\}} & Length of the variable \texttt{sample}
+\end{tabularx}
+
+\subsubsection{Command-line arguments}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\$0} & Script name\\
+\texttt{\$1} & First argument\\
+\texttt{\$n} & n$^{th}$ argument.\\
+\texttt{\$\#} & Number of arguments not including \texttt{\$0}.\\
+\end{tabularx}
+
+\textbf{Example:}\\
+\begin{mdframed}
+\texttt{\#!/bin/bash}\\
+\texttt{echo "script name: \$0"}\\
+\texttt{echo "first arg: \$1"}\\
+\texttt{echo "second arg: \$2"}\\
+\texttt{echo "There are \$\# input arguments"}
+\end{mdframed}
+
+\subsection{Conditionals}
+\textbf{Format}
+\begin{mdframed}
+\texttt{if [ \textit{<conditon-statement>} ]}\\
+\texttt{then}\\
+\texttt{if-statements}\\
+\texttt{elif}\\
+\texttt{then}\\
+\texttt{elif-statements}\\
+\texttt{else}\\
+\texttt{else-statements}\\
+\texttt{fi}
+\end{mdframed}
+
+\columnbreak
+\vfill \null
+
+\textbf{Example:}\\
+\begin{mdframed}
+\texttt{if [ \$\# -lt 3 ]}\\
+\texttt{then}\\
+\texttt{echo "There are less than 3 arguments"}\\
+\texttt{fi}
+\end{mdframed}
+
+\textcolor{red}{In bash 0 is true/success, anything else is false/failure}
+
+\textbf{String and integer comparison}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-z str} & \texttt{str}  is null string.\\
+\texttt{str1 == str2} & \texttt{str1} and \texttt{str2} are identical.\\
+\texttt{str1 != str2} & \\
+\texttt{int1 -eq int2} & \texttt{int1} and \texttt{int2} are equal.\\
+\texttt{int1 -ne int2} & \\
+\texttt{int1 -lt int2} & \\
+\texttt{int1 -gt int2} & \\
+\texttt{int1 -le int2} & \\
+\texttt{int1 -ge int2} & \\
+\texttt{-o} & Logical OR.\\
+\texttt{-a} & Logical AND.\\
+\end{tabularx}
+
+\texttt{if} conditional can also be used to depend on exit status. Eg:\\
+
+\begin{mdframed}[nobreak=true]
+\texttt{if grep "pattern" file1.txt > /dev/null \&\& grep "pattern" file2.txt > /dev/null/}\\
+\texttt{then}\\
+\texttt{    echo "found pattern in file1.txt and file2.txt"}\\
+\texttt{fi}
+\end{mdframed}
+
+\begin{mdframed}
+\texttt{if ! grep "pattern" file1.txt > /dev/null}\\
+\texttt{then}\\
+\texttt{    echo "pattern not found in file1.txt"}\\
+\texttt{fi}
+\end{mdframed}
+
+\subsubsection{Testing files and dirs}
+\textbf{List of test expressions.}\\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-d dir} & \texttt{dir} is a directory\\
+\texttt{-f file} & \texttt{file} is a file.\\
+\texttt{-e file} & \texttt{file} exists.\\
+\texttt{-h lind} & \texttt{link} is a link.\\
+\texttt{-r file} & \texttt{file} is readable.\\
+\texttt{- w file} & \texttt{file} is writable.\\
+\texttt{-x file} & \texttt{file} is executable.\\
+\end{tabularx}
+
+Example\\
+
+\begin{mdframed}
+\texttt{test -d dir ; echo \$? }\\
+\null\\
+\texttt{test -d dir1 -o -d dir2; echo \$?}
+
+\end{mdframed}
+
+
+
+
+
+Exit status would be \texttt{0} if the directory dir exists.\\
+
+
+\textbf{Example:}\\
+
+\begin{mdframed}
+\texttt{if ! test -d \$1}\\
+\texttt{then}\\
+\texttt{mkdir \$1}\\
+\texttt{fi}
+\end{mdframed}
+
+Above script is equivalent to the following.\\
+
+\begin{mdframed}
+\texttt{if [ ! -d \$1 ]}\\
+\texttt{then}\\
+\texttt{mkdir \$1}\\
+\texttt{fi}
+\end{mdframed}
+
+\null
+
+\subsection{Arrays and For loop}
+
+\subsubsection{Manual creation}
+\begin{mdframed}
+
+\texttt{\$ sample\_names=(zmaysA zmaysB zmaysC)}\\
+\texttt{\$ echo \$\{sample\_names[0]\}}\\
+\texttt{zmaysA}\\
+\texttt{\$ echo \$\{sample\_names[@]\}}\\
+\texttt{zmaysA zmaysB zmaysC}\\
+\texttt{\$ echo \$\{\#sample\_names[@]\}}\\
+\texttt{3}\\
+\texttt{\$ echo \$\{!sample\_names[@]\}}\\
+\texttt{0 1 2}
+\end{mdframed}
+
+\subsubsection{Array creation using command substitution}
+\begin{mdframed}
+\texttt{samples=(\$(cut -f3 samples.tsv))}\\
+\texttt{file\_names=(\$(ls))}
+\end{mdframed}
+
+
+\subsubsection{Array of number sequence}
+
+\begin{mdframed}
+\texttt{seq 0 0.1 1 \# seq start step end}\\
+\texttt{s=(\$(seq 0 0.1 1))}
+\end{mdframed}
+
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\$\{arr[i]\}} & (i-1)$^{th}$ element of \texttt{array}.\\
+\texttt{\$\{arr[@]\}} & All the elements of \texttt{arr}.\\
+\texttt{\$\{\#sample\_names[@]\}} & Length of \texttt{arr}.\\
+\texttt{\$\{!sample\_names[@]\}} & Returns an array containing the index of elements in \texttt{arr}.\\
+\end{tabularx}
+
+\subsection{For loop}
+
+
+\begin{mdframed}
+\texttt{for name in \$\{file\_names[@]\}}\\
+\texttt{do}\\
+\quad\texttt{process.sh \$name}\\
+\texttt{done}\\
+\null\\
+\texttt{for name in \$\{file\_names[@]\}; do}\\
+\quad\texttt{process.sh \$name}\\
+\texttt{done}\\
+\null\\
+\texttt{for name in \$\{file\_names[@]\}; do; process.sh \$name; done }\\
+\texttt{for i in \$(seq \textit{start} \textit{step\_size} \textit{end});}\\
+\texttt{do}\\
+\texttt{process.sh \$i}\\
+\texttt{done}
+\end{mdframed}
+
+
+
+
+\subsection{Find, exec and xargs}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{find} & Usage: \texttt{find \textit{<folder>} -name "\textit{<pattern>}"}.\\
+& Eg: \texttt{find . -name foo.sh}.\\
+\texttt{-name <pattern>} & Find \texttt{<pattern>} using same special characters as bash (\texttt{*,?, [...] })\\
+\texttt{-iname} & Identical to \texttt{-name} but case-insensitive.\\
+\texttt{-empty} & Matches emtpy files and folders.\\
+\texttt{-type <x>} & Matches types \texttt{x} (\texttt{f} - file, \texttt{d} - directory, \texttt{l} - links).\\
+\texttt{-size <size>} & Matches \texttt{<size>}.\\
+&  Eg: \texttt{+50M} ; Files larger than 50 MB\\
+& Eg: \texttt{-50M}; Files smaller than 50 MB\\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{-regex} & Match regular expression. Use \texttt{-E} for extended POSIX.\\
+\texttt{-iregex} & Case-insensitive.\\
+\texttt{-print0} & separate results with null-byte and not new line. 
+\textcolor{red}{Explain!}\\
+\texttt{expr -and expr} & Logical AND.\\
+\texttt{expr -or expr} & Logial OR.\\
+\texttt{-not expr} & Logial NOT. Alternate: \texttt{"!" expr}\\
+\texttt{(expr)} & Group a set of expressions.\\
+\texttt{-exec} & Example: \\
+ & \texttt{find . -name *.c -exec <prog1> \{\} \textbackslash ;}.\\
+ & Execute \texttt{<prog1>} on all the found files. \texttt{\{\}} represents the found files. \\
+ & Mind the space between \texttt{\{\}} and \texttt{\textbackslash;}\\
+ 
+\hline
+
+\end{tabularx}
+
+
+\subsubsection{xargs}
+\texttt{xargs} takes input passed to it and uses as argument for another program.\\
+Examples:
+
+\begin{mdframed}
+\texttt{find . -name *.fastq | xargs rm} \# Uses all the inputs as arguments for rm\\
+\texttt{find . -name *.fastq | xargs -n 1 rm} \# Uses one input at a time after rm.\\
+\texttt{find . -name *.fastq | xargs -n 1 echo "rm -i" > delete-temp.sh}\\
+\texttt{find . -name *.c | xargs basename -s ".c" | xargs -I\{\} gcc -o \{\}.o \{\}.c }
+\end{mdframed}
+\texttt{xargs} flags
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-n <\textit{num}>} & Process \texttt{num} input(s) at time.\\
+\texttt{-I\{\}} & Uses \texttt{\{\}} as a placeholder for input.\\
+\texttt{-P <num>} & Parallel processing: use \texttt{<num>} processes.\\
+
+\end{tabularx}
+
+
+\subsection{Arithmetics}
+\subsubsection{let}
+Examples using \texttt{let}:\\
+
+\begin{mdframed}
+\texttt{let x=1} \#No space within expression\\
+\texttt{let x=x*2}\\
+\texttt{let x++}\\
+\texttt{let "x = x + 1"} \# Space OK within quotation.
+\end{mdframed}
+
+Examples using \texttt{expr}:
+\begin{mdframed}
+\texttt{expr 2 + 3} \# Space is required for \texttt{expr}\\
+\texttt{a=\$(expr 2 + 3)}\\
+\texttt{expr \$x + 1}
+\end{mdframed}
+
+\texttt{expr} is simillar to \texttt{let}, but only evaluate and not assign value to a variable.\\
+
+\textbf{Arithmetic operations:}
+
+\begin{tabularx}{\linewidth}{lX}
++, -, /, \% & \\
+* & Multiplication operator for \texttt{let}\\
+/* & Multiplication operator for \texttt{expr}\\
+\texttt{var++} & increment var by 1 used only in \texttt{let}\\
+\texttt{var--} & increment var by 1 used only in \texttt{let}
+\end{tabularx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vfill\null
+\pagebreak
+
+\section{Git}
+
+
+Setup git with the following commands:\\
+\texttt{\$ git config --global user.name "Ramasamy Kandasamy"}\\
+\texttt{\$ git config --global user.email ".....@gmail.com"}\\
+Next command tells git to use color to indicate changes.\\
+\texttt{\$ git config --global color.ui true}\\
+To change default text editor:\\
+\texttt{\$ git config --global core.editor gedit}\\
+These commands create a .gitconfig file in home directory. Use \texttt{\$ cat \~{}/.gitconfig} to get current information.\\
+\begin{tabularx}{\linewidth}{X}
+\hline
+\end{tabularx}
+
+
+Git command structure: \texttt{git <subcommand>}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git init} & Initialize git repository in a directory.\\
+\texttt{git clone} & To clone a git repository.\\ 
+\end{tabularx}
+Eg:\\
+\texttt{\$ git clone https://github.com/user/sth.git}\\
+\texttt{\$ git clone https://github.com/user/sth.git dir\_name}\\
+\texttt{\$ git clone https://user@bitbucket.org/user/sth.git}\\
+\begin{tabularx}{\linewidth}{X}
+\hline 
+\end{tabularx}
+
+
+Git consists of untracked files, tracked file , files staged for commit, and files committed to the repository. \\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git status} & Gives three categories of files: untracked, tracked files that have been modified, files staged for commit.\\
+\texttt{git add} & Start tracking a file or stage a file for commit.\\
+\texttt{-f} & To stage a file not tracked, i.e. a file in \texttt{.gitignore}.\\
+\texttt{git commit} & Commits all staged files to repository. \texttt{--amend}\\
+\texttt{-a} & This options tells git to automatically stage all modified tracked files in this commit.\\
+\texttt{-m "..."} & Message is mandatory. If there is no message, git opens text editor to input message. Default text editor can be specified in git-config.\\
+\texttt{git diff} & Shows difference between current version and staged version. If there are no staged version, shows difference between last commit and current versions.\\
+\texttt{-- staged} & To see difference between staged version and last commit.\\
+\texttt{git reset} & Unstage a file. Without a file name all staged files get unstaged.\\
+\texttt{git log} & List all commits, commit message SHA-1 checksum etc. Options: \texttt{--pretty=oneline}, \texttt{--abbrev-commit}, \texttt{--graph}, \texttt{--branches}, \texttt{-n2} : to view only latest two commits.\\
+\texttt{git rm} & Use these commands to rename or delete files.\\
+\texttt{git mv} & Using rm and mv will confuse git.\\
+\texttt{.gitignore} & Used to avoid certain files, fastq files for example, from being listed in untracked section of \texttt{git status}.\\
+ & Eg: \texttt{\$ echo "*.fa" >> .gitignore}.\\
+\texttt{git ls-tree} & List contents of tree object.\\
+ & Use to list all files in the latest commit.\\
+ & Eg: \texttt{git ls-tree -r master --name-only}\\
+\hline
+\end{tabularx}
+
+To add a remote repository.\\
+\texttt{\$ git remote add origin git@github.com:username/project.git}\\
+\texttt{\$ git remote add origin user@bitbucket....} \\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git remote -v} & Shows remote repository that connected to local repository. \\
+\texttt{git remote rm} & Remove remote repository. Eg: \texttt{git remote rm origin}\\
+\texttt{git push} & Use \texttt{git push origin master} to push main branch to origin (remote repository)\\
+\texttt{git pull} & \texttt{git pull origin master}: simillar to above.\\
+\hline\\
+\end{tabularx}
+
+\textbf{Resolving merge conflicts}: First \texttt{git pull} from remote repo. \texttt{git status} shows files with merge conflict. Open the file and resolve the conflict using guidlines provided. \\
+
+\textcolor{red}{Unfinished: Github SSH}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git checkout} & Restores file from \texttt{HEAD}. To restore a file\\
+\texttt{-- file} & from a specific commit. Use the commit SHA-1 ID. Eg \texttt{git checkout 08ccd3b -- README.md}\\
+\texttt{git stash} & To temporarily store the changes and go back to \texttt{HEAD}.\\
+ & \texttt{git stash pop} to restore changes stored in git stash.\\
+\texttt{git diff} & \texttt{git diff id1 id2 file} to compare different version using SHA-1 ID.\\
+ & \texttt{git diff HEAD\~{}3 HEAD\~{}4} : w.r.t to last commit.\\
+\texttt{git commit} & To edit message in last commit.\\
+\texttt{--amend} & Can also be used to modify files in previous commit, but I don't know how.\\
+\hline
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git branch} & Creates a new branch. It also lists all branches and indicate the branch that is used currently.\\
+\texttt{-d} & To delete a branch.\\
+\texttt{-m} & Rename a branch. Eg: \\
+& \texttt{git branch -m \textit{new-branch}} \# Renames current branch.\\
+& \texttt{git branch -m \textit{old-branch} \textit{new-branch}}.\\
+\texttt{--all} & To view hidden branches including remote repositories. For eg, \texttt{/remote/origin/master} is usually hidden. This functions like an actual branch but one cannot develop in this remote branch.\\
+\texttt{git checkout} & To jump between branches. Use branch name that you want to jump to.\\
+\texttt{git merge} & To merge two branches go to the branch you want to merge to and use \texttt{git merge <other branch>}. Merge conflict can be resolved as described earlier. In fact the earlier merge conflict was between a local branch and a remote branch.\\
+\texttt{git push } & New branch from local can be synchronized with remote using: \texttt{git push origin branchname}.\\
+\texttt{git fetch} & Used to synchronize my remote branch with remote remote repository. Eg: \texttt{git fetch origin}. To incoporate this to local branch use \texttt{git merge}.\\
+\end{tabularx}
+\underline{\textbf{NOTE:}} \texttt{git pull} is nothing but \texttt{git fetch} followed by \texttt{git merge}.\\
+
+\texttt{git checkout -b new-methods origin/new-methods}\\ This command simultaneously creates and swithces a new branch using \texttt{-b} option. This local branch will push and pull to this specific remote branch.\\
+
+\texttt{git remote prune origin} : To prune a stale branch in /remote branch.
+
+\vfill \null
+\columnbreak
+
+\section{Markdown}
+\textbf{Text formatting:}\\
+\begin{itemize}
+\item \texttt{*italics*} \\
+\item \texttt{**bold**} \\
+\item \texttt{*** bold italics ***}\\
+\item \texttt{\_\_underline\_\_}\\
+\item \texttt{\_\_*underline italics*\_\_}\\
+\item \texttt{\_\_**underline bold**\_\_}
+\item \texttt{\_\_***underline bold italics***\_\_}
+\item \texttt{\~{}\~{}strikethrough\~{}\~{}}
+\item Text coloring:\\
+\texttt{$<$span style="color:blue"$>$ blue text $<$/span$>$}
+
+\end{itemize}
+
+\textbf{Heading, lists and links}\\
+
+\begin{itemize}
+
+\item Itemized list: \texttt{* item 1} or \texttt{+ item 1} or \texttt{- item 1}
+\item Ordered list: Eg:\\
+\texttt{1. red}\\
+\texttt{2. blue} \\
+\texttt{4. green} \# Here output automatically numbers it to \texttt{3} \\ 
+\item Use \# for Headers. \\
+\texttt{\# Header level 1}\\
+\texttt{\#\# Header level 2}\\
+Markdown supports upto 6 levels.\\
+\item \texttt{$<$http://website.com/link$>$} \\
+\item \texttt{[link text](http://website.com/link)} \\
+\item Insert figure\\
+\texttt{![alt text](path/to/figure.png/)}\\
+\end{itemize}
+\textbf{Inserting code}\\
+\begin{itemize}
+\item \texttt{`inline code`}, Use backticks. \\
+\item Code block with tilde:\\
+\texttt{\~{}\~{}\~{} Language (Optional used by pandoc to )}\\
+\texttt{code block}\\
+\texttt{code block}\\
+\texttt{\~{}\~{}\~{}\~{}\~{}} \\
+\item Codeblock with three backticks:\\
+\texttt{```Language (Optional used by pandoc to )}\\
+\texttt{code block}\\
+\texttt{code block}\\
+\texttt{```}
+\end{itemize}
+
+\section{Pandoc}
+
+\begin{itemize}
+\item \textbf{Markdown to HTML (simple version)}\\
+\texttt{\$ pandoc -f markdown -t html README.md -o README.html}
+\item \textbf{md to word}\\
+\texttt{\$ pandoc -s README.md -o README.docx}
+\item \textbf{Standalone}: \texttt{-s}. Necessary for syntax highlighting.\\
+To get list of languages: \texttt{--list-highlight-languages}
+\item \textbf{Box/shading for code}: Use \texttt{--highlight-style}. Eg:\\
+\texttt{--highlight-style tango} \# Good for light shade.\\
+\texttt{--highlight-style breezedark} \# Good for dark shade.\\
+\texttt{--list-highlight-style} \# List of highlight themes.
+\end{itemize}
+
+\vfill \null
+\columnbreak
+
+\section{Uncategorized}
+
+\textbf{Terminal shortcuts}
+
+\begin{tabularx}{\linewidth}{lX}
+\keys{ctrl} + \keys{W} & Delete from cursor to beginning of word.\\
+\keys{ctrl} + \keys{U} & Delete from current cursor to start of line.\\
+\keys{ctrl} + \keys{A} & Move cursor to begining of line.\\
+\keys{ctrl} + \keys{E} & Move cursor to end of line.\\
+\keys{ctrl} + \keys{L} & Clear the screen.\\
+\keys{alt} + \keys{F} & Move forward by word.\\
+\keys{alt} + \keys{B} & Move backward by word.\\
+\end{tabularx}
+
+
+\vfill \null
+\columnbreak
+
+\section{WSL and windows CMD}
+\subsection{Execute command prompt commands from WSL.}
+\begin{itemize}
+	\item Notepad:\\
+		\texttt{notepad.exe}\\
+		\texttt{notepad.exe temp.txt}\\
+	\item File explorer:\\
+		\texttt{explorer.exe}\\
+		\texttt{explorer.exe .}\\
+	\item Execute command prompt commands in WSL.\\
+		\texttt{cmd.exe \textit{commmand-line-commands}}
+		Eg: Opening a windows program\\
+		\texttt{cmd.exe /C start \textit{program\_name} \textit{file\_name}}\\
+		Eg:\\
+		\texttt{cmd.exe /C start SumatraPDF.exe mementopython3-english.pdf}
+\end{itemize}
+
+\subsection{Open from command prompt}
+\begin{itemize}
+	\item Websites using edge or chrome.\\
+		Edge: \texttt{start microsoft-edge}\\
+		Edge: \texttt{start microsoft-edge:http://www.google.co.in/}\\
+	\item MS-office apps.\\
+	\item Other applications.\\
+\end{itemize}
+
+\vfill \null
+\columnbreak
+
+\section{Using GUI in WSL}
+\subsection{Installing XFCE}
+\textcolor{red}{Under construction}\\
+\textbf{Ref:}\\
+https://www.youtube.com/watch?v=nKCe9UE-quA\\
+https://www.shogan.co.uk/how-tos/wsl2-gui-x-server-using-vcxsrv/
+
+
+\subsection{Running XFCE}
+\textbf{Open XLaunch app}\\
+The following is just to open a windows with simple settings.
+\begin{enumerate}
+\item Doulble-click and open XLaunch app. You will see a dialog box for display settings.
+\item Choose "One large window" and choose "-1" for Display Number. Click "Next".
+\item Choose "Start no client". Click "Next".
+\item Check "Clipboard", "Primary Selection", and "Native opengl". Click "Next".
+\item Save the configuration if you want, or just click "Finish" to start the window.
+\end{enumerate}
+
+\textbf{Launch xfce in WSL}\\
+Execute the command \textcolor{blue}{\texttt{xfce4-session}}. Ignore the warnings.
+
+\vfill \null
+\columnbreak

@@ -1,0 +1,58 @@
+\section{Compile and Debug}
+
+\subsection{G++}
+Usage:\\
+\texttt{g++ \textit{option} hello.cpp -o hello}\\
+\texttt{g++ hello.cpp -o hello}\\
+\texttt{g++ -O3 hello.cpp -o hello}\\
+Options:\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-o} & Output file name.\\
+\texttt{-I} & Include additional directories in the search path. Eg:\\
+& \texttt{g++ -I /home/user/libs foo.cpp}\\
+\texttt{-O\textit{<level>}} & Optimization level, starts from 0. Eg: \texttt{-O3}\\
+\texttt{-g} & Creates breakpoints for debugging using GDB.\\
+\texttt{-lm} & Missing link. Used to link certain libraries like \texttt{math.h}.\\
+\texttt{-E} & Output preprocessed but uncompiled code.\\
+\texttt{-S} & Compile but do not assemble.\\
+\texttt{-c} & Compile and assembly, but do not link.\\
+\end{tabularx}
+
+\subsection{GDB}
+To run: \texttt{gdb hello}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{break} & Set break point. Eg: \texttt{break \textit{function}} or \texttt{break \textit{line number}}.\\
+\texttt{run} & Run the program. The program stops at every break point.\\
+\texttt{next} & Run until next breakpoint.\\
+\texttt{print} & Eg: \texttt{print i} or \texttt{print \&i}\\
+\texttt{sizeof} & Eg: \texttt{print sizeof(i)}\\
+\texttt{\&i} & Address of i.\\
+\texttt{*j} & Content of memory location j.\\
+\texttt{ptype} & get type of a variable. Eg: \texttt{ptype(i)}\\
+\texttt{set var} & Reassign variable. Eg: \texttt{set var i = 1}\\
+\texttt{disassemble} & Use after break and run. Gives assembly code.\\
+\end{tabularx}
+
+\textbf{Accessing memory location using x}\\
+Usage: \texttt{x/nfs}. \texttt{nfs} describes the format.\\
+n - Number of units to display.\\
+f - Number format.\\
+s - Size of each unit.\\
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{x} & Hex.\\
+\texttt{o} & Octal.\\
+\texttt{t} & Binary.\\
+\texttt{d} & Decimal.\\
+\texttt{u} & Unsigned decimal.\\
+\texttt{i} & Instruction.\\
+\texttt{c} & Character.\\
+\texttt{s} & String.\\
+\hline
+\texttt{b} & byte.\\
+\texttt{h} & Halfword.\\
+\texttt{w} & Word.\\
+\texttt{g} & Giant.\\
+\hline
+\end{tabularx}
+

@@ -1,0 +1,248 @@
+\section{Previous Mistakes:}
+
+\subsection{Using proper variable types}
+Eg: using \texttt{int} instead of \texttt{long long int} would cause erroneous output.\\
+
+\subsection{Be careful of unsigned int}
+Eg
+\vspace{-6pt}
+\begin{verbatim}
+unsigned x; cin >> x;
+while(x >= 0){
+    // Do something
+}
+\end{verbatim}
+The above will never terminate, since \texttt{x} never becomes negative.
+
+\subsection{Upper bound and lower bound}
+Check for edge cases. While searching for \texttt{x}, if \texttt{x} is not found, then \texttt{lower\_bound} points to an element larger than \texttt{x}. The following might be helpful.
+
+
+\begin{verbatim}
+if(lower_bound > begin && *lower_bound > x) lower_bound--;
+if(lower_bound == end) lower_bound--;
+if(upper_bound == end) upper_bound--; // Might be 
+necessary sometimes.
+\end{verbatim}
+
+
+\subsection{Loops}
+\begin{itemize}
+\item  Using variable in boundary condition. Eg:\\
+\begin{verbatim}
+// value of x changes within the loop. 
+for(int i = 0; i < (d[x] - c); i++) // Dangerous !!
+
+k = d[x] - c;
+for(int i = 0; i < k; i++) // 
+\end{verbatim}
+
+\item When the variable in boundary condition is updated by mulitiplication.\\
+In the following loop when n $>$ 1 and a = 1, this loop won't terminate.
+\begin{verbatim}
+    int x = 1;
+    while(x < n){
+        x = a * x; 
+    }
+\end{verbatim}
+
+\end{itemize}
+
+\subsection{Bugs in compiler directives}
+In Bioinformatics contest 2021, a bug was because I use \texttt{bitset<M>}, where \texttt{M} was specified as compiler directive. While debugging I did not pay attention to \texttt{\#define} statements.\\ 
+\textit{Lesson:} While debugging pay attention to the entire code, particularly compiler directives. They are particulary important because they are hidden and not directly noticeable in the code.
+
+\subsection{Bugs due to augmented data}
+\textit{Ref:} ABC\_207 problem C.
+There were two vectors, \texttt{v} and \texttt{t} associated by index. The vector \texttt{v[i]} corresponds to \texttt{t[i]}. In this problem, I sorted v independently from t. Thus this broke the association between \texttt{v} and \texttt{t} resulting in erroneous results.\\
+
+\subsection{min\_element and max\_element}
+Do not use these two functions to find minimum and maximum elements in an unsorted array. Read documentation to know more about them. 
+
+
+\subsection{map vs multiset, NOT exactly a mistake}
+In one problem I used multiset to keep count of some values. It was very slow compared to using map to keep count of those values.
+
+\subsection{Math errors}
+Division by zero and logarithm of zero.
+
+\subsection{Not accessing out of bound elements}
+\vspace{6pt}
+\begin{verbatim}
+if(a[i] == 0) {do something;} // Wrong.
+\end{verbatim}
+
+\vspace{-14pt}
+
+\begin{verbatim}
+if(i < n && a[i] == 0){do something;}// Correct.
+\end{verbatim}
+
+\subsection{Order of precedence and brackets}
+Example:(CRF-732: 1546C)
+\begin{verbatim}
+if(l_pos[k] - l_pos[k-1] % 2 == 1){do something}// Wrong;
+if((l_pos[k] - l_pos[k-1]) % 2 == 1){do something}// Correct;
+\end{verbatim}
+
+\subsection{Using braces appropriately in conditionals and loops}
+Example:(CRF-732: 1546C)
+\begin{verbatim}
+// Wrong if do_2 depends on x :
+if(x) do_1;
+    do_2;
+\end{verbatim}
+
+
+\begin{verbatim}
+// Correct if do_2 depends on x :
+if(x){ do_1;
+    do_2;
+}
+\end{verbatim}
+
+
+\subsection{Errors due to 0-based and 1-based indexing}
+The data in most programming contests use 1-based indexing. Error could arise while reading or using such data.\\
+Eg:
+\begin{verbatim}
+	for(int i = 0; i < n; i++){
+		int temp; cin >> temp;
+		a[temp]++;
+	}
+\end{verbatim}
+
+Here if a is 0-based and input temp is 1-based, then error will arise. The following is correct.
+
+\begin{verbatim}
+	for(int i = 0; i < n; i++){
+		int temp; cin >> temp;
+		a[temp-1]++;
+	}
+\end{verbatim}
+
+\subsection{Error while using obj.size() as limit in a loop}
+Obj.size() return a value of type \texttt{size\_t} which (probably) unsigned long long int. Therefore it inherits the same dangers associated with using \texttt{unsigned int}(13.2).
+Eg: Here if v.size() is zero, v.size()-1 will not return -1, rather it would return the largest \texttt{long long}.
+\begin{verbatim}
+    for(int i = 0; i <= v.size()-1; i++){}
+\end{verbatim}
+\vspace{-6pt}
+Probable a correct way to write the above code is as follows:
+\vspace{-6pt}
+\begin{verbatim}
+    for(int i = 0; i <= (int)v.size()-1; i++){}
+\end{verbatim}
+\vspace{-6pt}
+\textbf{Another example:}
+\vspace{-6pt}
+\begin{verbatim}
+    for(int i = r.length()-2; i >=0; i++){}	
+\end{verbatim}
+\vspace{-6pt}
+Correct version.
+\vspace{-6pt}
+\begin{verbatim}
+    int rl = r.length();
+    for(int i = rl-2; i >=0; i++){}	
+\end{verbatim}
+
+\subsection{Loop condition dependent on string::find}
+Bugs could arise because \texttt{string::find} return -1 when the query is not found.\\
+Eg: 
+\vspace{-6pt}
+\begin{verbatim}
+    for(int i = 0; i < size; i++){
+        i = s.find(c, i);
+        //More code...
+    }
+\end{verbatim}
+
+
+\vspace{-6pt}
+Correct version:\\
+
+\vspace{-6pt}
+\begin{verbatim}
+    for(int i = 0; i < size; i++){
+        i = s.find(c, i);
+        if(i == -1) break;
+        //More code...
+    }
+\end{verbatim}
+
+\subsection{Semicolon typo}
+Eg: 
+\begin{verbatim}
+for(int i = 0; i < n; i++);{
+    cout << i << '\n';
+}
+\end{verbatim}
+In above code the for loop is prematurely terminated. This would result in runtime error.
+
+\subsection{Bugs due to using infinity}{
+Eg:\\
+\begin{verbatim}
+const int inf = numerics::limits<int>max();
+int x = inf;
+cout << x + inf << '\n';
+\end{verbatim}
+}
+The output here would not be inf. I made a simillar mistake while using infinity in Floyd-Warshall's algorithm.
+
+\subsection{No code after return}
+
+Once I made the following mistake:
+
+\begin{verbatim}
+	return r.top(); r.pop();	
+\end{verbatim}
+Obviously, that \verb!r.pop()! did not work.
+
+\subsection{Beware when using logical operators with functions}
+
+The following is dangerous:
+
+\begin{verbatim}
+	ans = ans && f(x);
+\end{verbatim}
+
+If \texttt{ans} is initally false, f won't be executed.	
+
+Better one would be (I am not sure if this always works with all programming languages):
+
+\begin{verbatim}
+	ans = f(x) && ans; 
+\end{verbatim}
+
+I made this mistake in \textcolor{red}{LeetCode 130. Surrounded Regions}.
+
+\subsection{Be careful with char vs int}
+I made the following mistake:\\
+\begin{verbatim}
+	if(mat[i][j] == 1){
+		// do something.
+	}
+\end{verbatim}
+Here \verb!mat! was \verb!vector<vector<char>>! I should have tested for \verb!mat[i][j] == '1'!.
+
+\subsection{Be careful about pass by reference.}
+Ref: A student's code. \\
+Not using pass by reference  resulted in failure in the update of value of the target.
+This caused issue in an implementation of linked-list.
+
+\subsection{a = a + 1 vs a += 1}
+Ref: Discussion with a labmate.
+This is in the context of python programming.
+a = a + 1 creates a new object and assigns it to a.
+a += 1 does not create a new object. It modifies the existing object.
+
+\subsection{Failure to initialize all the variables}
+Ref: A student's code.\\
+The student did not initialize all the variables. This resulted in a bug.
+This was particularly critical because one  of the class variable was a pointer.
+This resulted in segmentation fault. It also cause TLE, but I am not sure about the exact mechanism.
+
+\vfill \null
+\columnbreak
+

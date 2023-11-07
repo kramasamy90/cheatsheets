@@ -1,0 +1,124 @@
+\section{Pointers and arrays}
+
+\subsection{Pointers}
+
+\begin{tabularx}{\linewidth}{l|X}
+\hline
+Declaration & \texttt{\textit{type} *\textit{ptr};}\\
+& Eg: \texttt{int *p;}\\
+\hline
+Initialization & \texttt{\textit{type *ptr = val};}\\
+& Eg: \texttt{int *p = 0;}\\
+& Eg: \texttt{int *p = NULL;}// Null pointer.\\
+& Eg: \texttt{int *p = (int *) 100;}\\
+& NOTE: Casting is required for integer other than zero. Also, the above memory location may not be available.\\
+\hline
+\texttt{\&} & Gives address.\\
+& Eg: \texttt{ptr = \&x;}\\
+\hline
+\texttt{*} & Dereferencing operator.\\
+& Eg, \texttt{*ptr} refers to x.\\
+\hline
+\end{tabularx}
+
+\subsection{Arrays}
+
+\begin{itemize}
+\item \textbf{Character arrays}\\
+\texttt{char s[100];}\\
+\texttt{s = "abc";} //ERROR.\\
+\texttt{*s = "abc";} // OK.\\
+\texttt{char s[] = \{'a','b','c'\};}\\
+\texttt{char s[] = "abc";}\\
+\item \textbf{Integer, float arrays}\\
+\texttt{int num[100]}\\
+\texttt{num = \{1,2,3\}} // ERROR\\
+\texttt{*num = \{1,2,3\}} // ERROR \\
+\texttt{int num[] = \{1,2,3\}}\\
+\texttt{float num[] = \{1.0,2.0,3.0\}}\\
+\end{itemize}
+
+\subsection{Character pointers}
+
+\textbf{Examples:}\\
+
+\texttt{char *pmessage;}\\
+\texttt{pmessage = "Hello, World!\textbackslash n";} \\
+\texttt{printf("\%s",pmessage); \# Prints the string}\\
+\texttt{*pmessage} refer to '\texttt{H}'\\
+
+\subsection{Pointer to pointers}
+
+\textbf{Examples:}\\
+
+\begin{tabularx}{\linewidth}{l|X}
+\texttt{int **p} & \texttt{p} is a pointer to a pointer to \texttt{int}\\
+& \texttt{*p} is poiner to a pointer to \texttt{int}\\
+\texttt{char *line[MAXLEN]} & \texttt{line} is a pointer to a character array.\\
+
+\end{tabularx}
+
+\subsection{Multi-dimensional arrays}
+
+I think, multi-dimensional arrays can be thought of as pointers to pointers etc.\\
+
+Example:\\
+Given: \texttt{int a[2][3] = \{\{1,2,3\},\{4,5,6\}\} } \\
+The following are equivalent:\\
+
+\begin{tabular}{l|l}
+\hline
+\texttt{a[0][0]} & \texttt{**a}\\
+\hline
+\texttt{a[1][1]} & \texttt{*(*(a + 1) + 1)}\\ 
+\hline
+\end{tabular}
+
+\hspace{10pt}\\
+
+Here \texttt{a} is a pointer to an array of pointers. 
+
+\subsection{Arrays and pointers}
+The following two are equivalent:\\
+
+\begin{tabular}{l|l}
+\hline
+\texttt{pa = \&a[0];} & \texttt{pa = a;}\\
+\texttt{a[i]} & \texttt{*(a + i)}\\
+\texttt{p[i]} & \texttt{*(p + i)}\\
+\texttt{f(int arr[])} & \texttt{f(int *arr)}\\
+\hline
+\end{tabular}
+
+\begin{tabular}{l|l}
+\hline
+Legal & Illegal\\
+\hline
+\texttt{pa++} & \texttt{a++}\\
+\texttt{pa[-1]} & \texttt{a[-1]}\\
+\hline
+\end{tabular}
+
+\subsection{Pointer to functions}
+
+
+
+Eg: \\
+\texttt{int sum\_f(int size, int arr[], int (*foo)(int ))} // Definition.\\
+\texttt{\{}\\
+\qquad \texttt{int sum = 0;}\\
+\qquad \texttt{for (int i = 0; i < size; i++)}\\
+\qquad \qquad \texttt{sum += (*foo)(arr[i]);}\\
+\texttt{\}}
+
+Here \texttt{foo} is a pointer to a function and \texttt{(*foo)} is the function.\\
+
+\texttt{sum\_f(size, arr, square)} // Usage.Sum of squares.\\
+\texttt{sum\_f(size, arr, cube)} // Usage.Sum of cubes.\\
+
+NOTE: Function names act as pointers to the function. \\
+
+
+\vfill \null
+\columnbreak
+

@@ -1,0 +1,194 @@
+\section{Determinants}
+
+\subsection{Properties of determinants}
+\subsubsection{Three most basic properties of determinants}
+
+\begin{enumerate}
+\item det I = 1.
+\item Determinant changes sign when two rows are exchanged.
+\item Determinant depend linearly on the first row.\\
+Eg: 
+$$
+\begin{vmatrix}
+	a + a' & b + b'\\
+	c & d	
+\end{vmatrix}
+=
+\begin{vmatrix}
+	a & b\\
+	c & d	
+\end{vmatrix}
++
+\begin{vmatrix}
+	a' & b'\\
+	c & d	
+\end{vmatrix}
+$$\\
+
+$$
+\begin{vmatrix}
+	ta & tb\\
+	c & d
+\end{vmatrix}
+=
+t
+\begin{vmatrix}
+	a & b\\
+	c & d	
+\end{vmatrix}
+$$
+ 
+\end{enumerate}
+
+\subsubsection{Derivative properties of determinants}
+\begin{enumerate}
+	\setcounter{enumi}{3}
+	\item $\mid cA \mid = c^n \mid A \mid$.
+	\item If two rows of $A$ are equal, then $det A = 0$\\
+	Follows from rule 2.
+	\item Adding a multiple of one row to another does not alter the value of the matrix.\\
+	Follows from rule 3 and rule 4.
+	\item If $A$ has a row of $0$s, then $det A = 0$.\\
+	Follows form rule 4 and rule 5.
+	\item If $A$ is triangular, $det A = \prod d_i$.\\
+	Proof: Convert $A$ to an equivalent diagonal determinant by row operation. Now apply rule 3 and finally rule 1.
+	\item If $A$ is singular, then $det A = 0$. If $A$ is invertible, then $detA \neq 0$.\\
+	Proof:\\
+	If $A$ is singular, elimination leads to zero row, $\therefore detA= 0$\\
+	If $A$ is invertible, elimination leads to non-zero pivots. $detA = \prod \text{pivots} \neq 0$.
+	\item $det(AB) = det(A)\times det(B)$\\
+	Proof:\\
+	For a diagonal matrix $D$, $det(DB) = det(D)det(B)$\\
+	$A$ can be converted to a diagonal matrix $D$ by row operations.\\
+	Using the exact same row operation as above $AB$ can be converted to $DB$\\
+	\textit{For another proof see book.}
+	\item $det(A^T) = det(A)$.\\
+	Proof:\\ 
+	$PA = LDU$ and $det(PA) = det(LDU)$\\
+	$det(A^TP^T) = det(U^TD^TL^T) = det (LDU) = det(PA)$\\
+	$det(P^T) = det(P) \therefore det(A^T) = det(A)$.
+
+\end{enumerate}
+
+
+\subsection{Formulae for determinant}
+
+\subsubsection{Based on LDU decomposition}
+If $A$ is invertible $PA = LDU$.\\
+$det(A) = \pm det(L)det(D)det(U) = \pm(\text{product of pivots})$\\
+
+\subsubsection{Using linearity of determinants}
+Eg: $2\times 2$ case.\\
+$$
+\begin{vmatrix}
+a & b\\
+c & d\\
+\end{vmatrix}
+= 
+\begin{vmatrix}
+a & 0\\
+c & 0
+\end{vmatrix}
++
+\begin{vmatrix}
+a & 0\\
+0 & d
+\end{vmatrix}
++
+\begin{vmatrix}
+0 & b\\
+c & 0
+\end{vmatrix}
++
+\begin{vmatrix}
+0 & b\\
+0 & d
+\end{vmatrix}
+= ad - bc
+$$
+
+\subsubsection{Expansion in cofactors}
+
+\framebox{The determinant of $A$ is any row $i$ times its cofactors}\\
+That is, $det(A) = a_{i1}C_{i1} + a_{i2}C_{i2} + \cdots + a_{in}C_{in}$\\
+Where , $C_{ij} = (-1)^{i+j}det(M_{ij})$\\
+\textbf{Proof:}\\
+Split the $n\times n$ matrix to sum of $n\times n$ matrices by linearity property of deteterminants. Each of the constituent matrices can be converted to LDU form.  
+
+\subsubsection{Block matrices}
+
+\begin{itemize}
+\item 
+$det
+\begin{bmatrix}
+A & 0 \\
+C & D\\ 
+\end{bmatrix}
+= det(A) det(D) = 
+det
+\begin{bmatrix}
+A & B\\
+0 & D\\
+\end{bmatrix}
+$
+\item If $A$ is invertible\\
+$
+det
+\begin{bmatrix}
+A & B\\
+C & D\\
+\end{bmatrix}
+ = det(A)det(D - CA^{-1}B)
+$
+\item If blocks are square matrices of the same size. And $AC = CA$.\\
+$det
+\begin{bmatrix}
+A & B\\
+C & D
+\end{bmatrix}
+ = det(AD - CB)
+$
+
+\item If blocks are square matrices of same size and if $A = D$ and $B = C$. Here $A$ and $B$ need not commute.\\
+$
+det
+\begin{bmatrix}
+A & B\\
+B & A
+\end{bmatrix}
+ = det(A - B)det(A + B)
+$
+\end{itemize}
+
+ 
+\subsection{Application of determinants}
+
+
+\begin{definition}[Adjugate Matrix]
+Transpose of cofactor matrix: $adj(A) = C^T$.
+\textcolor{red}{NOTE: $\mid adj(A) \mid = \mid A \mid ^ {n-1}$.}
+\end{definition}
+
+\subsubsection{Computation of $A^{-1}$}
+
+
+$$A^{-1} = \frac{C^T}{det(A)} = \frac{adj(A)}{det(A)}$$
+$C$ is cofactor matrix.\\
+\textbf{Proof:}\\
+$$A^{-1} = \frac{C^T}{det(A)} \implies det(A)I = AC^T$$
+Now the diagonal of $AC^T$ will be $det(A)$. To complete the proof we just need to show that the
+off-diagonal elements are all 0.\\
+Each off-diagonal element is represented as:\\
+$a_{i1}C_{j1} + a_{i2}C_{j2} + \cdots + a_{in}C_{jn}$\\
+where $i \neq j$\\
+This is equal to the determinant of modified $A$ where the $j$'th row 
+is replaced by a copy of $i$'th row times $\pm 1$. This determinant $ = 0$\\
+
+\subsubsection{Cramer's rule; Solution to $Ax = b$}
+
+$$x_j = \frac{det(B_j)}{det A}$$
+Where, $B_j$ is $A$ with it's j'th column replaced by $b$.\\
+\textbf{Proof:} $x = A^{-1}b = \frac{1}{\det(A)}C^Tb$
+
+\subsubsection{Volume of a box}
+$det(A)$ represents the volume of a box(higher dimensional parellelogram) whose edges are represented by the row vectors of $A$ (or the column vectors of A, I think).

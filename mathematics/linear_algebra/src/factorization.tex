@@ -1,0 +1,23 @@
+\section{Matrix Factorizations}
+
+\subsubsection{LU factorizability}
+\begin{center}
+\framebox{$A= LU$}	
+\end{center}
+\textbf{Requirements:} \\
+An invertible matrix $A$ is LU factorizable, if the determinant of all its \textcolor{red}{principal minors} are $> 0$.
+Or if $A$ has rank $k$, $A$ is LU factorizable, if all its first $k$ principal minors are $> 0$.
+
+\textbf{Procedure:}\\
+Do Gaussian elimination without row exchanges.\\
+\textbf{LDU:}\\
+Pivots in U are divided out into D to have 1s in the diagonal of U.\\
+
+\subsubsection{PLU factorization}
+\begin{center}
+\framebox{$PA= LU$}	
+\end{center}
+Always exists.\\
+\textbf{Procedure:}\\
+Do Gaussian elimination.\\
+If $A$ is invertible, then $L$ are $U$ are invertible. $P$ is always invertible and $P^{-1} = P^T$.\\

@@ -1,0 +1,31 @@
+\section{Code snippets, etc.,}
+
+\subsection{GCD:}
+\vspace{8pt}
+	\begin{verbatim}
+		int gcd(int x, int y){
+		    return y ? gcd(y, x%y) : x;
+		}
+	\end{verbatim}
+
+\subsection{Middle of an array}
+    n: length of array\\
+    \subsubsection{0-based indexing}
+    if n is odd: $\floor*{\frac{n}{2}}$\\
+    if n is even: $\floor*{\frac{n}{2}} - 1$ and $\floor*{\frac{n}{2}}$\\
+
+    \subsubsection{1-based indexing}
+    if n is odd: $\ceil*{\frac{n}{2}}$\\
+    if n is even: $\ceil*{\frac{n}{2}}$ and $\ceil*{\frac{n}{2}} + 1$\\
+
+    \subsection{Decimal to binary}
+        \begin{verbatim}
+            int n;
+            cin >> n;
+            auto a = bitset<64>(n);
+        \end{verbatim}
+    \texttt{a[0]} contains zeroth bit and so on.
+
+\vfill \null
+\columnbreak
+

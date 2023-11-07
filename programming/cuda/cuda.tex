@@ -1,0 +1,149 @@
+\input{src/preamble.tex}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\begin{tabular}{c}
+\LARGE{\textbf{CUDA}}\\
+\today\\
+Ramasamy Kandasamy\\
+\end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{DeviceManagement}
+
+\begin{itemize}
+	\item \texttt{cudaDeviceSynchronize()}: \\
+    Tells CPU to wait for GPU code execution.
+    \item \texttt{cudaGetDeviceProperty(cudaDeviceProp* prop, int Device)}\\
+    \texttt{Device}: Device number, eg: \texttt{0}. Store device property in the structure pointed by \texttt{prop}. 
+\end{itemize}
+
+\section*{Memory Management}
+
+\begin{itemize}
+	\item \texttt{cudaMalloc(void** (\&dp), size\_t sz)}:\\
+    Allocates a memory of size \texttt{sz} and store the pointer value at \texttt{dp}, where dp is a pointer.
+    \item \texttt{cudaMemset(void* da, char v, size\_t sz)}:\\
+    This function copies the byte-sized value \texttt{v}, starting from the memory location \texttt{da} \textbf{byte-by-byte} upto \texttt{sz} bytes.\\
+    textcolor{red}{IMPORTANT:} The following will give unexpected results:\\
+    \textcolor{red}{\texttt{cudaMemset(da, 0, sizeof(int))}}
+    \item \texttt{cudaMemcpy(void* da, void* ha, size\_t sz, cudaMemcpyHostToDevice)}\\
+    \item \texttt{cudaMemcpy(void* ha, void* da, size\_t sz, cudaMemcpyDeviceToHost)}\\
+\end{itemize}
+
+\section*{Kernels}
+
+\subsubsection*{Types of functions}
+
+\begin{itemize}
+	\item \texttt{\_\_global\_\_}: Can be called from CPU/GPU(?), runs on GPU.
+	\item \texttt{\_\_device\_\_}: Can be called only from GPU, runs on GPU. 
+	\item \texttt{\_\_host\_\_}: Can be called only from CPU, runs on CPU.
+\end{itemize}
+
+If a function is decorated by both \texttt{\_\_host\_\_} and \texttt{\_\_device\_\_}, then two instances of the function are created, one for the device and another for host.\\
+However if a function in device is to be called by host it should be decorated by \texttt{\_\_global\_\_}.\\
+\textcolor{red}{NOTE:} Functions decorated by \texttt{\_\_global\_\_} should only return \texttt{void}.
+
+\subsubsection*{Grids and Blocks}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+dkernel<<<1, 1>>>(); // One block with one thread. 
+dkernel<<<1, M>>>(); // One block with M threads. 
+dkernel<<<N, 1>>>(); // N blocks with one thread each.
+dkernel<<<N, M>>>(); // N blocks with M threads each.
+\end{verbatim}
+\end{mdframed}
+
+\textbf{Grids} contain \textbf{blocks} which contain \textbf{threads.}.\\
+\textbf{}
+
+\subsubsection*{Advanced}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+	\begin{verbatim}
+		dim3 block(x, y); // Contains x * y threads.
+		dim3 block(x, y, z); // Contains x * y * z threads.
+		dim3 grid(a, b);  // Contains x * y blocks.
+		dim3 grid(a, b, c);  // Contains x * y * z blocks.
+		dkernel<<<grid, block>>>(da);
+	\end{verbatim}
+	Here, the above kernel will run a * b * c * x * y * z threads.
+\end{mdframed}
+\textbf{Attributes}\\
+\begin{itemize}
+	\item \texttt{threadIdx.x}, \texttt{threadIdx.y} and \texttt{threadIdx.z}
+	\item \texttt{blockIdx.x}, \texttt{blockIdx.y} and \texttt{blockIdx.z}
+	\item \texttt{blockDim.x}, \texttt{blockDim.y} and \texttt{blockDim.z}.
+	\item \texttt{gridDim.x}, \texttt{gridDim.y} and \texttt{gridDim.z}.
+\end{itemize}
+
+\vfill\null
+\columnbreak
+
+ 
+
+
+\vfill\null
+\columnbreak
+
+\section*{Errors}
+\subsection*{Detecting error in CUDA}
+
+\textbf{Ref:}\\
+https://stackoverflow.com/a/14038590/5607735
+
+\begin{verbatim}
+#define gpuErrchk(ans){gpuAssert((ans), __FILE__, __LINE__);}
+inline void gpuAssert(cudaError_t code, char *file,
+            int line, bool abort=true)
+{
+   if (code != cudaSuccess)
+   {
+      fprintf(stderr,"GPUassert: %s %s %d\n",
+       cudaGetErrorString(code), file, line);
+      if (abort) exit(code);
+   }
+} 
+\end{verbatim}
+
+\subsection*{Notable errors in CUDA}
+\subsubsection*{1. Incomplete output}
+
+\begin{verbatim}
+__global__ void per_row_AB_kernel(long int m, long int n){
+    long int K = blockIdx.x * 1024 + threadIdx.x;
+    if(K >= (m * n)) return;
+    printf("%ld \n", K);	
+}
+
+int main(){
+    long int m, n;
+    scanf("%ld", &m);
+    scanf("%ld", &n);
+    
+    dim3 grid_1((m * n)/1024 + 1, 1, 1);
+    dim3 block_1(1024, 1, 1);
+    
+    per_row_AB_kernel<<<grid_1, block_1>>>(m, n);
+    cudaDeviceSynchronize();                                                           
+}	
+\end{verbatim}
+
+In the above code for large values of \texttt{m} and \texttt{n} not all values of \texttt{K} will be printed. This is because there is limited space for in output buffer. It is intended for small scale debug style output not large scale output.\\
+\textbf{Source:} https://stackoverflow.com/a/15421935/5607735
+\end{multicols*}
+\end{document}

@@ -1,0 +1,46 @@
+\section{Lambda Functions}
+
+\textit{Format:}\\
+\texttt{[capture](parameters) -> return\_type \{body\}}\\
+
+\begin{itemize}
+    \item \textbf{Capture:} Captures variable from the surrounding scope by value or reference.\\
+        Eg: \texttt{[a,\&b]}\\
+    \item \textbf{Parameters:} Parameters of the function.\\
+        Eg: \texttt{(int a, int b)}\\
+\textit{Return type:} Return type of the function.\\
+\end{itemize}
+
+\subsubsection{Examples}
+\textbf{Sorting in reverse order:}
+\begin{verbatim}
+    sort(v.begin(), v.end(), [](int a, int b) -> bool {
+        return a > b;
+    });
+\end{verbatim} 
+
+\textbf{Counting number of elements in a vector:}
+\begin{verbatim}
+    int count = count_if(v.begin(), v.end(), [](int a) -> bool {
+        return a > 5;
+    });
+\end{verbatim}
+
+\vfill\null
+\columnbreak
+
+\textbf{Using capture:}\\
+Lambda functions can also be stored in variables like the add in the following example.\\
+\begin{verbatim}
+   #include <iostream>
+
+    int main() {
+        int x = 10;
+        int y = 20;
+        auto add = [x, y]() -> int {
+            return x + y;
+        int result = add();
+    };
+}
+ 
+\end{verbatim}

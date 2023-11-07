@@ -1,0 +1,87 @@
+\section{Structures, unions and typedefs}
+
+\subsection{Structure}
+
+\begin{itemize}
+\item \textbf{Definition:}\\
+\texttt{struct point}\\
+\texttt{\{}\\
+\qquad \texttt{int x;}\\
+\qquad \texttt{int y;}\\
+\texttt{\};}\\
+
+NOTE-1: Structure tag is optional??\\
+NOTE-2: In C  a function cannot be a member of a structure.\\
+
+\item \textbf{Declaration examples:}\\
+\begin{itemize}
+\item \texttt{struct \{$\cdots$\} a,b,c;}\\
+\item \texttt{struct point \{$\cdots$\} a,b,c;}\\
+\item \texttt{struct point a,b,c}\\
+\item \texttt{struct point *p;}\\
+\end{itemize}
+
+\item \textbf{Accessing members}\\
+\texttt{a.x = 5;}\\
+\texttt{printf("\%d\textbackslash n",a.x);}\\
+
+\item \textbf{Accessing members with pointer}\\
+\texttt{struct point *p = \&a;}\\
+The following are equivalent:\\
+\begin{itemize}
+\item \texttt{p -> x;}\\
+\item \texttt{(*p).x;}\\
+\item \texttt{a.x;}
+\end{itemize}
+
+\item \textbf{Arrays of structure:}\\
+\texttt{struct points pts[100];}\\
+\texttt{struct \{$\cdots$\} pts[] = \{\{$\cdots$\},\{$\cdots$\},$\cdots$,\{$\cdots$\}\};}\\
+NOTE: In above assignment, in the RHS, elements within the braces could be of different types matching the members of the structure.\\
+In case of simple members, each members need not be enclosed within braces.\\
+ 
+\end{itemize}
+
+\subsection{typedef}
+end{itemize}
+\begin{itemize}
+	\item
+		\texttt{typedef int Length;}\\
+		\texttt{Length len, maxlen;}\\
+		\texttt{Length *length[];}\\
+		\texttt{typedef struct tnode *Treeptr;}\\
+		\texttt{typedef struct tree Treenode;}\\
+	\item The above examples could also be implemented by \texttt{\#define}\\
+		The following can only be implemented by \texttt{typedef}:\\
+		\texttt{typedef int (*PFI) (char*, char*);}
+\end{itemize}
+
+\subsection{Union}
+A union is a variable that may hold objects of different types and sizes.\\
+The syntax is based on structures:\\
+\texttt{union u\_tag \{}\\
+\texttt{\qquad int ival;}\\
+\texttt{\qquad float fval;}\\
+\texttt{\qquad char *sval;}\\
+\texttt{\} u;}\\
+
+For example, integer value of u can be accessed as:\\
+\texttt{u.ival}
+
+\subsection{Bit fields}
+
+Eg:\\
+\texttt{
+	struct \{\\
+		\qquad unsigned int is\_keyword : 1;\\
+		\qquad unsigned int is\_extern : 1;\\
+		\qquad unsigned int is\_static: 1;\\
+	\} flags;
+}\\
+
+This defines \texttt{flags} that contains three 1-bit fields.\\
+The number following the colon represents the field width.\\
+
+\textbf{Namespace}
+\texttt{using namespace std;}\\
+	With this statement standard library functions can be used without the prefix \texttt{std::}\\
