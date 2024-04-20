@@ -1,0 +1,23 @@
+\section{Matplotlib}
+
+\subsection{General}
+\subsubsection*{Plotting with panels}
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+    \begin{verbatim}
+        fig, ax = subplots()
+        ax.plot(x, y, '.')
+    \end{verbatim}
+\end{mdframed}
+
+
+\subsection{Contour plot}
+Example:\\
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+    \begin{verbatim}
+        x = np.linspace(-10, 10, 100) 
+        y = np.linspace(-10, 10, 100)
+        x, y = np.meshgrid(x, y)
+        z = f(x, y) # f is a function of two variable.
+
+    \end{verbatim}
+\end{mdframed}
