@@ -1,53 +1,71 @@
-\section{Unix shell}
+\section{Navigation, Files and Directories.}
 
 %\textbf{Files and Directories}
 \begin{tabularx}{\linewidth}{lX}
-    \texttt{pwd} & Print working directory\\
+    % Navigate and explore.
     \texttt{cd} & Change directory.\\
-    \texttt{./ , ../} & Relative paths to current and parent dir.\\
+    \texttt{pwd} & Print working directory\\
+    \texttt{ls} & Options: \texttt{-Ralh} \\
+    \texttt{tree} & List in tree form. eg: \texttt{tree \textit{dir}}\\
+
+    % Manipulate files and directories.
+    \texttt{touch} & Creates text file. \\
     \texttt{mkdir} & Make directory\\
     \texttt{mkdir -p} & Make directory and necessary parent dir.\\
-    \texttt{touch} & Creates text file. \\
-    \texttt{ls} & Options: \texttt{-Ralh} \\
-    \texttt{du -h \textit{dir}} & Gives size of all directories in \texttt{\textit{dir}}\\
-    \texttt{du -sh \textit{dir}} & Gives size of \texttt{\textit{dir}}.\\
-    \texttt{df -h} & Gives information about disk usage.\\
-    \texttt{tree} & List in tree form. eg: \texttt{tree \textit{dir}}\\
     \texttt{cp} & Copy files.\\
     \texttt{mv} & To move files and rename files.\\
     \texttt{rm} & Remove files permanently. \\
     \texttt{rm -i} & Remove files interactively. \\
     \texttt{rm -r, rm -R} & Remove files recursively. Use to delete folders.\\
     \texttt{rm -f} & Force delete.\\
+    %
+    \texttt{basename} & Removes folder name from path and optionally  suffix.\\
+    \texttt{-s} & Remove suffix. eg: \texttt{basename -s .fastq $<$\textit{path}$>$}\\
+    % File permissions.
     \texttt{chmod 777} & r-4,w-2,x-1. User, group,all.  \\
     \texttt{chmod xyz} & Eg \texttt{chmod u+w}.\\
     & x = \texttt{u} : user, \texttt{g} : group, \texttt{a} : all.\\
     & y = \texttt{+} : add, \texttt{-} : remove.\\
     & z = \texttt{r} : read, \texttt{w} : write, \texttt{x} : execute.\\
-    \texttt{\~{}} & Root directory.\\
 
+    % Disk usage. 
+    \texttt{du -h \textit{dir}} & Gives size of all directories in \texttt{\textit{dir}}\\
+    \texttt{du -sh \textit{dir}} & Gives size of \texttt{\textit{dir}}.\\
+    \texttt{df -h} & Gives information about disk usage.\\
+    
+    % Common aliases.
+    \texttt{\~} & Home directory, aka \texttt{\$HOME}.\\
+    \texttt{./ , ../} & Relative paths to current and parent dir.\\
+
+    % Pattern matching.
     \texttt{?,*, [A-Z]} & Wild cards.\\
-
     \texttt{\{\}} & Expands combinatorially.\\ 
     &  Eg: \texttt{\$ mkdir mm10-\{chr1,chr2,chr3\}}\\
     & Eg: \texttt{echo "...\$(...)..."}\\
     & Eg: \texttt{mkdir results-\$(date +\%F)}\\
     \texttt{alias x ="..."} & Store new commands. But in shell startup file eg \texttt{\~{}/.profile} or \texttt{\~{}/.bashrc} and it is temporary.\\
     & Eg: \texttt{\$ today = "date + \%F"}. \\
-    
+\end{tabularx}
+
+\vfill\null
+\columnbreak 
+
+\begin{tabularx}{\linewidth}{lX}
+    % Process control & program execution.
+    \keys{ctrl} + \keys{c} & Kill a running job.\\
+    \keys{ctrl} + \keys{z} & Pause a running job.\\
     \texttt{jobs} & List all jobs. Use id in [] to bg,fg,kill. \\
     \texttt{top} & Lists all ongoing processes. Better than \texttt{jobs}.\\
     \texttt{fg,bg,kill} & Bring job to foreground, background, kill a job. Pause a job before bg.  \\
-    \keys{ctrl} + \keys{z} & Pause a running job.\\
-    \keys{ctrl} + \keys{c} & Kill a running job.\\
-    \texttt{echo \$?} & Exit status,=0 when a program exits without an error.\\
+    \texttt{\&} & Run in background. eg: \texttt{nohup prog1 \&}\\
+
     \texttt{Cmd1 ; Cmd2} & Run Cmd2 irrespective of exit status of Cmd1.\\
     \texttt{Cmd1 || Cmd2} & Execute \texttt{Prog2} only if \texttt{Prog1} has failed (non-zero exit status).\\
     \texttt{Cmd1 \&\& Cmd2} & Execute \texttt{Prog2} only if \texttt{Prog1} has succeded (zero exit status).\\
+
     \texttt{true, false} & Assign exit status as 0 or 1 respectively.\\
-    \texttt{basename} & Removes folder name from path and optionally  suffix.\\
-    \texttt{-s} & Remove suffix. eg: \texttt{basename -s .fastq $<$\textit{path}$>$}\\
-    \texttt{\&} & Run in background. eg: \texttt{nohup prog1 \&}
+    \texttt{echo \$?} & Exit status,=0 when a program exits without an error.\\
+
 \end{tabularx}
 
 \vfill\null

@@ -183,7 +183,8 @@ Returns the iterator for the largest element in a. If there are multiple largest
 \subsubsection{Merge}
 \begin{itemize}
 \item \texttt{merge(InputIterator F1, InputIterator L1, InputIterator F2, InputIterator L2, OutputIterator R);} \\
-Returns the iterator to the end of output.
+Returns the iterator to the end of output.\\
+NOTE: This operator does not allocate memory. The \texttt{OutputIterator R} should point to a vector with sufficient memory to store the concatenated vector.\\
 \item \texttt{set\_intersection} Arguments and output are the same as that for \texttt{merge}.
 \item \texttt{set\_union} Arguments and output are the same as that for \texttt{merge}.
 \item \texttt{set\_difference} Arguments and output are the same as that for \texttt{merge}.
@@ -214,7 +215,7 @@ Two strategies for combining hash values are:
 Custom hash function for a user defined type can be defined as follows:
 \begin{verbatim}
    class CustomHash {
-    size_t operator (const pair<string, string>) const {
+    size_t operator () (const pair<string, string>) const {
         hash<string> hasher;
         auto h1 = hasher(p.first);
         auto h2 = hasher(p.second);
