@@ -1,4 +1,6 @@
-\section{Navigation, Files and Directories.}
+\section{Command Line Tools}
+
+\subsubsection{Files \& Directories}
 
 %\textbf{Files and Directories}
 \begin{tabularx}{\linewidth}{lX}
@@ -31,18 +33,101 @@
 
     %
     % File permissions.
-    \texttt{chmod 777} & r-4,w-2,x-1. User, group,all.  \\
-    \texttt{chmod xyz} & Eg \texttt{chmod u+w}.\\
-    & x = \texttt{u} : user, \texttt{g} : group, \texttt{a} : all.\\
-    & y = \texttt{+} : add, \texttt{-} : remove.\\
-    & z = \texttt{r} : read, \texttt{w} : write, \texttt{x} : execute.\\
+    \texttt{chmod 777}              & r-4,w-2,x-1. User, group,all.  \\
+    \texttt{chmod xyz}              & Eg \texttt{chmod u+w}.\\
+                                    & x = \texttt{u} : user, \texttt{g} : group, \texttt{a} : all.\\
+                                    & y = \texttt{+} : add, \texttt{-} : remove.\\
+                                    & z = \texttt{r} : read, \texttt{w} : write, \texttt{x} : execute.\\
     \hline
 
     % Disk usage. 
-    \texttt{du -h \textit{dir}} & Gives size of all directories in \texttt{\textit{dir}}\\
-    \texttt{du -sh \textit{dir}} & Gives size of \texttt{\textit{dir}}.\\
-    \texttt{df -h} & Gives information about disk usage.\\
+    \texttt{du -h \textit{dir}}     & Gives size of all directories in \texttt{\textit{dir}}\\
+    \texttt{du -sh \textit{dir}}    & Gives size of \texttt{\textit{dir}}.\\
+    \texttt{df -h}                  & Gives information about disk usage.\\
     \hline
+
+\end{tabularx}
+
+\subsubsection{File compression}
+
+
+\begin{tabularx}{\linewidth}{lX}
+
+    \texttt{tar}            & Tape archive\\
+    \texttt{-cf}            & To make tar file form a directory \texttt{tar -cf dir.tar dir}.\\
+    \texttt{-tf}            & View contents of an archive.\\
+    \texttt{-tvf}           & View contents, verbose.\\
+    \texttt{-xf}            & extract.\\
+    \hline
+
+    \texttt{zip -r}         & Compress. \texttt{zip -r file.zip dir}\\
+    \texttt{unzip -l}       & View contents. \texttt{unzip -l file.zip}\\
+    \texttt{unzip}          & Decompress. \texttt{unzip file.zip}\\
+    \hline
+
+    \texttt{gzip}           & Eg: \texttt{gzip filename}. \texttt{gzip} can only compress a file and not a directory. To compress a directory first make a .tar file and then compress that.\\
+    \texttt{gunzip}         & To unzip .gz files.\\
+    \texttt{-c}             & Output to standard output. \\
+                            & Eg: \texttt{gzip -c file1 >  file.gz}. Eg: \texttt{gzip -c file2 >> file.gz}. and \texttt{gunzip -c}.\\
+    \texttt{bzip2}          & Works like gzip. Higher compression, but slow. File extension \texttt{.bz2}\\
+    \hline
+
+\end{tabularx}
+
+
+\textcolor{red}{TODO: chown, chgrp.}
+\textcolor{red}{\texttt{compress}/\texttt{uncompress}. Also: \texttt{zgrep}, \texttt{zcat}, \texttt{zless}, \texttt{zdiff}}
+\textcolor{red}{rsync}\\
+\textcolor{red}{hexdump, checksums, diff (in text processing?).}\\
+
+\subsubsection{Process Execution}
+
+\begin{tabularx}{\linewidth}{lX}
+    % Processes execution.
+
+    \texttt{Cmd1 ; Cmd2}        & Run Cmd2 irrespective of exit status of Cmd1.\\
+    \texttt{Cmd1 || Cmd2}       & Execute \texttt{Prog2} only if \texttt{Prog1} has failed (non-zero exit status).\\
+    \texttt{Cmd1 \&\& Cmd2}     & Execute \texttt{Prog2} only if \texttt{Prog1} has succeded (zero exit status).\\
+    \texttt{(...;...)|...}      & Subshell: Both commands separated by a semicolon are processed independently and piped in parallel to next step. \\
+    \texttt{<(...)}             & Process substitution, like anonymous named pipe. Eg: \texttt{program --in1 <(...) --in2 <(...) }.\\
+    \texttt{>(...)}             & Write output to anonymous named pipe. Eg: \texttt{program --out1 >(...) --out2 >(...)}.\\
+    \hline
+
+    % Pipelines.
+    \texttt{mkfifo}             & Create a named pipe. Eg: \texttt{mkfifo fqin}. Treat named pipe like any other file. But the input and output is piped. While using named pipe nothing is written on the disk.\\
+
+    % Background and persistent processes.
+    \texttt{nohup} & Run a program without interruption.\\
+    \texttt{\&} & Run in background. eg: \texttt{nohup prog1 \&}\\
+    \hline
+
+    % Process execution and control
+\end{tabularx}
+
+
+\subsubsection{Process mangement}
+
+\begin{tabularx}{\linewidth}{lX}
+    % Job control.
+    \texttt{jobs}           & List all jobs. Use id in [] to bg,fg,kill. \\
+    \texttt{fg}             & Bring a job to foreground.\\
+    \texttt{bf}             & Resume a suspended process in the background.\\
+    \keys{ctrl} + \keys{z}  & Pause a running job.\\
+    \keys{ctrl} + \keys{c}  & Kill a running job.\\
+    \texttt{kill}           & End a job.\\
+    \texttt{echo \$?}       & Exit status,=0 when a program exits without an error.\\
+    \hline
+
+    % System monitoring.
+    \texttt{htop}           & User friendly tool to view running processes and resource utilization.\\
+    \hline
+\end{tabularx}
+
+
+\subsubsection{Etc}
+
+
+\begin{tabularx}{\linewidth}{lX}
     
     % Pattern matching.
     \texttt{?,*, [A-Z]} & Wild cards.\\
@@ -50,15 +135,9 @@
     &  Eg: \texttt{\$ mkdir mm10-\{chr1,chr2,chr3\}}\\
     \$() & Eg: \texttt{echo "...\$(...)..."}\\
     & Eg: \texttt{mkdir results-\$(date +\%F)}\\
-    \texttt{alias x ="..."} & Store new commands. But in shell startup file eg \texttt{\~{}/.profile} or \texttt{\~{}/.bashrc} and it is temporary.\\
     & Eg: \texttt{\$ today = "date + \%F"}. \\
     \hline
     % Process control & program execution.
-    \texttt{echo \$?} & Exit status,=0 when a program exits without an error.\\
-    \keys{ctrl} + \keys{c} & Kill a running job.\\
-    \keys{ctrl} + \keys{z} & Pause a running job.\\
-    \texttt{nohup} & Run a program without interruption. The program continues to run even after the user signs out. Useful to run a program for long time on a remote machine. Use run in the background using \texttt{\&} option.\\
-    \texttt{\&} & Run in background. eg: \texttt{nohup prog1 \&}\\
 
 \end{tabularx}
 
@@ -66,17 +145,15 @@
 \columnbreak 
 
 \begin{tabularx}{\linewidth}{lX}
-    \texttt{top} & Lists all ongoing processes. Better than \texttt{jobs}.\\
-    \texttt{htop} & User friendly tool to view running processes and resource utilization.\\
-    \texttt{jobs} & List all jobs. Use id in [] to bg,fg,kill. \\
-    \texttt{fg,bg,kill} & Bring job to foreground, background, kill a job. Pause a job before bg.  \\
 
-    \texttt{Cmd1 ; Cmd2} & Run Cmd2 irrespective of exit status of Cmd1.\\
-    \texttt{Cmd1 || Cmd2} & Execute \texttt{Prog2} only if \texttt{Prog1} has failed (non-zero exit status).\\
-    \texttt{Cmd1 \&\& Cmd2} & Execute \texttt{Prog2} only if \texttt{Prog1} has succeded (zero exit status).\\
-    \hline
 \end{tabularx}
 
-\textcolor{red}{TODO: chown, chgrp.}\\
-\textcolor{red}{File management: rsync, bzip, tar}\\
-\textcolor{red}{hexdump, checksums, diff (in text processing?).}\\
+
+\subsubsection{Terminal customization}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{alias x ="..."}             & Store new commands. But in shell startup file eg \texttt{\~{}/.profile} or \texttt{\~{}/.bashrc} and it is temporary.\\
+    Directory depth                     & To trim the path shown in terminal:\\
+                                        & \texttt{PROMPT\_DIRTRIM=1}\\
+                                        & \texttt{1} indicates a depth of 1.\\
+\end{tabularx}

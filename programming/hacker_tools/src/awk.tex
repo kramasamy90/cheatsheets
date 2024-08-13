@@ -1,37 +1,3 @@
-\section{File compression}
-
-\begin{tabularx}{\linewidth}{lX}
-
-\hline
-\texttt{tar} & Tape archive\\
-\texttt{-cf} & To make tar file form a directory \texttt{tar -cf dir.tar /dir}. \texttt{-c} alone does not work for me (Why?), so use \texttt{-cf}\\
-\texttt{-tf} & View contents of an archive.\\
-\texttt{-tvf} & View contents, verbose.\\
-\texttt{-xf} & extract.\\
-\hline
-
-\texttt{zip -r} & Compress. \texttt{zip -r file.zip /dir}\\
-\texttt{unzip -l}  & View contents. \texttt{unzip -l file.zip}\\
-\texttt{unzip} & Decompress. \texttt{unzip file.zip}\\
-\hline
-
-\end{tabularx}
-
-\begin{tabularx}{\linewidth}{lX}
-\hline
-\texttt{gzip} & Eg: \texttt{gzip filename}. \texttt{gzip} can only compress a file and not a directory. To compress a directory first make a .tar file and then compress that.\\
-\texttt{gunzip} & To unzip .gz files.\\
-\texttt{-c} & Output to standard output. \\
-& Eg: \texttt{gzip -c file1 >  file.gz}. Eg: \texttt{gzip -c file2 >> file.gz}. and \texttt{gunzip -c}.\\
-\texttt{bzip2} & Works like gzip. Higher compression, but slow. File extension \texttt{.bz2}\\
-\hline
-
-\end{tabularx}
-
-Checkout \texttt{compress}/\texttt{uncompress}. Also: \texttt{zgrep}, \texttt{zcat}, \texttt{zless}, \texttt{zdiff} etc.
-
-
-
 \section{Awk}
 
 Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f file.awk input.txt}.\\ Record = row. Column = fields. \\
