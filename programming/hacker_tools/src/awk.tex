@@ -508,23 +508,6 @@ Above script is equivalent to the following.\\
 \end{tabularx}
 
 
-\subsubsection{xargs}
-\texttt{xargs} takes input passed to it and uses as argument for another program.\\
-Examples:
-
-\begin{mdframed}
-\texttt{find . -name *.fastq | xargs rm} \# Uses all the inputs as arguments for rm\\
-\texttt{find . -name *.fastq | xargs -n 1 rm} \# Uses one input at a time after rm.\\
-\texttt{find . -name *.fastq | xargs -n 1 echo "rm -i" > delete-temp.sh}\\
-\texttt{find . -name *.c | xargs basename -s ".c" | xargs -I\{\} gcc -o \{\}.o \{\}.c }
-\end{mdframed}
-\texttt{xargs} flags
-\begin{tabularx}{\linewidth}{lX}
-\texttt{-n <\textit{num}>} & Process \texttt{num} input(s) at time.\\
-\texttt{-I\{\}} & Uses \texttt{\{\}} as a placeholder for input.\\
-\texttt{-P <num>} & Parallel processing: use \texttt{<num>} processes.\\
-
-\end{tabularx}
 
 
 \subsection{Arithmetics}

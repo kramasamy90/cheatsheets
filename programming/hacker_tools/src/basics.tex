@@ -93,15 +93,26 @@
     \texttt{>(...)}             & Write output to anonymous named pipe. Eg: \texttt{program --out1 >(...) --out2 >(...)}.\\
     \hline
 
+    %xargs
+    \texttt{xargs}              & Execute command from stdin. \textbf{Examples:}\\
+                                & \textit{Apply wc on each file.}\\
+                                & \texttt{ls *.txt | xargs wc}\\
+                                & \textit{Apply wc on each file, using placeholder.}\\
+                                & \texttt{ls *.txt | xargs -I \{\} wc \{\}}.\\
+                                & \textit{List all files in each dir, with the dirname. [Two ways.]}\\
+                                & \texttt{ls | xargs -I \{\} sh -c 'echo \{\}; echo "---"; ls \{\}'}\\
+                                & \texttt{ls | xargs -I \{\} sh -c 'echo \$1; echo "---"; ls \$1'} \_ \{\}\\
+    \hline
+
     % Pipelines.
+    $\mid$                           & Pipe output to another program.\\
     \texttt{mkfifo}             & Create a named pipe. Eg: \texttt{mkfifo fqin}. Treat named pipe like any other file. But the input and output is piped. While using named pipe nothing is written on the disk.\\
 
     % Background and persistent processes.
-    \texttt{nohup} & Run a program without interruption.\\
-    \texttt{\&} & Run in background. eg: \texttt{nohup prog1 \&}\\
+    \texttt{nohup}              & Run a program without interruption.\\
+    \texttt{\&}                 & Run in background. eg: \texttt{nohup prog1 \&}\\
     \hline
 
-    % Process execution and control
 \end{tabularx}
 
 
@@ -126,8 +137,12 @@
 
 \subsubsection{Etc}
 
-
 \begin{tabularx}{\linewidth}{lX}
+    % find.
+    \texttt{find}           & Find file/directories.\\
+                            & Pattern: \texttt{find <dir> <iname/name> "<patttern>"}\\
+                            & Eg: \texttt{find . -iname "*deviceQuery"}\\
+    \hline
     
     % Pattern matching.
     \texttt{?,*, [A-Z]} & Wild cards.\\
@@ -137,7 +152,6 @@
     & Eg: \texttt{mkdir results-\$(date +\%F)}\\
     & Eg: \texttt{\$ today = "date + \%F"}. \\
     \hline
-    % Process control & program execution.
 
 \end{tabularx}
 
@@ -157,3 +171,9 @@
                                         & \texttt{PROMPT\_DIRTRIM=1}\\
                                         & \texttt{1} indicates a depth of 1.\\
 \end{tabularx}
+
+\textcolor{red}{TODO: export, \$PATH, source}
+
+
+\vfill\null
+\columnbreak
