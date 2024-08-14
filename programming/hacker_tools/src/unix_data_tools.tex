@@ -86,3 +86,129 @@
 \end{tabularx}
 
 \textcolor{red}{Checkout hexdump}
+
+\subsection{Awk}
+
+Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f file.awk input.txt}.\\ Record = row. Column = fields. \\
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{-F} & Input field separator. Eg: \texttt{awk -F"," input.txt}. Defaule field separator = tab.\\
+\texttt{-f} & Take input from file. Eg: awk -f file.awk input.txt.\\
+\texttt{(...) \&\& (...)} &  Use logical operators. See below.\\
+\texttt{\$n ~ /.../} & Use regular expression between slashes.\\
+\texttt{/.../,/.../} & Specify range. Works only with regex (with double slash) .\\
+\texttt{BEGIN\{...\}} & Eg: \texttt{awk 'BEGIN\{...\} ... \{...\} END\{...\}'}\\
+\texttt{END\{...\}} & \\
+\hline
+\end{tabularx}
+\textbf{Awk operations:} \texttt{+,-,*,/,\%,\^{}}. \\
+\texttt{a ... b}. Replace "\texttt{...}" : \texttt{==,!=,<,>,<=,>=,\~{},!\~{},\&\&,||,!a}\\
+\textbf{Field separators:} FS,RS,OFS, ORS.\\
+\textbf{Awk variables:} NF, NR (Record number accumulates between files.), FNR(Resets record number after every files.).\\
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\textbf{Example awk script file}\\
+\texttt{awk -f script.awk plasmids.tsv}\\
+\texttt{BEGIN\{FS="\textbackslash t";OFS="\textbackslash t";x=0\}}\\
+\texttt{/[Cc]re/\{}\\
+\texttt{x+=1;}\\
+\texttt{print x,\$1,\$2\}}\\
+\texttt{END\{print "There are " x "plasmids with Cre"\}}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\textcolor{red}{Checkout BioAwk}.\\
+\textcolor{red}{Checkout control flow}.\\
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\subsection{Sed}
+
+\texttt{sed 's/\textit{target}/\textit{replacement}/\textit{flag}'}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-e} & to Chain commands.Eg: \texttt{sed -e 's/:/\t/' -e 's/-/\t/'}.\\
+\texttt{-E} & Use extended POSIX.\\
+\texttt{g} & Global flag. Usually sed replaces only the first occurrence  in a sentence. Use global flag to replace all occurences.\\
+\texttt{i} & To make the search case insensitive.\\
+\end{tabularx}
+
+%\hspace{10pt}\\
+%\hspace{10pt}\\
+%\hspace{10pt}\\
+
+%\pagebreak
+
+\subsection{Regular Expression}
+
+\textbf{Single character meta characters}
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{.} & Match any single character.\\
+\texttt{[ ]} & Match any single character between \texttt{[]}. Eg: \texttt{[at]} match "a" or "t".\\
+\texttt{[\^{}]} & Match any single charcter except on between \texttt{[]}.\\
+\texttt{[0-9]} & Any number between 0 and 9. Eg: \texttt{0-3a-cz]} equals \texttt{[123abcz]}.\\
+\texttt{(...)} & Grouping. eg: \texttt{(AT)+} or \texttt{(GLY ) \{2,\}}.\\
+\hline
+
+\end{tabularx}
+
+
+\textbf{Quantifiers}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{?} & Match preceding character zero or one time. \\
+\texttt{*} & Match zero or more time.\\
+\texttt{+} & Match one or more time.\\
+\texttt{\{n\}} & Match n times.\\
+\texttt{\{n,\}} & Match atleast n times.\\
+\texttt{\{a,b\}} & Match atleast a times, atmost b times.\\
+
+\hline
+
+\end{tabularx}
+
+\textbf{Anchors}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{\^{}} & Match the start of a line.\\
+\texttt{\$} & Match end of a line.\\
+\texttt{\textbackslash $<$} & Match beginning of word.\\
+\texttt{\textbackslash $>$} & Match at the end of word.\\
+\texttt{\textbackslash b} & Match either beginning or end of word.\\
+\texttt{\textbackslash B} & Match any character not at the beginning or end. \\
+
+\hline
+
+\end{tabularx}
+
+\textbf{Character class}
+
+[:alnum:], [:digit:], [:alpha:], [:upper:], [:lower:], [:blank:], [:space:], [:punct:] and [:print:].\\
+
+Use backslash as escape character. \\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\textbackslash s} & white space character. What it includes depends on the flavour of regex.\\
+\texttt{\textbackslash d} & Add digits.\\
+\texttt{\textbackslash w} & Word character, matches \texttt{[A-Za-z0-9\_]}\\
+\end{tabularx}
+\texttt{|} as OR logical operator: \texttt{(GLY|GLN)}.
+\texttt{"one and|or two"} is equal to \texttt{"(one and)|(or two)"}.\\
+\texttt{"one (and|or) two"} is "one and two" or "one or two".\\
+
+\textbf{Back references:} () : Memorizes the match for regular expression within parenthesis. Use \texttt{\textbackslash n} to recall nth match.
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\vfill\null
+\columnbreak
+

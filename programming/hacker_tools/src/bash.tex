@@ -1,0 +1,285 @@
+\section{Shell scripting}
+\subsubsection{Modifying PATH}
+Add a directory to path: Append one of the following files.\\
+\texttt{$\sim$/.profile} or \texttt{$\sim$/.bash\_profile}\\
+with the following line:\\
+\texttt{PATH=\$PATH:\textit{<directory>}}\\
+Eg: \texttt{PATH=\$PATH:\$HOME/scripts}\\
+
+%\textcolor{blue}{NOTE: the above line could used in a terminal and the modification of PATH variable is valid only during the session, alternatively when it is used within a script the modification is valid only within the script and for example not in the terminal where the script is run.}\\
+
+
+\subsubsection{Header}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\#!/bin/bash} & Shebang\\
+\texttt{set -e} & Terminates script if there is non-zero exit status.\\
+\texttt{set -o pipefail} & If a program in the pipe fails the entire pipe returns non-zero exit status.\\
+\texttt{set -u} & Terminates for undefined variables.\\
+\end{tabularx}
+
+\subsubsection{Variables}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{sample="CNTRL"} & Assignment, no space around "\texttt{=}"\\
+\texttt{echo \$sample} & \\
+\texttt{echo \$\{sample\}\_aln} & Use curly braces while concatenating a variable with additional text.\\
+\texttt{mkdir "\$\{sample\}\_aln}" & Quoting variables prevents commands from interpreting spaces and special variables.\\
+\texttt{echo \$\{\#sample\}} & Length of the variable \texttt{sample}
+\end{tabularx}
+
+\subsubsection{Command-line arguments}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\$0} & Script name\\
+\texttt{\$1} & First argument\\
+\texttt{\$n} & n$^{th}$ argument.\\
+\texttt{\$\#} & Number of arguments not including \texttt{\$0}.\\
+\end{tabularx}
+
+\textbf{Example:}\\
+\begin{mdframed}
+\texttt{\#!/bin/bash}\\
+\texttt{echo "script name: \$0"}\\
+\texttt{echo "first arg: \$1"}\\
+\texttt{echo "second arg: \$2"}\\
+\texttt{echo "There are \$\# input arguments"}
+\end{mdframed}
+
+\subsection{Conditionals}
+\textbf{Format}
+\begin{mdframed}
+\texttt{if [ \textit{<conditon-statement>} ]}\\
+\texttt{then}\\
+\texttt{if-statements}\\
+\texttt{elif}\\
+\texttt{then}\\
+\texttt{elif-statements}\\
+\texttt{else}\\
+\texttt{else-statements}\\
+\texttt{fi}
+\end{mdframed}
+
+\columnbreak
+\vfill \null
+
+\textbf{Example:}\\
+\begin{mdframed}
+\texttt{if [ \$\# -lt 3 ]}\\
+\texttt{then}\\
+\texttt{echo "There are less than 3 arguments"}\\
+\texttt{fi}
+\end{mdframed}
+
+\textcolor{red}{In bash 0 is true/success, anything else is false/failure}
+
+\textbf{String and integer comparison}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-z str} & \texttt{str}  is null string.\\
+\texttt{str1 == str2} & \texttt{str1} and \texttt{str2} are identical.\\
+\texttt{str1 != str2} & \\
+\texttt{int1 -eq int2} & \texttt{int1} and \texttt{int2} are equal.\\
+\texttt{int1 -ne int2} & \\
+\texttt{int1 -lt int2} & \\
+\texttt{int1 -gt int2} & \\
+\texttt{int1 -le int2} & \\
+\texttt{int1 -ge int2} & \\
+\texttt{-o} & Logical OR.\\
+\texttt{-a} & Logical AND.\\
+\end{tabularx}
+
+\texttt{if} conditional can also be used to depend on exit status. Eg:\\
+
+\begin{mdframed}[nobreak=true]
+\texttt{if grep "pattern" file1.txt > /dev/null \&\& grep "pattern" file2.txt > /dev/null/}\\
+\texttt{then}\\
+\texttt{    echo "found pattern in file1.txt and file2.txt"}\\
+\texttt{fi}
+\end{mdframed}
+
+\begin{mdframed}
+\texttt{if ! grep "pattern" file1.txt > /dev/null}\\
+\texttt{then}\\
+\texttt{    echo "pattern not found in file1.txt"}\\
+\texttt{fi}
+\end{mdframed}
+
+\subsubsection{Testing files and dirs}
+\textbf{List of test expressions.}\\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-d dir} & \texttt{dir} is a directory\\
+\texttt{-f file} & \texttt{file} is a file.\\
+\texttt{-e file} & \texttt{file} exists.\\
+\texttt{-h lind} & \texttt{link} is a link.\\
+\texttt{-r file} & \texttt{file} is readable.\\
+\texttt{- w file} & \texttt{file} is writable.\\
+\texttt{-x file} & \texttt{file} is executable.\\
+\end{tabularx}
+
+Example\\
+
+\begin{mdframed}
+\texttt{test -d dir ; echo \$? }\\
+\null\\
+\texttt{test -d dir1 -o -d dir2; echo \$?}
+
+\end{mdframed}
+
+
+
+
+
+Exit status would be \texttt{0} if the directory dir exists.\\
+
+
+\textbf{Example:}\\
+
+\begin{mdframed}
+\texttt{if ! test -d \$1}\\
+\texttt{then}\\
+\texttt{mkdir \$1}\\
+\texttt{fi}
+\end{mdframed}
+
+Above script is equivalent to the following.\\
+
+\begin{mdframed}
+\texttt{if [ ! -d \$1 ]}\\
+\texttt{then}\\
+\texttt{mkdir \$1}\\
+\texttt{fi}
+\end{mdframed}
+
+\null
+
+\subsection{Arrays and For loop}
+
+\subsubsection{Manual creation}
+\begin{mdframed}
+
+\texttt{\$ sample\_names=(zmaysA zmaysB zmaysC)}\\
+\texttt{\$ echo \$\{sample\_names[0]\}}\\
+\texttt{zmaysA}\\
+\texttt{\$ echo \$\{sample\_names[@]\}}\\
+\texttt{zmaysA zmaysB zmaysC}\\
+\texttt{\$ echo \$\{\#sample\_names[@]\}}\\
+\texttt{3}\\
+\texttt{\$ echo \$\{!sample\_names[@]\}}\\
+\texttt{0 1 2}
+\end{mdframed}
+
+\subsubsection{Array creation using command substitution}
+\begin{mdframed}
+\texttt{samples=(\$(cut -f3 samples.tsv))}\\
+\texttt{file\_names=(\$(ls))}
+\end{mdframed}
+
+
+\subsubsection{Array of number sequence}
+
+\begin{mdframed}
+\texttt{seq 0 0.1 1 \# seq start step end}\\
+\texttt{s=(\$(seq 0 0.1 1))}
+\end{mdframed}
+
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\$\{arr[i]\}} & (i-1)$^{th}$ element of \texttt{array}.\\
+\texttt{\$\{arr[@]\}} & All the elements of \texttt{arr}.\\
+\texttt{\$\{\#sample\_names[@]\}} & Length of \texttt{arr}.\\
+\texttt{\$\{!sample\_names[@]\}} & Returns an array containing the index of elements in \texttt{arr}.\\
+\end{tabularx}
+
+\subsection{For loop}
+
+
+\begin{mdframed}
+\texttt{for name in \$\{file\_names[@]\}}\\
+\texttt{do}\\
+\quad\texttt{process.sh \$name}\\
+\texttt{done}\\
+\null\\
+\texttt{for name in \$\{file\_names[@]\}; do}\\
+\quad\texttt{process.sh \$name}\\
+\texttt{done}\\
+\null\\
+\texttt{for name in \$\{file\_names[@]\}; do; process.sh \$name; done }\\
+\texttt{for i in \$(seq \textit{start} \textit{step\_size} \textit{end});}\\
+\texttt{do}\\
+\texttt{process.sh \$i}\\
+\texttt{done}
+\end{mdframed}
+
+
+
+
+\subsection{Find, exec and xargs}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{find} & Usage: \texttt{find \textit{<folder>} -name "\textit{<pattern>}"}.\\
+& Eg: \texttt{find . -name foo.sh}.\\
+\texttt{-name <pattern>} & Find \texttt{<pattern>} using same special characters as bash (\texttt{*,?, [...] })\\
+\texttt{-iname} & Identical to \texttt{-name} but case-insensitive.\\
+\texttt{-empty} & Matches emtpy files and folders.\\
+\texttt{-type <x>} & Matches types \texttt{x} (\texttt{f} - file, \texttt{d} - directory, \texttt{l} - links).\\
+\texttt{-size <size>} & Matches \texttt{<size>}.\\
+&  Eg: \texttt{+50M} ; Files larger than 50 MB\\
+& Eg: \texttt{-50M}; Files smaller than 50 MB\\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{-regex} & Match regular expression. Use \texttt{-E} for extended POSIX.\\
+\texttt{-iregex} & Case-insensitive.\\
+\texttt{-print0} & separate results with null-byte and not new line. 
+\textcolor{red}{Explain!}\\
+\texttt{expr -and expr} & Logical AND.\\
+\texttt{expr -or expr} & Logial OR.\\
+\texttt{-not expr} & Logial NOT. Alternate: \texttt{"!" expr}\\
+\texttt{(expr)} & Group a set of expressions.\\
+\texttt{-exec} & Example: \\
+ & \texttt{find . -name *.c -exec <prog1> \{\} \textbackslash ;}.\\
+ & Execute \texttt{<prog1>} on all the found files. \texttt{\{\}} represents the found files. \\
+ & Mind the space between \texttt{\{\}} and \texttt{\textbackslash;}\\
+ 
+\hline
+
+\end{tabularx}
+
+
+
+
+\subsection{Arithmetics}
+\subsubsection{let}
+Examples using \texttt{let}:\\
+
+\begin{mdframed}
+\texttt{let x=1} \#No space within expression\\
+\texttt{let x=x*2}\\
+\texttt{let x++}\\
+\texttt{let "x = x + 1"} \# Space OK within quotation.
+\end{mdframed}
+
+Examples using \texttt{expr}:
+\begin{mdframed}
+\texttt{expr 2 + 3} \# Space is required for \texttt{expr}\\
+\texttt{a=\$(expr 2 + 3)}\\
+\texttt{expr \$x + 1}
+\end{mdframed}
+
+\texttt{expr} is simillar to \texttt{let}, but only evaluate and not assign value to a variable.\\
+
+\textbf{Arithmetic operations:}
+
+\begin{tabularx}{\linewidth}{lX}
++, -, /, \% & \\
+* & Multiplication operator for \texttt{let}\\
+/* & Multiplication operator for \texttt{expr}\\
+\texttt{var++} & increment var by 1 used only in \texttt{let}\\
+\texttt{var--} & increment var by 1 used only in \texttt{let}
+\end{tabularx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vfill\null
+\pagebreak
+

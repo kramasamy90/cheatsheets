@@ -1,0 +1,101 @@
+\section{Git}
+
+
+Setup git with the following commands:\\
+\texttt{\$ git config --global user.name "Ramasamy Kandasamy"}\\
+\texttt{\$ git config --global user.email ".....@gmail.com"}\\
+Next command tells git to use color to indicate changes.\\
+\texttt{\$ git config --global color.ui true}\\
+To change default text editor:\\
+\texttt{\$ git config --global core.editor gedit}\\
+These commands create a .gitconfig file in home directory. Use \texttt{\$ cat \~{}/.gitconfig} to get current information.\\
+\begin{tabularx}{\linewidth}{X}
+\hline
+\end{tabularx}
+
+
+Git command structure: \texttt{git <subcommand>}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git init} & Initialize git repository in a directory.\\
+\texttt{git clone} & To clone a git repository.\\ 
+\end{tabularx}
+Eg:\\
+\texttt{\$ git clone https://github.com/user/sth.git}\\
+\texttt{\$ git clone https://github.com/user/sth.git dir\_name}\\
+\texttt{\$ git clone https://user@bitbucket.org/user/sth.git}\\
+\begin{tabularx}{\linewidth}{X}
+\hline 
+\end{tabularx}
+
+
+Git consists of untracked files, tracked file , files staged for commit, and files committed to the repository. \\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git status} & Gives three categories of files: untracked, tracked files that have been modified, files staged for commit.\\
+\texttt{git add} & Start tracking a file or stage a file for commit.\\
+\texttt{-f} & To stage a file not tracked, i.e. a file in \texttt{.gitignore}.\\
+\texttt{git commit} & Commits all staged files to repository. \texttt{--amend}\\
+\texttt{-a} & This options tells git to automatically stage all modified tracked files in this commit.\\
+\texttt{-m "..."} & Message is mandatory. If there is no message, git opens text editor to input message. Default text editor can be specified in git-config.\\
+\texttt{git diff} & Shows difference between current version and staged version. If there are no staged version, shows difference between last commit and current versions.\\
+\texttt{-- staged} & To see difference between staged version and last commit.\\
+\texttt{git reset} & Unstage a file. Without a file name all staged files get unstaged.\\
+\texttt{git log} & List all commits, commit message SHA-1 checksum etc. Options: \texttt{--pretty=oneline}, \texttt{--abbrev-commit}, \texttt{--graph}, \texttt{--branches}, \texttt{-n2} : to view only latest two commits.\\
+\texttt{git rm} & Use these commands to rename or delete files.\\
+\texttt{git mv} & Using rm and mv will confuse git.\\
+\texttt{.gitignore} & Used to avoid certain files, fastq files for example, from being listed in untracked section of \texttt{git status}.\\
+ & Eg: \texttt{\$ echo "*.fa" >> .gitignore}.\\
+\texttt{git ls-tree} & List contents of tree object.\\
+ & Use to list all files in the latest commit.\\
+ & Eg: \texttt{git ls-tree -r master --name-only}\\
+\hline
+\end{tabularx}
+
+To add a remote repository.\\
+\texttt{\$ git remote add origin git@github.com:username/project.git}\\
+\texttt{\$ git remote add origin user@bitbucket....} \\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git remote -v} & Shows remote repository that connected to local repository. \\
+\texttt{git remote rm} & Remove remote repository. Eg: \texttt{git remote rm origin}\\
+\texttt{git push} & Use \texttt{git push origin master} to push main branch to origin (remote repository)\\
+\texttt{git pull} & \texttt{git pull origin master}: simillar to above.\\
+\hline\\
+\end{tabularx}
+
+\textbf{Resolving merge conflicts}: First \texttt{git pull} from remote repo. \texttt{git status} shows files with merge conflict. Open the file and resolve the conflict using guidlines provided. \\
+
+\textcolor{red}{Unfinished: Github SSH}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git checkout} & Restores file from \texttt{HEAD}. To restore a file\\
+\texttt{-- file} & from a specific commit. Use the commit SHA-1 ID. Eg \texttt{git checkout 08ccd3b -- README.md}\\
+\texttt{git stash} & To temporarily store the changes and go back to \texttt{HEAD}.\\
+ & \texttt{git stash pop} to restore changes stored in git stash.\\
+\texttt{git diff} & \texttt{git diff id1 id2 file} to compare different version using SHA-1 ID.\\
+ & \texttt{git diff HEAD\~{}3 HEAD\~{}4} : w.r.t to last commit.\\
+\texttt{git commit} & To edit message in last commit.\\
+\texttt{--amend} & Can also be used to modify files in previous commit, but I don't know how.\\
+\hline
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{git branch} & Creates a new branch. It also lists all branches and indicate the branch that is used currently.\\
+\texttt{-d} & To delete a branch.\\
+\texttt{-m} & Rename a branch. Eg: \\
+& \texttt{git branch -m \textit{new-branch}} \# Renames current branch.\\
+& \texttt{git branch -m \textit{old-branch} \textit{new-branch}}.\\
+\texttt{--all} & To view hidden branches including remote repositories. For eg, \texttt{/remote/origin/master} is usually hidden. This functions like an actual branch but one cannot develop in this remote branch.\\
+\texttt{git checkout} & To jump between branches. Use branch name that you want to jump to.\\
+\texttt{git merge} & To merge two branches go to the branch you want to merge to and use \texttt{git merge <other branch>}. Merge conflict can be resolved as described earlier. In fact the earlier merge conflict was between a local branch and a remote branch.\\
+\texttt{git push } & New branch from local can be synchronized with remote using: \texttt{git push origin branchname}.\\
+\texttt{git fetch} & Used to synchronize my remote branch with remote remote repository. Eg: \texttt{git fetch origin}. To incoporate this to local branch use \texttt{git merge}.\\
+\end{tabularx}
+\underline{\textbf{NOTE:}} \texttt{git pull} is nothing but \texttt{git fetch} followed by \texttt{git merge}.\\
+
+\texttt{git checkout -b new-methods origin/new-methods}\\ This command simultaneously creates and swithces a new branch using \texttt{-b} option. This local branch will push and pull to this specific remote branch.\\
+
+\texttt{git remote prune origin} : To prune a stale branch in /remote branch.
+
+\vfill \null
+\columnbreak
+

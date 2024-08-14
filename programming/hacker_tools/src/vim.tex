@@ -1,0 +1,137 @@
+\section{Vim}
+
+\textbf{Motion}
+Usage: \texttt{<num> <motion>}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{h l} & One character left or right.\\
+\texttt{j k} & One line up or down.\\
+\texttt{w b} & One word forward or backwarks.\\
+\texttt{e} & Simillar to w but keeps the cursor at the end of the word.\\
+\texttt{0} & Cursor to the begining of the sentence.\\
+\texttt{\$} & Moves cursor to the end of the sentences.\\
+\texttt{G} & End of the file.\\
+\texttt{gg} & First line.\\
+\texttt{H} & Top of screen.\\
+\texttt{M} & Middle of screen.\\
+\texttt{L} & Botom of screen.\\
+\texttt{<num>G} & Go to line \texttt{<num>}.\\
+\keys{\texttt{Ctrl}} + \texttt{f} & One screen forward.\\
+\keys{\texttt{Ctrl}} + \texttt{b} & One screen backward.\\
+\keys{\texttt{Ctrl}} + \texttt{G} & View position in the file.\\
+\keys{\texttt{Ctrl}} + \texttt{O} & Go to where you came from .\\
+\keys{\texttt{Ctrl}} + \texttt{I} & Opposite of \keys{\texttt{Ctrl}} + \keys{\texttt{O}}\\
+\texttt{\%} & Go to the corresponding opening or closing parenthesis.\\
+\hline\\
+
+\end{tabularx}
+
+\textbf{Operators}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{i} & INSERT mode\\
+\texttt{a} & append, goes to insert mode\\
+\texttt{a} & append from the end of the line.\\
+\texttt{v} & visual selection, selection is stored in clipboard\\
+\texttt{o} & open a line below\\
+\texttt{O} & open a line above\\
+\keys{\texttt{Esc}} & Go to command mode\\
+\texttt{d} & delete and also cut, $\equiv$ \keys{\texttt{Ctrl}} + \keys{\texttt{X}}\\
+\texttt{dd} & delete whole sentence\\
+\texttt{x} & delete character under the cursor\\
+\texttt{r} & replace the character under the cursor\\
+\texttt{R} & replace until \keys{\texttt{Esc}} \\
+\texttt{c} & change: works equivalent to \texttt{d} followed by \texttt{i}\\
+\texttt{y} & yank, copy\\
+\texttt{p} & paste\\
+\texttt{u} & undo most recent edit\\
+\texttt{U} & undo all the changes in the line\\
+\keys{\texttt{Ctrl}} + \keys{\texttt{R}} & Redo\\
+\hline
+
+\end{tabularx}
+
+\textbf{Copy, paste, bookmark}
+
+\begin{tabularx}{\linewidth}{lX}
+
+\texttt{:xmy} & Move line \texttt{x} below line \texttt{y}.\\
+\texttt{:x,ymz} & Moves lines between and including \texttt{x} and \texttt{y} below line \texttt{z}.\\
+\texttt{:xty} & Copy line \texttt{x} below line \texttt{y}.\\
+\texttt{:x,ytz} & Copy lines between and including \texttt{x} and \texttt{y} below line \texttt{z}.\\
+\texttt{ma} & Set bookmark at current line. \texttt{a} $\in$ [a-z].\\
+\texttt{'a} & Jump to bookmark \texttt{a}.\\
+\texttt{:'a,'bco'c} & Copy lines between and including bookmarks \texttt{a} and \texttt{b} below bookmark c.\\
+\texttt{:'a,'bco'z} & Copy lines between and including bookmarks \texttt{a} and \texttt{b} below line z.\\
+\hline\\
+\end{tabularx}
+
+\textbf{Search and replace}\\
+
+\begin{tabularx}{\linewidth}{lX}
+:/REGEX & Find regular expression.\\
+n & next search target\\
+N & Previous search target\\
+:s/target/replace & Simillar to sed. Replaces target only in the current sentence and only once.\\
+:s/target/replace/g & Replaces at all instance in the current sentence.\\
+:\%s/target/replace/g & Replaces through the entire file.\\
+:\%s/target/replace/gc & Ask for confirmation at each instance.\\
+
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\end{tabularx}
+
+\textbf{Save, write and Exit}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{:q} & quit\\
+\texttt{:q!} & quit without saving\\
+\texttt{:w} & save the current file\\
+\texttt{:wq} or \texttt{:x} & save and quite \\
+\texttt{:w \textit{file}} & write to \textit{file}.\\
+\texttt{:xyw \textit{file}} & write lines between and including lines \texttt{x} and \texttt{y} to \textit{file}.\\
+\texttt{:!} & Execute shell command. Eg: \texttt{:!pwd}\\
+\hline\\
+
+\end{tabularx}
+
+\textbf{\texttt{:set}}\\
+Usage: \texttt{:set \textit{option}}. Eg: \texttt{:set ic}
+\begin{tabularx}{\linewidth}{lX}
+ic & Case-insensititve search\\
+hls & Highlight search\\
+number & Show line number \\
+\end{tabularx}
+To turnoff the option use no. Eg \texttt{:set noic} to turnoff \texttt{ic}\\
+\begin{tabularx}{\linewidth}{lX}
+\hline\
+\end{tabularx}
+\textbf{Etc}
+
+\keys{Ctrl} + \keys{D} for command completion.\\
+\keys{Tab} for filename completion.\\
+For further setting: \texttt{$\sim$/.vimrc} \\
+\textbf{Help}:\\
+\keys{F1}\\
+\texttt{:help}\\
+\texttt{:help w}\\
+\texttt{:help user-manual}\\
+
+\textbf{Default settings:}
+Set default settings in \texttt{~/.vimrc} \\
+Create this file if it does not exist. \\
+Example \texttt{.vimrc} file:\\
+
+\begin{mdframed}
+\texttt{syntax on}\\
+\texttt{colorscheme desert}\\
+\texttt{set number}\\
+\texttt{set hls}
+
+\end{mdframed}
+
+\vfill\null
+
+\columnbreak
+
