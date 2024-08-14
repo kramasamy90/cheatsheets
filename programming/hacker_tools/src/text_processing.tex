@@ -1,82 +1,79 @@
 \section{Text processing}
 
 \begin{tabularx}{\linewidth}{lX}
-
-\texttt{echo} & Process and print whatever follows.\\
-\texttt{echo -e} & enable backslash escapes like \texttt{\textbackslash \textbackslash, \textbackslash t, \textbackslash n} \\
-\texttt{cat} & Takes standard input or input from file and gives standard output. \\
-\texttt{cat -n} & Output with line numbers.\\
-\texttt{head -n x} & Print first x lines.Default: 10 lines.\\
-\texttt{tail -n y} & Print last y lines.\\
-\texttt{wc} & Word count. Outputs number of words, lines and characters.\\
-\texttt{wc -l} & Outputs only number of lines.\\
-\texttt{tr} & Translate. Eg: \texttt{tr ':' '\textbackslash t'}.\\
-\hline
-\texttt{less} & Pager. Commonly used commands: \\
-\keys{Space} & Next page.\\
-\keys{b} & Previous page.\\
-\keys{g} & First line.\\
-\keys{G} & Last line.\\
-\keys{j} & Down (One line at a time).\\
-\keys{k} & Up (One line at a time).\\
-\texttt{/<pattern>} & Search down for a pattern.\\
-\texttt{?<pattern>} & Search up for pattern.\\
-\keys{n} & Repeat last search downward.\\
-\keys{N} & Repeat last search upward.\\
-\hline
-\texttt{cut} & To extract specific columns.\\
-\texttt{-f x} & Extract columns x.\\
-\texttt{-f x-z} & Extract range of columns.\\
-\texttt{-f w,x-z} & Extract w and x-z. Cut cannot reorder column.\\
-\texttt{-d} & Specify delimiter eg: \texttt{-d","}. Default delimiter is tab. \\
-\texttt{column -t} & To visualize columns of data. Usually data is piped to \texttt{column -t}.\\
-\texttt{-s}& Specify delimiter using \texttt{-s","}. Default: tab.\\
-\hline
-
+    \texttt{echo} & Process and print whatever follows.\\
+    \texttt{echo -e} & enable backslash escapes like \texttt{\textbackslash \textbackslash, \textbackslash t, \textbackslash n} \\
+    \texttt{cat} & Takes standard input or input from file and gives standard output. \\
+    \texttt{cat -n} & Output with line numbers.\\
+    \texttt{head -n x} & Print first x lines.Default: 10 lines.\\
+    \texttt{tail -n y} & Print last y lines.\\
+    \texttt{wc} & Word count. Outputs number of words, lines and characters.\\
+    \texttt{wc -l} & Outputs only number of lines.\\
+    \texttt{tr} & Translate. Eg: \texttt{tr ':' '\textbackslash t'}.\\
+    \hline
+    \texttt{less} & Pager. Commonly used commands: \\
+    \keys{Space} & Next page.\\
+    \keys{b} & Previous page.\\
+    \keys{g} & First line.\\
+    \keys{G} & Last line.\\
+    \keys{j} & Down (One line at a time).\\
+    \keys{k} & Up (One line at a time).\\
+    \texttt{/<pattern>} & Search down for a pattern.\\
+    \texttt{?<pattern>} & Search up for pattern.\\
+    \keys{n} & Repeat last search downward.\\
+    \keys{N} & Repeat last search upward.\\
+    \hline
+    \texttt{cut} & To extract specific columns.\\
+    \texttt{-f x} & Extract columns x.\\
+    \texttt{-f x-z} & Extract range of columns.\\
+    \texttt{-f w,x-z} & Extract w and x-z. Cut cannot reorder column.\\
+    \texttt{-d} & Specify delimiter eg: \texttt{-d","}. Default delimiter is tab. \\
+    \texttt{column -t} & To visualize columns of data. Usually data is piped to \texttt{column -t}.\\
+    \texttt{-s}& Specify delimiter using \texttt{-s","}. Default: tab.\\
+    \hline
 \end{tabularx}
 
-%\vfill \null
-%\columnbreak
 
 \begin{tabularx}{\linewidth}{lX}
-\texttt{grep} & Use as \texttt{grep "<pattern>" file}. Quotation around the patter is not necessary but it is safe. If the pattern contains quote then use single quotes eg: \texttt{grep '...".."..'}.\\
-\texttt{-i} & Case insensitive.\\
-\texttt{-E} & To use regular expressions in grep.\\
-\texttt{\^} & Look for pattern in the beginning of line. Eg: \texttt{"\^{}\#"}\\
-\texttt{-w} & Matches the entire word surrounded by space.\\
-\texttt{-v} & Returns only lines that do not match the pattern.\\
-\texttt{-o} & Return the exact matching pattern.\\
-\texttt{-c} & Count how many lines match a pattern.\\
-\texttt{-B1} & Print one line of context before the matching line.\\
-\texttt{-A2} & Print two lines of context after the matching line.\\
-\texttt{-C} & Context before and after the matching line.(\textcolor{red}{Doesn't work?})\\
-\hline
-
+    \texttt{grep} & Use as \texttt{grep "<pattern>" file}. Quotation around the patter is not necessary but it is safe. If the pattern contains quote then use single quotes eg: \texttt{grep '...".."..'}.\\
+    \texttt{-i} & Case insensitive.\\
+    \texttt{-E} & To use regular expressions in grep.\\
+    \texttt{\^} & Look for pattern in the beginning of line. Eg: \texttt{"\^{}\#"}\\
+    \texttt{-w} & Matches the entire word surrounded by space.\\
+    \texttt{-v} & Returns only lines that do not match the pattern.\\
+    \texttt{-o} & Return the exact matching pattern.\\
+    \texttt{-c} & Count how many lines match a pattern.\\
+    \texttt{-B1} & Print one line of context before the matching line.\\
+    \texttt{-A2} & Print two lines of context after the matching line.\\
+    \texttt{-C} & Context before and after the matching line.(\textcolor{red}{Doesn't work?})\\
+    \hline
 \end{tabularx}
 
-\begin{tabularx}{\linewidth}{lX}
-\texttt{sort} & Sorts alphanumerically by line.\\
-\texttt{-ka,b} & Sorts w.r.t to columns a to b.\\
-\texttt{-k2,2n} & Treats columns 2 as numeric and sorts w.r.t to columns 2.\\
-\texttt{-t} & Specify delimiter eg: \texttt{-t","}. Default = tab.\\
-\texttt{-s} & Stable sort. Do not reorder lines in file if the sort rank is equal.\\
-\texttt{-c} & Check if the file is already sorted. \\
-\texttt{-r} & Reverse sort.\\
-\texttt{-V} & Understands numbers inside string. Eg \texttt{chr22}.\\
-\texttt{-S} & Specify memory to be used. \\
- & Eg: \texttt{-S 2G \# Use 2 GB}, \\ 
- & \hspace{13pt} \texttt{-S 50\% \# Use 50\% of memory}. \\
-\texttt{--parallel} & to use parallel processing.\\
-\hline
-\texttt{uniq} & Usually used along with sort as : \texttt{sort ...| uniq}.\\
-\texttt{-i} & Case insensitive.\\
-\texttt{-c} & Count occurences next to the unique lines.\\
-\texttt{-d} & Return line with duplicates.\\
-\hline
-\texttt{join} & Combine data based on a common column. Eg: \texttt{join -1 a -2 b file1 file2}. \texttt{a} and \texttt{b} represent two columns common to file1 and file2. \\
-\texttt{-a} & If some elements of common column are missing from one file. Use this flag to show all elements of common column from superset file. \\
-\hline
+\vfill\null
+\columnbreak
 
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{sort} & Sorts alphanumerically by line.\\
+    \texttt{-ka,b} & Sorts w.r.t to columns a to b.\\
+    \texttt{-k2,2n} & Treats columns 2 as numeric and sorts w.r.t to columns 2.\\
+    \texttt{-t} & Specify delimiter eg: \texttt{-t","}. Default = tab.\\
+    \texttt{-s} & Stable sort. Do not reorder lines in file if the sort rank is equal.\\
+    \texttt{-c} & Check if the file is already sorted. \\
+    \texttt{-r} & Reverse sort.\\
+    \texttt{-V} & Understands numbers inside string. Eg \texttt{chr22}.\\
+    \texttt{-S} & Specify memory to be used. \\
+    & Eg: \texttt{-S 2G \# Use 2 GB}, \\ 
+    & \hspace{13pt} \texttt{-S 50\% \# Use 50\% of memory}. \\
+    \texttt{--parallel} & to use parallel processing.\\
+    \hline
+    \texttt{uniq} & Usually used along with sort as : \texttt{sort ...| uniq}.\\
+    \texttt{-i} & Case insensitive.\\
+    \texttt{-c} & Count occurences next to the unique lines.\\
+    \texttt{-d} & Return line with duplicates.\\
+    \hline
+    \texttt{join} & Combine data based on a common column. Eg: \texttt{join -1 a -2 b file1 file2}. \texttt{a} and \texttt{b} represent two columns common to file1 and file2. \\
+    \texttt{-a} & If some elements of common column are missing from one file. Use this flag to show all elements of common column from superset file. \\
+    \hline
 \end{tabularx}
 
 \textcolor{red}{Checkout hexdump}
@@ -86,23 +83,23 @@
 Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f file.awk input.txt}.\\ Record = row. Column = fields. \\
 
 \begin{tabularx}{\linewidth}{lX}
-
-\texttt{-F} & Input field separator. Eg: \texttt{awk -F"," input.txt}. Defaule field separator = tab.\\
-\texttt{-f} & Take input from file. Eg: awk -f file.awk input.txt.\\
-\texttt{(...) \&\& (...)} &  Use logical operators. See below.\\
-\texttt{\$n ~ /.../} & Use regular expression between slashes.\\
-\texttt{/.../,/.../} & Specify range. Works only with regex (with double slash) .\\
-\texttt{BEGIN\{...\}} & Eg: \texttt{awk 'BEGIN\{...\} ... \{...\} END\{...\}'}\\
-\texttt{END\{...\}} & \\
-\hline
+    \texttt{-F} & Input field separator. Eg: \texttt{awk -F"," input.txt}. Defaule field separator = tab.\\
+    \texttt{-f} & Take input from file. Eg: awk -f file.awk input.txt.\\
+    \texttt{(...) \&\& (...)} &  Use logical operators. See below.\\
+    \texttt{\$n ~ /.../} & Use regular expression between slashes.\\
+    \texttt{/.../,/.../} & Specify range. Works only with regex (with double slash) .\\
+    \texttt{BEGIN\{...\}} & Eg: \texttt{awk 'BEGIN\{...\} ... \{...\} END\{...\}'}\\
+    \texttt{END\{...\}} & \\
+    \hline
 \end{tabularx}
+
 \textbf{Awk operations:} \texttt{+,-,*,/,\%,\^{}}. \\
 \texttt{a ... b}. Replace "\texttt{...}" : \texttt{==,!=,<,>,<=,>=,\~{},!\~{},\&\&,||,!a}\\
 \textbf{Field separators:} FS,RS,OFS, ORS.\\
 \textbf{Awk variables:} NF, NR (Record number accumulates between files.), FNR(Resets record number after every files.).\\
 
 \begin{tabularx}{\linewidth}{lX}
-\hline
+    \hline
 \end{tabularx}
 
 \textbf{Example awk script file}\\
@@ -114,7 +111,7 @@ Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f 
 \texttt{END\{print "There are " x "plasmids with Cre"\}}
 
 \begin{tabularx}{\linewidth}{lX}
-\hline
+    hline
 \end{tabularx}
 
 \textcolor{red}{Checkout BioAwk}.\\
@@ -128,10 +125,10 @@ Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f 
 \texttt{sed 's/\textit{target}/\textit{replacement}/\textit{flag}'}
 
 \begin{tabularx}{\linewidth}{lX}
-\texttt{-e} & to Chain commands.Eg: \texttt{sed -e 's/:/\t/' -e 's/-/\t/'}.\\
-\texttt{-E} & Use extended POSIX.\\
-\texttt{g} & Global flag. Usually sed replaces only the first occurrence  in a sentence. Use global flag to replace all occurences.\\
-\texttt{i} & To make the search case insensitive.\\
+    \texttt{-e} & to Chain commands.Eg: \texttt{sed -e 's/:/\t/' -e 's/-/\t/'}.\\
+    \texttt{-E} & Use extended POSIX.\\
+    \texttt{g} & Global flag. Usually sed replaces only the first occurrence  in a sentence. Use global flag to replace all occurences.\\
+    \texttt{i} & To make the search case insensitive.\\
 \end{tabularx}
 
 %\hspace{10pt}\\
@@ -144,43 +141,36 @@ Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f 
 
 \textbf{Single character meta characters}
 \begin{tabularx}{\linewidth}{lX}
-
-\texttt{.} & Match any single character.\\
-\texttt{[ ]} & Match any single character between \texttt{[]}. Eg: \texttt{[at]} match "a" or "t".\\
-\texttt{[\^{}]} & Match any single charcter except on between \texttt{[]}.\\
-\texttt{[0-9]} & Any number between 0 and 9. Eg: \texttt{0-3a-cz]} equals \texttt{[123abcz]}.\\
-\texttt{(...)} & Grouping. eg: \texttt{(AT)+} or \texttt{(GLY ) \{2,\}}.\\
-\hline
-
+    \texttt{.} & Match any single character.\\
+    \texttt{[ ]} & Match any single character between \texttt{[]}. Eg: \texttt{[at]} match "a" or "t".\\
+    \texttt{[\^{}]} & Match any single charcter except on between \texttt{[]}.\\
+    \texttt{[0-9]} & Any number between 0 and 9. Eg: \texttt{0-3a-cz]} equals \texttt{[123abcz]}.\\
+    \texttt{(...)} & Grouping. eg: \texttt{(AT)+} or \texttt{(GLY ) \{2,\}}.\\
+    \hline
 \end{tabularx}
 
 
 \textbf{Quantifiers}
 \begin{tabularx}{\linewidth}{lX}
-\texttt{?} & Match preceding character zero or one time. \\
-\texttt{*} & Match zero or more time.\\
-\texttt{+} & Match one or more time.\\
-\texttt{\{n\}} & Match n times.\\
-\texttt{\{n,\}} & Match atleast n times.\\
-\texttt{\{a,b\}} & Match atleast a times, atmost b times.\\
-
-\hline
-
+    \texttt{?} & Match preceding character zero or one time. \\
+    \texttt{*} & Match zero or more time.\\
+    \texttt{+} & Match one or more time.\\
+    \texttt{\{n\}} & Match n times.\\
+    \texttt{\{n,\}} & Match atleast n times.\\
+    \texttt{\{a,b\}} & Match atleast a times, atmost b times.\\
+    \hline
 \end{tabularx}
 
 \textbf{Anchors}
 
 \begin{tabularx}{\linewidth}{lX}
-
-\texttt{\^{}} & Match the start of a line.\\
-\texttt{\$} & Match end of a line.\\
-\texttt{\textbackslash $<$} & Match beginning of word.\\
-\texttt{\textbackslash $>$} & Match at the end of word.\\
-\texttt{\textbackslash b} & Match either beginning or end of word.\\
-\texttt{\textbackslash B} & Match any character not at the beginning or end. \\
-
-\hline
-
+    \texttt{\^{}} & Match the start of a line.\\
+    \texttt{\$} & Match end of a line.\\
+    \texttt{\textbackslash $<$} & Match beginning of word.\\
+    \texttt{\textbackslash $>$} & Match at the end of word.\\
+    \texttt{\textbackslash b} & Match either beginning or end of word.\\
+    \texttt{\textbackslash B} & Match any character not at the beginning or end. \\
+    \hline
 \end{tabularx}
 
 \textbf{Character class}
@@ -188,11 +178,12 @@ Format: \texttt{awk pattern \{action\} input1.txt input2.txt} \\ \texttt{awk -f 
 [:alnum:], [:digit:], [:alpha:], [:upper:], [:lower:], [:blank:], [:space:], [:punct:] and [:print:].\\
 
 Use backslash as escape character. \\
-\begin{tabularx}{\linewidth}{lX}
-\texttt{\textbackslash s} & white space character. What it includes depends on the flavour of regex.\\
-\texttt{\textbackslash d} & Add digits.\\
-\texttt{\textbackslash w} & Word character, matches \texttt{[A-Za-z0-9\_]}\\
+    \begin{tabularx}{\linewidth}{lX}
+    \texttt{\textbackslash s} & white space character. What it includes depends on the flavour of regex.\\
+    \texttt{\textbackslash d} & Add digits.\\
+    \texttt{\textbackslash w} & Word character, matches \texttt{[A-Za-z0-9\_]}\\
 \end{tabularx}
+
 \texttt{|} as OR logical operator: \texttt{(GLY|GLN)}.
 \texttt{"one and|or two"} is equal to \texttt{"(one and)|(or two)"}.\\
 \texttt{"one (and|or) two"} is "one and two" or "one or two".\\
@@ -200,7 +191,7 @@ Use backslash as escape character. \\
 \textbf{Back references:} () : Memorizes the match for regular expression within parenthesis. Use \texttt{\textbackslash n} to recall nth match.
 
 \begin{tabularx}{\linewidth}{lX}
-\hline
+    \hline
 \end{tabularx}
 
 \vfill\null
