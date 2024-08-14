@@ -105,13 +105,22 @@
     \hline
 
     % Pipelines.
-    $\mid$                           & Pipe output to another program.\\
+    \texttt{|}                  & Pipe \\
+    \texttt{tee}                & Eg: \texttt{prog1 in.txt | tee intermediate.txt | prog > result.txt}\\
     \texttt{mkfifo}             & Create a named pipe. Eg: \texttt{mkfifo fqin}. Treat named pipe like any other file. But the input and output is piped. While using named pipe nothing is written on the disk.\\
+    \hline
 
     % Background and persistent processes.
     \texttt{nohup}              & Run a program without interruption.\\
     \texttt{\&}                 & Run in background. eg: \texttt{nohup prog1 \&}\\
     \hline
+
+    % Redirections.
+    \texttt{>, >>}              & Write and append, respectively, standard output to a file. \\
+    \texttt{2>, 2>>}            & Write and append standard error to a file. \\
+    \texttt{2>\&1}              & Redirects std.err to std.out.\\
+    \texttt{<}                  & Take input.\\
+    \texttt{/dev/null}          & Eg: \texttt{foo > /dev/null}, the output is not printed.\\
 
 \end{tabularx}
 
@@ -135,6 +144,9 @@
     \hline
 \end{tabularx}
 
+\vfill\null
+\columnbreak
+
 
 \subsubsection{Etc}
 
@@ -153,13 +165,6 @@
     & Eg: \texttt{mkdir results-\$(date +\%F)}\\
     & Eg: \texttt{\$ today = "date + \%F"}. \\
     \hline
-
-\end{tabularx}
-
-\vfill\null
-\columnbreak 
-
-\begin{tabularx}{\linewidth}{lX}
 
 \end{tabularx}
 
