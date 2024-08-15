@@ -75,10 +75,9 @@
 \end{tabularx}
 
 
-\textcolor{red}{TODO: chown, chgrp.}
-\textcolor{red}{\texttt{compress}/\texttt{uncompress}. Also: \texttt{zgrep}, \texttt{zcat}, \texttt{zless}, \texttt{zdiff}}
-\textcolor{red}{rsync}\\
-\textcolor{red}{hexdump, checksums, diff (in text processing?).}\\
+\textcolor{red}{TODO: chown, chgrp.}\\
+\textcolor{red}{\texttt{compress}/\texttt{uncompress}.\\ 
+Also: \texttt{zgrep}, \texttt{zcat}, \texttt{zless}, \texttt{zdiff}}\\
 
 \subsubsection{Process Execution}
 
@@ -153,7 +152,9 @@
     \hline
 \end{tabularx}
 
-\textcolor{red}{TODO: exec, find, pkill, killall.}
+\vfill\null
+\columnbreak
+
 
 \subsubsection{Terminal customization}
 
@@ -188,24 +189,31 @@ Generally included in the \texttt{.bashrc} file.
     \texttt{-regex}             & Match regular expression. Use \texttt{-E} for extended POSIX.\\
     \texttt{-iregex}            & Case-insensitive.\\
     \hline
+
+    %rsync.
+    \texttt{rsync}              & Sync files from source to target.\\
+                                & Usage: \texttt{rsync <options> <source-dir> <target-dir>}\\
+                                & Eg: \texttt{rsync -av sdir tdir}.\\
+                                & Copies the directory \texttt{sdir} into \texttt{tdir}. \texttt{tdir} now contains sdir.\\
+                                & Eg: \texttt{rsync -av sdir/ tdir}.\\
+                                & \texttt{tdir} now contains the contents of \texttt{sdir} and not the directory \texttt{sdir} itself.\\
+    -av                         & Most common options. Sufficient for most use cases.\\
+    -avn                        & Dry run.\\
     
     % Pattern matching.
-    \texttt{?,*, [A-Z]} & Wild cards.\\
-    \texttt{\{\}} & Expands combinatorially.\\ 
-    &  Eg: \texttt{\$ mkdir mm10-\{chr1,chr2,chr3\}}\\
-    \$() & Eg: \texttt{echo "...\$(...)..."}\\
-    & Eg: \texttt{mkdir results-\$(date +\%F)}\\
-    & Eg: \texttt{\$ today = "date + \%F"}. \\
+    \texttt{?,*, [A-Z]}         & Wild cards.\\
+    \texttt{\{\}}               & Expands combinatorially.\\ 
+                                &  Eg: \texttt{\$ mkdir dir-\{1, 2, 3\}}\\
+                                &  Eg: \texttt{\$ mkdir dir-\{1..100\}}\\
+                                &  Eg: \texttt{touch foo-\{A..C\}-\{1..10\}}\\
+    \$()                        & Eg: \texttt{echo "...\$(...)..."}\\
+                                & Eg: \texttt{mkdir results-\$(date +\%F)}\\
+                                & Eg: \texttt{\$ today = "date + \%F"}. \\
     \hline
 
     % Miscellaneous.
     \texttt{export}          &  Exports variable to child processes.\\
 \end{tabularx}
-
-
-\textcolor{red}{TODO: export, \$PATH, source}
-
-
 
 
 \vfill\null
