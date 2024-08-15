@@ -215,32 +215,16 @@ Above script is equivalent to the following.\\
 \subsection{Find, exec and xargs}
 
 \begin{tabularx}{\linewidth}{lX}
-\texttt{find} & Usage: \texttt{find \textit{<folder>} -name "\textit{<pattern>}"}.\\
-& Eg: \texttt{find . -name foo.sh}.\\
-\texttt{-name <pattern>} & Find \texttt{<pattern>} using same special characters as bash (\texttt{*,?, [...] })\\
-\texttt{-iname} & Identical to \texttt{-name} but case-insensitive.\\
-\texttt{-empty} & Matches emtpy files and folders.\\
-\texttt{-type <x>} & Matches types \texttt{x} (\texttt{f} - file, \texttt{d} - directory, \texttt{l} - links).\\
-\texttt{-size <size>} & Matches \texttt{<size>}.\\
-&  Eg: \texttt{+50M} ; Files larger than 50 MB\\
-& Eg: \texttt{-50M}; Files smaller than 50 MB\\
-\end{tabularx}
-
-\begin{tabularx}{\linewidth}{lX}
-
-\texttt{-regex} & Match regular expression. Use \texttt{-E} for extended POSIX.\\
-\texttt{-iregex} & Case-insensitive.\\
-\texttt{-print0} & separate results with null-byte and not new line. 
-\textcolor{red}{Explain!}\\
-\texttt{expr -and expr} & Logical AND.\\
-\texttt{expr -or expr} & Logial OR.\\
-\texttt{-not expr} & Logial NOT. Alternate: \texttt{"!" expr}\\
-\texttt{(expr)} & Group a set of expressions.\\
-\texttt{-exec} & Example: \\
- & \texttt{find . -name *.c -exec <prog1> \{\} \textbackslash ;}.\\
- & Execute \texttt{<prog1>} on all the found files. \texttt{\{\}} represents the found files. \\
- & Mind the space between \texttt{\{\}} and \texttt{\textbackslash;}\\
- 
+    %
+    \texttt{expr -and expr} & Logical AND.\\
+    \texttt{expr -or expr} & Logial OR.\\
+    \texttt{-not expr} & Logial NOT. Alternate: \texttt{"!" expr}\\
+    \texttt{(expr)} & Group a set of expressions.\\
+    %
+    \texttt{-exec} & Example: \\
+    & \texttt{find . -name *.c -exec <prog1> \{\} \textbackslash ;}.\\
+    & Execute \texttt{<prog1>} on all the found files. \texttt{\{\}} represents the found files. \\
+    & Mind the space between \texttt{\{\}} and \texttt{\textbackslash;}\\
 \hline
 
 \end{tabularx}
