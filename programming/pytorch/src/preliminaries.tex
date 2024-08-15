@@ -1,0 +1,26 @@
+\section{Preliminaries}
+
+\subsubsection*{Creating a tensor.}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+# From a list.
+x = torch.tensor([1, 2, 3], dtype=torch.float32)
+
+# From a numpy array.
+u = np.array([1, 2, 3], dtype=np.float32)
+x = torch.from_numpy(u) # x inherits dtype from u.
+
+# 
+x = torch.zeros((3, 3), dtype=torch.float32)
+x = torch.ones((3, 3), dtype=torch.float32)
+x = torch.zeros((3, 3), dtype=torch.float32)
+
+\end{verbatim}
+\end{mdframed}
+
+\subsubsection*{Uncategorized}
+
+\begin{tabularx}{\linewidth}{lX}
+    
+\end{tabularx}
