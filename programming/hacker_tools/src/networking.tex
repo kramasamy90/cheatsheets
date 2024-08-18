@@ -20,6 +20,44 @@
 \end{itemize}
 
 
+\subsection{Cryptography}
+
+\subsubsection{SSH}
+
+\begin{itemize}
+    \item \textbf{Generating the keys.} Examples:\\
+            \texttt{ssh-keygen -t ed25519 -C "your\_email@example.com"}\\
+            \texttt{ssh-keygen -t rsa -b 4096 -C "your\_email@example.com"}\\
+            \texttt{-t}: Algorithm to use.\\
+            \texttt{-b}: Key length.\\
+            \texttt{-C}: Label for the key, generally email ID.\\
+    \item   Public keys: \texttt{$\sim$/.ssh/id\_rsa}\\
+    \item   Private keys: \texttt{$\sim$/.ssh/id\_rsa.pub}\\
+\end{itemize}
+
+\subsubsection{GPG Keys}
+
+\begin{itemize}
+\item \textbf{Genertate key:} \texttt{gpg --full-generate-key}\\
+        Follow the instructions to generate the key.\\
+\item \texttt{gpg --list-keys}.
+\item  \textbf{Export public key:}\\
+        \texttt{gpg --armor --export your\_email\@example.com > public\_key.asc}\\
+            \texttt{--armor} Output key in ASCII format.\\
+            \texttt{--export} Specify the key.\\
+\item \textbf{Import key:}\\
+        \texttt{gpg --import public\_key.asc}\\
+\item \textbf{Sign a file:}\\
+        gpg --sign file.txt\\
+\item  \textbf{Encryption / Decryption:}\\
+        \textit{Encrypt:}\\
+        \texttt{gpg --encrypt --recipient recipient\_email\@example.com file.txt}\\
+        \textit{Decrypt:}\\
+        \texttt{gpg --decrypt file.txt}\\
+\item Keys are located in \texttt{$\sim$/.gnupg} directory.
+\end{itemize}
+
+
 \vfill\null
 \columnbreak
 
@@ -52,14 +90,6 @@
 \end{tabularx}
 Curl can also download form SFTP and SCP. Also checkout RCurl and pycurl.
 
-\begin{tabularx}{\linewidth}{lX}
-\hline
-\texttt{shasum} & Calculate checksum using SHA-1. Can be used to find checksum of many files and store the result in a text file. Eg: \texttt{shasum *.fa > chksm.sha}\\
-\texttt{-c} & Validate the files. Eg: \texttt{shasum -c chksm.sha}.\\
-\texttt{sum} & Checksum program used by Ensemble.\\
-\texttt{diff -u} & Outputs a diff file that shows difference between two files. Eg: \texttt{diff -u file1 file2}\\
-\hline
-\end{tabularx}
 
 \vfill \null
 \columnbreak
