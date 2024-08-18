@@ -88,9 +88,12 @@
     \hline
     md5sum                  & \texttt{md5sum <input-file>}\\
     \hline
+    \texttt{shasum}         & Calculate checksum using SHA-1. Can be used to find checksum of many files and store the result in a text file. Eg: \texttt{shasum *.fa > chksm.sha}\\
+    \texttt{-c}             & Validate the files. Eg: \texttt{shasum -c chksm.sha}.\\
+    \texttt{sum}            & Checksum program used by Ensemble.\\
+    \texttt{diff -u}        & Outputs a diff file that shows difference between two files. Eg: \texttt{diff -u file1 file2}\\
+    \hline
 \end{tabularx}
-
-\textcolor{red}{Checkout hexdump, checksum, md5sum, diff, cmp}
 
 
 \vfill\null
