@@ -1,5 +1,31 @@
 \section{Networking}
 
+\subsection{Basic Tools}
+
+\begin{itemize}
+\item \textbf{\texttt{ifconfig}}. Lists network properties like IP addresses.\\
+        Lists info regarding loop-back, ethernet and WiFi (etc.)\\
+        \begin{itemize}
+        \item \texttt{lo} is loop back.\\
+        \item \texttt{inet}: IPv4.\\
+        \item \texttt{inet6}: IPv6.\\
+        \item \texttt{ether}: MAC address.\\
+        \item \texttt{RX}: Stats on received data.\\
+        \item \texttt{TX}: Stats on transmitted (sent) data.\\
+        \end{itemize}
+\item \texttt{ip addr show}. Simillar to ifconfig. Show only the IP addresses and not the stats.
+\item \texttt{ping}. Eg: \texttt{ping google.com}\\
+        Give TTL, RTT and packet loss when connecting to the host.\\
+\item \texttt{hostname}
+\end{itemize}
+
+
+\vfill\null
+\columnbreak
+
+
+\subsection{File Transfer}
+
 \begin{tabularx}{\linewidth}{lX}
 \hline
 \texttt{wget \textit{url}} & Download file from http or ftp.\\
