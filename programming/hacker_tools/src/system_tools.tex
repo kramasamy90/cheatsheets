@@ -2,14 +2,157 @@
 
 \begin{tabularx}{\linewidth}{lX}
     % Disk utilization.
-    df -h & View usage of all the mounted disk.\\
-
-    % Package management.
+    df -h                       & View usage of all the mounted disk.\\
+    free -h                     & RAM usage.\\
+    uname -a                    & Info such as kernel name, architecture, version etc.\\
+    \hline
 
     % Drivers, lspci etc.
-
+    lspci                       & Lists all the PCI devices.\\
+    lsusb                       & Lists USB devices.\\
+    lscpu                       & List CPU info.\\
+    lsblk                       & List block devices like HDD, SSDs and Partitions.\\
+    lshw                        & List all the hardware info about the PC.\\
+    \hline
     % 
 \end{tabularx}
+
+\subsection{Important Directories.}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{bin}                & Essential binaries like, \texttt{ls}, \texttt{cp}, etc.\\
+    \texttt{boot}               & Files related to boot process.\\
+    \texttt{dev}                & Hardware and virtual devices.\\
+                                & $\bullet$ \texttt{/dev/sda} : Storage devices.\\
+                                & $\bullet$ \texttt{/dev/tty} : Terminal devices.\\
+    \texttt{etc}                & Configuration files and directories. Eg: \texttt{/etc/passwd}\\
+    \texttt{lib}                & Shared libraries.\\
+    \texttt{media}              & Mount points for automatic mounting of removable media like pendrive, CDS etc.\\
+    \texttt{mnt}                & Temporarily mounting filesystems such as external drives.\\
+    \texttt{opt}                & Individual applications. Eg \texttt{/opt/microsoft-edge}.\\
+    \texttt{usr}                & User specific files.\\
+    \texttt{var}                & Stores data that changes frequently.\\
+                                & \texttt{/var/cache}.\\
+                                & \texttt{/var/log}.\\ 
+                                & \texttt{/var/lib}.\\ 
+    \hline
+\end{tabularx} 
+
+Directories in \texttt{usr}. Shares some simillarity with root: \texttt{bin}, \texttt{lib}.\\
+\vspace{8pt}
+\textbf{\texttt{usr/...}}\\
+\begin{tabularx}{\linewidth}{lX}
+    include             & Header files for development. Used during compilation.\\
+    local               & Software installed manually, such as custom compiled application.\\ 
+    share               & \texttt{/usr/share/man}.\\
+                        & \texttt{/usr/share/doc}.\\
+                        & \texttt{/usr/share/icons}.\\
+                        & \texttt{/usr/share/keyrings}.\\
+    \hline
+\end{tabularx}
+
+\begin{itemize}
+    \item \texttt{/etc/apt/preferences}\\
+            Manage package version and pinning, to ensure certain packages come from a specific repo and to prioritize certain versions.\\
+    \item \texttt{/etc/apt/sources.list.d}\\
+            Manage third party repositories. New repos can be added using \texttt{add-apt-repositories} or manually.\\
+    \item \texttt{/var/cache/apt/archive}\\
+            Holds \texttt{.deb} packages downloaded by \texttt{apt}.
+    \item \texttt{/usr/share/keyrings}\\
+            Contains GPG keyrings used by \texttt{apt} to verify the authenticity of packages and repositories.\\
+\end{itemize}
+
+\vfill\null
+\columnbreak
+
+\begin{itemize}
+    \item \texttt{\~{}/.local/}\\
+            User specific softwar and files.\\
+    \item \texttt{\~{}/.local/share/}\\
+            User specific data files.\\
+    \item \texttt{\~{}/.local/share/applications}\\
+            Contains desktop entry files.\\
+\end{itemize}
+
+
+
+\subsection{Package management.}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{which}              & Show where a executable is located.\\
+                                & Eg: \texttt{which vim}.\\
+    \hline
+    \texttt{ubuntu-drivers}     & $\bullet$ \texttt{ubuntu-drivers autoinstall}.\\
+                                & Installs the best available drivers for the hardware.\\
+                                & Especially usefull after fresh install of Ubuntu.\\
+                                & $\bullet$ \texttt{ubuntu-drivers devices}.\\
+                                & Lists all the available drivers for your hardware.\\ 
+    \hline
+\end{tabularx}
+
+\subsubsection*{Apt}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{apt}                & Command-line utility for managing package.\\
+                                & Often requires \texttt{sudo} access.\\
+    \texttt{install}            & $\bullet$ \texttt{sudo apt install vim}\\
+                                & $\bullet$ To install a specific version: \texttt{sudo apt install <pkg>=<ver>}.\\
+                                & Eg: \texttt{sudo apt install vim=1:8.2.3995-1ubuntu2.1}\\
+                                & $\bullet$ \texttt{--fix-broken}. To fix broken dependencies.\\
+    \texttt{update}             & Updates the local package index. Does not update or upgrade anything.\\
+    \texttt{upgrade}            & Upgrades packages to the latest version based on the updated 
+                                  local package index.\\
+    \texttt{remove}             & Uninstalls a package but leaves the configuration files intact.\\
+    \texttt{purge}              & Uninstalls a package along with its configuration files.\\
+    \texttt{autoremove}         & Uninstalls packages that were installed as dependencies but no longer needed.\\
+    \texttt{autoclean}          & When a package is downloaded using \texttt{apt} the \texttt{.deb} file are stored in \texttt{/var/cache/apt/archives/}.\\
+                                & \texttt{autoclean} remove the \texttt{.deb} files of packages that are obsolete.\\
+    \texttt{clean}              & \texttt{clean} is like \texttt{autoclean}, but it removes all the \texttt{.deb} files irrespective of whether the package is obsolete or not.\\
+                                & This clears out everything in \texttt{/var/cache/apt/archives/}.\\
+    \texttt{list}               & List available packages.\\
+                                & \texttt{--upgradable}, shows packages with available updates.\\
+                                & \texttt{--installed}, shows installed packages.\\
+    \texttt{search}             & Search for a package in the database.\\
+                                & NOTE: unlike list, search looks for a keyword in the package name and description etc. $\therefore$ this is not the same as say \texttt{apt list | grep <keyword>}.\\
+    \texttt{show}               & Show detailed info of a package, including it's dependencies.\\
+    \hline
+\end{tabularx}
+
+\vfill\null
+\columnbreak
+
+\textbf{Add a repository to \texttt{apt}}
+
+\begin{itemize}
+    \item Add repo using \texttt{add-apt-repository} from the \texttt{software-properties-common} package.\\
+            Eg: \texttt{sudo add-apt-repository "deb http://example.com/repo/ubuntu focal main"}
+    \item \textbf{Add a repo manually} by editing the \texttt{/etc/apt/sources.list.d/example.list} file\\
+            Eg: \texttt{sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu \$(lsb\_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'}\\
+    \item \textbf{Add gpg keys} using \texttt{apt-key}.\\
+            Eg: \texttt{curl -s https://raw.githubusercontent.com/ros/}
+            \texttt{rosdistro/master/ros.asc | sudo apt-key add -}
+    \item Use \texttt{sudo apt update} to include the new repository's packages and then install the package.\\
+            Eg: \texttt{sudo apt update}\\
+                \texttt{sudo apt install ros-noetic-desktop-full}.
+\end{itemize}
+
+
+\subsubsection{DPKG}
+
+Install \texttt{.deb} files. \texttt{dpkg} is a low level package manager and unlike \texttt{apt} it does not handle dependencies.\\
+When there is some issue with dependencies after installing using \texttt{dpkg}, \texttt{sudo apt install --fix-broken} might help.\\
+
+
+\begin{itemize}
+\item \texttt{-i}, \texttt{--install}:\\Install a \texttt{.deb} package.\\
+\item \texttt{-r}, \texttt{--remove}:\\ Uninstall but retain the config files.
+\item \texttt{-P}, \texttt{--purge}:\\ Uninstall package and remove the related config files.
+\item \texttt{-l}, \texttt{--list}:\\ List all the packages.\\
+        Output: First column indicates the status (intended actions, current status).
+\end{itemize}
+
+
+
 
 \vfill\null
 \columnbreak
