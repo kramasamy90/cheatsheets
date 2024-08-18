@@ -192,39 +192,40 @@ NOTE: This operator does not allocate memory. The \texttt{OutputIterator R} shou
 \end{itemize}
 
 \subsubsection{Hash Function}
+Can be used for custom types in \texttt{unordered\_map} and \texttt{unordered\_set}.
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
 Usage:\\
-\texttt{hash<T> h;}\\
+\texttt{hash<T> hasher;}\\
+\texttt{size\_t hasvalue = hasher(x);//Where x is an object of type T}\\
+\end{mdframed}
 Eg:
 \begin{verbatim}
     hash<int> h; size_t x = h(10);
     hash<string> h; size_t x = h("hello");
 \end{verbatim}
 
-The standard hash function can be used for user defined types by combining hash values.
-Two strategies for combining hash values are:
-\begin{itemize}
-    \item Simple: just use XOR: \texttt{h1 \^ h2}.
-    \item Used by Boost(?):\\
-    \texttt{h2 \^= h2 + 0x9e3779b9 + (h1<<6) + (h1>>2);}\\
-    0x9e3779b9 is a prime number.\\
-    See: https://stackoverflow.com/a/2595226/5607735\\
-    \textcolor{red}{How efficient is this for a smaller prime number that can be committed to memory.}
-\end{itemize}
-
 \textbf{Custom hash function.}
+
+% \textbf{Custom hash function.}
 Custom hash function for a user defined type can be defined as follows:
 \begin{verbatim}
    class CustomHash {
-    size_t operator () (const pair<string, string>) const {
+    public:
+    size_t operator () (const pair<string, string>& p) const {
         hash<string> hasher;
         auto h1 = hasher(p.first);
         auto h2 = hasher(p.second);
-        return h1 ^ h2;
+        return h1 ^ h2; // Below for better heuristics.
     }
 }; 
 \end{verbatim}
 
-This can be used for custom types in unordered\_map and unordered\_set.
+\textbf{Heuristics to combine hash values.}\\
+\texttt{h2 = h2 \textasciicircum (h1 << 1);}
+\texttt{h2 \textasciicircum= h2 + 0x9e3779b9 + (h1<<6) + (h1>>2);}\\
+0x9e3779b9 is a prime number.\\
+See: https://stackoverflow.com/a/2595226/5607735\\
+
 
 \subsubsection{Others}
 
