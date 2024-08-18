@@ -74,9 +74,27 @@
     \texttt{join} & Combine data based on a common column. Eg: \texttt{join -1 a -2 b file1 file2}. \texttt{a} and \texttt{b} represent two columns common to file1 and file2. \\
     \texttt{-a} & If some elements of common column are missing from one file. Use this flag to show all elements of common column from superset file. \\
     \hline
+    \texttt{diff}           & Compare two text files.\\
+                            & \texttt{diff file1.txt file2.txt}.\\
+                            & First line in output indicates the kind of change.\\
+                            & \texttt{a} added newline, \texttt{d} deleted a line, \texttt{c} change in the line.\\
+                            & After diff \texttt{echo \$?}  is \texttt{0} if there is no difference.\\
+    -b                      & Ignore changes in white spaces.\\
+    -w                      & Ignore all blank spaces. Does not ignore blank lines.\\
+    -B                      & Ignore blank lines. The above two do not ignore blank lines.\\
+    -Z                      & Ignore trailing white spaces.\\
+    \hline
+    cmp                     & Compares two files byte-by-byte and outputs the first byte that differs.\\ 
+    \hline
+    md5sum                  & \texttt{md5sum <input-file>}\\
+    \hline
 \end{tabularx}
 
 \textcolor{red}{Checkout hexdump, checksum, md5sum, diff, cmp}
+
+
+\vfill\null
+\columnbreak
 
 \subsection{Awk}
 
