@@ -96,6 +96,20 @@ To add a remote repository.\\
 
 \texttt{git remote prune origin} : To prune a stale branch in /remote branch.
 
+\subsubsection*{GitHub}
+\textbf{Authentication using SSH and GPG keys.}
+\begin{enumerate}
+\item Add the public keys to your GitHub account.\\
+\item Change remote URL to use SSH instead of HTTPS.\\
+\item Change \texttt{.gitconfig} to use GPG scheme for commits:\\
+        \texttt{git config --global user.signingKey <key\_id/email>}\\
+        \texttt{git config --global user.commit.gpuSign true}\\
+\item Change the remote repo link to use SSH instead of HTTPS:\\
+        \texttt{git remote set-url origin git@github.com:username/repository.git}
+\end{enumerate}
+
+
+
 \vfill \null
-\columnbreak
+\pagebreak
 
