@@ -16,7 +16,8 @@
 \item \texttt{ip addr show}. Simillar to ifconfig. Show only the IP addresses and not the stats.
 \item \texttt{ping}. Eg: \texttt{ping google.com}\\
         Give TTL, RTT and packet loss when connecting to the host.\\
-\item \texttt{hostname}
+\item \texttt{hostname}\\
+        \texttt{hostname -I} Gives all the IP addresses.\\
 \end{itemize}
 
 
@@ -95,7 +96,9 @@ Curl can also download form SFTP and SCP. Also checkout RCurl and pycurl.
 \vfill \null
 \columnbreak
 
-\subsection{SSH}
+\subsection{Remote machines}
+
+\subsubsection{Login with SSH}
 \begin{itemize}
 \item \textbf{Usage}\\
 \texttt{\$ ssh host}\\
@@ -103,48 +106,31 @@ Curl can also download form SFTP and SCP. Also checkout RCurl and pycurl.
 
 \item \textbf{Examples of host}\\
 \texttt{192.162.82.120}\\
-\texttt{bioclust.myuniversity.edu}\\
-\texttt{darwin@192.162.82.120}\\
-\texttt{darwin@bio.univ.edu}\\
+\texttt{hpc.myuniversity.edu}\\
+\texttt{turing@192.162.82.120}\\
+\texttt{turing@cse.univ.edu}\\
 
 \item \textbf{Options} \\
 
 \texttt{-v} verbose. Verbosity can be increased by: \texttt{-vv} or \texttt{-vvv}. \\
-\texttt{-p} port. Eg: \texttt{ssh -p 5043 cdarwin@bio.univ.edu}\\
+\texttt{-p} port. Eg: \texttt{ssh -p 5043 aturing@cse.univ.edu}\\
 \qquad Default port is \texttt{22}
 
  
 \item \textbf{Using alias:} To use alias create the file \texttt{\~{}/.ssh/config} and store server as info as below. 
-\texttt{Host bio\_serv}\\
-\qquad \texttt{HostName 190.512.171.29}\\
-\qquad \texttt{User cdarwin}\\
+\texttt{Host hpc\_serv}\\
+\qquad \texttt{HostName 190.257.170.129}\\
+\qquad \texttt{User aturing}\\
 \qquad \texttt{Port 50434}\\
 Also applies for \texttt{Rsync and scp}\\
 
-\item \textbf{SSH keys}: SSH key to connect without password. Eg:\\
-\texttt{\$ ssh-keygen -b 2048}\\
-This command request the following:\\
-\begin{itemize}
-\item File to save the key. By default this is:\\
-\texttt{/Users/username/.ssh/id\_rsa}
-NOTE: This file is the private key.\\
-\item Passphrase:\\
-Not necessary but good to use.\\
 \end{itemize}
-Private key: \texttt{~/.ssh/id\_rsa}\\
-Public key: \texttt{~/.ssh/id\_rsa.pub}\\
 
-\texttt{\$ chmod 400 id\_rsa \# restrict access to private key}\\
-\texttt{\$ ssh-add} \\
-
-\end{itemize}
+\textcolor{red}{TODO: scp}.
 
 
 \subsection{Setting up a server}
 Use "Open SSH": https://help.ubuntu.com/lts/serverguide/openssh-server.html\\
-
-My IP address: \texttt{hostname -I}\\
-List of logins to the server: \texttt{sudo less /var/log/auth.log}\\
 
 \vfill \null
 \columnbreak
