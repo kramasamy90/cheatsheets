@@ -1,0 +1,87 @@
+\section{OS, Shutil, Sys, Etc.}
+
+\begin{center}
+    \large{\texttt{os}}\\
+\end{center}
+
+\begin{tabularx}{\linewidth}{lX}
+   \texttt{chdir()}           & \\
+   \texttt{getcwd()}          & \\
+   \texttt{listdir()}         & \\
+   \texttt{mkdir()}           & Create a directory at the path.\\
+   \texttt{makedirs()}        & Recursively creates the directories.\\
+                            & Like \texttt{mkdir -p} in bash.\\
+   \texttt{rmdir()}           & To delete \textbf{empty} directories.\\
+   \texttt{rename()}          & \texttt{os.rename(src, dst)}.\\
+                            & Rename for files and directories.\\
+    \hline
+    \texttt{system()}         & Execute system commands. Return the exit status.\\
+                            & Eg: \texttt{exit\_status = os.system('ls')}.\\
+\hline
+\end{tabularx}
+
+\begin{center}
+    \large{\texttt{shutil}}\\
+\end{center}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{rmtree()}         & \texttt{shutil.rmtree('mydir')}.\\
+    \texttt{move()}           & \texttt{shutil.move(src, des)}.\\
+    \texttt{copy()}           & \texttt{shutil.copy(src, des)}.\\
+                            & Copy single file without preserving meta data.\\
+    \texttt{copy2()}          & Copy single file with preserving meta data.\\
+    \texttt{copytree()}       & Copy entire directory and it's contents.\\
+\hline
+\end{tabularx}
+
+\begin{center}
+    \large{\texttt{os.path}}\\
+\end{center}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{isdir()}         & \\
+    \texttt{isfile()}        & \\
+    \texttt{exists()}        & \\
+    \hline
+    \texttt{join()}          & \\
+    \texttt{dirname()}       & \\
+    \texttt{basename()}      & \\
+    \hline
+    \texttt{abspath()}       & Return the absolute path to a file.\\
+                             & Eg: \texttt{os.path.abspath('foo')}.\\
+    \texttt{realpath()}      & Real path Resolves any symlinks along the way.\\
+    \hline
+\end{tabularx}
+
+\begin{center}
+    \large{\texttt{sys}}\\
+\end{center}
+
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{argv}           & Command line arguments as a list of strings.\\ 
+    \texttt{exit()}         & Exit and return an exit status to the calling process.\\
+    \texttt{version}        & Get python version.\\
+    \texttt{path}           & Manage list of search paths for modules.\\ 
+                            & \texttt{sys.path.append('foo')}. Add the  directory \texttt{foo} to the path.\\
+    \hline
+\end{tabularx}
+
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta]
+    \vspace{6pt}
+    \textcolor{red}{CAUTION!!}\\
+    \vspace{1pt}
+    In \texttt{sys.path.append()}, relative path is acceptable, but it is relative to the directory from where the script is being executed, not relative to where the script file is located.\\
+
+\end{mdframed}
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta]
+
+    \textbf{Best practice:}\\
+    \vspace{-16pt}
+        \begin{verbatim}
+script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(script\_dir,\
+relative/path/to/directory'))
+        \end{verbatim}
+\end{mdframed}
+

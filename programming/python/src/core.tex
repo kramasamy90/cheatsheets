@@ -1,0 +1,63 @@
+\section{Core}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{.\_\_name\_\_}           & Name of an object, function, module, etc.\\
+                                    & Eg: \texttt{foo.\_\_name\_\_ \# Returns 'foo'}.\\ 
+                                    & Eg: \texttt{f = foo}\\
+                                    & Eg: \texttt{f.\_\_name\_\_ \# Returns 'foo'}.\\
+    \texttt{\_\_name\_\_}           & When not an attribute, it hold the name of the script.\\
+                                    & If the script is run on its own then \texttt{\_\_name\_\_ == "\_\_main\_\_"}.\\
+                                    & Else it holds the name of the script. If the script is \texttt{foo.py}\\
+                                    & Then \texttt{\_\_name\_\_ == "foo"}.\\
+    \hline
+    \texttt{globals()}              & Gives dictionary representing the global symbol table.\\
+    .get('foo')                     & Returns the object the name \texttt{foo}.\\
+    \hline
+    id(x)                           & Gives the address of the variable \texttt{x}.\\ 
+                                    & Can be used to check if two variables point to the same object.\\
+                                    & The address cannot be derefenced like a C pointer.\\
+    \hline
+    *                               & Unpacks a sequence like a list or tuple to function arguments.\\
+                                    & Eg: \texttt{l = [1, 2, 3]}\\
+                                    & Eg: \texttt{foo(*l)}\\
+                                    & Eg: \texttt{a, *b, c = [1, 2, 3, 4, 5] \# b = [2, 3, 4]}\\
+    **                              & Upacks a dictionary into keyword arguments.\\
+                                    & Eg: \texttt{kwargs = {'a': 1,'b' = 2}}.\\
+                                    & Eg: \texttt{foo(**kwargs)}\\
+                                    & Inside function foo \texttt{a} and \texttt{b} becomes variables with
+                                      values \texttt{1} and \texttt{2} respectively.\\
+    \hline
+    \texttt{zip}                    & Zip two iterables.\\
+                                    & Eg: \texttt{x = [1, 2]}.\\
+                                    & Eg: \texttt{y = [3, 4]}.\\
+                                    & Eg: \texttt{w = list(zip(x, y))}.\\
+                                    & Eg: \texttt{w = [(1, 3), (2, 4)]}.\\
+    \texttt{enumerate}              & Enumerate iterables.\\ 
+                                    & Eg: \texttt{for id, x in enumerate(l):}.\\
+                                    & Eg: \texttt{for id, (x, y) in enumerate(zip(l1, l2)):}.\\
+    \hline
+
+\end{tabularx}
+
+\subsubsection{Special Variables and Naming Conventions}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\_foo}                  & Internal use. Not for public access.\\
+\texttt{\_\_foo}                & Name mangling to prevent accidental overrides. Interpreter changes
+                                    the name to prevent override in child class.\\
+\texttt{\_\_foo\_\_}            & Special variables that are part of python, don't create your own.\\
+\texttt{foo\_}                  & To avoid conflict with keywords.\\
+\hline
+\texttt{\_\_file\_\_}           & Path to current script of file.\\
+\texttt{\_\_name\_\_}           & Name of the module or \texttt{"\_\_main\_\_"} if run directly.\\
+\texttt{\_\_version\_\_}        & Version of the module. Does not work for all (eg: os).\\
+                                & Eg: \texttt{np.\_\_version\_\_}.\\
+                                & Eg: \texttt{os.\_\_version\_\_}. This does not work.\\
+\hline
+\end{tabularx}
+
+
+
+\textcolor{red}{TODO: Generators, }
+
+\columnbreak
