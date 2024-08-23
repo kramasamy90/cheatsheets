@@ -42,8 +42,6 @@ Git consists of untracked files, tracked file , files staged for commit, and fil
 \texttt{git log} & List all commits, commit message SHA-1 checksum etc. Options: \texttt{--pretty=oneline}, \texttt{--abbrev-commit}, \texttt{--graph}, \texttt{--branches}, \texttt{-n2} : to view only latest two commits.\\
 \texttt{git rm} & Use these commands to rename or delete files.\\
 \texttt{git mv} & Using rm and mv will confuse git.\\
-\texttt{.gitignore} & Used to avoid certain files, fastq files for example, from being listed in untracked section of \texttt{git status}.\\
- & Eg: \texttt{\$ echo "*.fa" >> .gitignore}.\\
 \texttt{git ls-tree} & List contents of tree object.\\
  & Use to list all files in the latest commit.\\
  & Eg: \texttt{git ls-tree -r master --name-only}\\
@@ -94,6 +92,8 @@ To add a remote repository.\\
 
 \texttt{git remote prune origin} : To prune a stale branch in /remote branch.
 
+\columnbreak
+
 \subsubsection*{GitHub}
 \textbf{Authentication using SSH and GPG keys.}
 \begin{enumerate}
@@ -107,7 +107,53 @@ To add a remote repository.\\
 \end{enumerate}
 
 
-\textcolor{red}{TODO: gitignore.}\\
+\subsubsection*{Gitignore}
+
+Store patterns in \texttt{.gitignore} file.\\
+Patterns file/directory paths with matching pattern will be exculded from tracking.\\
+
+\textbf{Patterns}\\
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{!}              & Reinclude an excluded file. \textcolor{red}{See Note below.}\\
+    \texttt{/}              & Directory separator.\\
+    \texttt{*}              & Match anything except \texttt{/}.\\
+    \texttt{?}              & Match any single character except \texttt{/}.\\
+    \texttt{**}             & Match anything including \texttt{/}.\\
+    \texttt{\textbackslash} & Escape character.\\
+    \hline    
+\end{tabularx}
+
+\textcolor{red}{NOTE:} Files whose parent directory has been excluded will not be reincluded.\\
+Eg:\\
+
+
+\begin{itemize}
+\item Pattern without a slash:\\
+        Match any file / directory with that name.\\
+        Eg: \texttt{foo} matches with the file/directory: \texttt{/bar/foo}, \texttt{foo}
+\item Pattern ending with a slash:\\
+        Matches only with directories.\\
+        Eg: \texttt{foo/} Does match a file.\\
+\item Pattern with slash in the beginning or middle:\\
+        Matches with path relative to \texttt{.gitignore}\\
+        Eg: \texttt{/bar/foo} does not match \texttt{/foo} or \texttt{/tmp/bar/foo}\\
+\end{itemize}
+
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+$ mkdir foo && touch foo/tmp{1..5}.txt 
+----
+/.gitignore
+foo/*
+!tmp1.txt # tmp1.txt will be tracked.
+----
+/.gitignore
+foo
+!tmp1.txt # tmp1.txt will not be tracked.
+\end{verbatim}
+\end{mdframed}
+\textcolor{red}{NOTE:} There is no gap after \texttt{!}.\\
 
 
 
