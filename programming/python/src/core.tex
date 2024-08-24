@@ -1,21 +1,28 @@
 \section{Core}
 
 \begin{tabularx}{\linewidth}{lX}
-    \texttt{.\_\_name\_\_}           & Name of an object, function, module, etc.\\
+    \texttt{help()}                 & Help about a module or function.\\
+                                    & Eg: \texttt{import numpy as np}\\
+                                    & Eg: \texttt{help(np)}\\
+                                    & Eg: \texttt{help(np.sort)}\\
+    \hline
+    \texttt{.\_\_name\_\_}          & Name of an object, function, module, etc.\\
                                     & Eg: \texttt{foo.\_\_name\_\_ \# Returns 'foo'}.\\ 
                                     & Eg: \texttt{f = foo}\\
                                     & Eg: \texttt{f.\_\_name\_\_ \# Returns 'foo'}.\\
-    \texttt{\_\_name\_\_}           & When not an attribute, it hold the name of the script.\\
-                                    & If the script is run on its own then \texttt{\_\_name\_\_ == "\_\_main\_\_"}.\\
-                                    & Else it holds the name of the script. If the script is \texttt{foo.py}\\
-                                    & Then \texttt{\_\_name\_\_ == "foo"}.\\
-    \hline
-    \texttt{globals()}              & Gives dictionary representing the global symbol table.\\
-    .get('foo')                     & Returns the object the name \texttt{foo}.\\
-    \hline
-    id(x)                           & Gives the address of the variable \texttt{x}.\\ 
+    \texttt{id(x)}                  & Gives the address of the variable \texttt{x}.\\ 
                                     & Can be used to check if two variables point to the same object.\\
                                     & The address cannot be derefenced like a C pointer.\\
+    \texttt{isinstance()}           & Eg: \texttt{isinstance(x, str)}, returns true if x is a string.\\
+                                    & \texttt{isinstance(x, (str, int))}, returns true if x is either a string or an integer.\\
+    \texttt{del()}                  & Delete objects.\\
+    \hline
+    \texttt{globals()}              & Gives dictionary representing the global symbol table.\\
+    \quad\texttt{.get()}            & Get object by name.\\
+                                    & Eg: \texttt{bar = globals.get('foo')}.\\
+    \texttt{global}                 & Declares and object as a global variable.\\
+                                    & Eg: \texttt{global foo}. But, \texttt{global foo = 2}, does not work.\\
+                                    & Assignment during global declaration does not work. Also see list comprehension.\\
     \hline
     *                               & Unpacks a sequence like a list or tuple to function arguments.\\
                                     & Eg: \texttt{l = [1, 2, 3]}\\
@@ -36,8 +43,45 @@
                                     & Eg: \texttt{for id, x in enumerate(l):}.\\
                                     & Eg: \texttt{for id, (x, y) in enumerate(zip(l1, l2)):}.\\
     \hline
-
+    \texttt{eval}                   & Evaluate a string expressions.\\
+                                    & Eg: \texttt{eval('1 + 2')}. Returns 3.\\
+    \hline
 \end{tabularx}
+
+
+\columnbreak
+
+\textcolor{red}{Caution: }\textbf{A note on circular imports.}\\
+When two modules import from each other it causes unexpected behaviour. Strategies to avoid circular imports:
+\begin{enumerate}
+\item Refactor shared functionalities to a distinct module.
+\item Use local imports. 
+\item Use lazy imports: \texttt{importlib.import\_module()}.
+\end{enumerate}
+
+
+\subsubsection{List comprehensions}
+\begin{itemize}
+\item \textbf{Basic Syntax.}\\
+            \texttt{[f(x) for x in iterable]}.
+            Eg: \texttt{[x ** 2 for x in range(4)]}\\
+            \texttt{[0, 1, 4, 9]}
+\item \textbf{With conditions.}\\ 
+            \texttt{[x ** 2 if x\%2==0 else 2 * x for x in range(10)]}\\
+            \texttt{[0, 2, 4, 6]}
+\item \textbf{Filtering items by condition.}\\
+            \texttt{[x ** 2 for x in range(10) if x\%2==0]}\\
+            \texttt{[0, 4]}
+\item \textbf{Nested list.}\\
+            \texttt{[(x, y) for x in [1, 2] for y in [3, 4]]}\\
+            \texttt{[(1, 3), (1, 4), (2, 3), (2, 4)]}
+\item \textbf{Flattening a list.}\\
+            \texttt{m = [[1, 2], [3, 4]]}\\
+            \texttt{[x for v in m for x in v]}\\
+            \texttt{[1, 2, 3, 4]}
+\end{itemize}
+
+
 
 \subsubsection{Special Variables and Naming Conventions}
 
@@ -50,6 +94,8 @@
 \hline
 \texttt{\_\_file\_\_}           & Path to current script of file.\\
 \texttt{\_\_name\_\_}           & Name of the module or \texttt{"\_\_main\_\_"} if run directly.\\
+                                & Eg: If the script is \texttt{foo.py}\\
+                                & Then \texttt{\_\_name\_\_ == "foo"}.\\
 \texttt{\_\_version\_\_}        & Version of the module. Does not work for all (eg: os).\\
                                 & Eg: \texttt{np.\_\_version\_\_}.\\
                                 & Eg: \texttt{os.\_\_version\_\_}. This does not work.\\
