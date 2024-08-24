@@ -1,0 +1,359 @@
+\section{OOP in Python}
+
+\subsection*{Classes and Instances}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+# Code-1
+class Employee:
+    raise_amount = 1.04 # 4% raise.
+    num_of_emps = 0
+    def __init__(self, first, last, salary):
+        self.first = first
+        self.last = last
+        self.salary = salary
+        Employee.num_of_emps += 1
+    def fullname(self):
+        return '{} {}'.format(first, last)
+\end{verbatim}
+\end{mdframed}
+\subsubsection*{Properties of a class}
+
+\begin{itemize}
+    \item \textbf{Instance:} Eg: \texttt{e1 = Employee("Sam", "Gamgee", 100)}\\
+    This creates an instance of the class \texttt{Employee} called \texttt{e1}.
+    For example: \texttt{raise\_amount} is not present in \texttt{e1.\_\_dict\_\_} but is present in \texttt{Employee.\_\_dict\_\_}
+
+    \item \textbf{Attribute:} Data in the class.\\
+    Eg: \texttt{first} is an attribute of the class \texttt{Employee}. This can be accessed as \texttt{e1.first}\\
+    \textbf{Class variables} and \textbf{Instance variables}.
+
+    \item \textbf{Method:} Functions defined in a class. In the above class \texttt{\_\_init\_\_} and \texttt{fullname} are methods of the class \texttt{Employee}. There are two access these:
+    \begin{itemize}
+        \item \texttt{e1.fullname()}
+        \item \texttt{Employee.fullname(e1)}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Namespace}
+
+\texttt{\_\_dict\_\_} can be used to view the namespace of a class or its instance. Eg:\\
+\begin{verbatim}
+print(Employee.__dict__)
+print(e1.__dict__)
+print(e2.__dict__)
+\end{verbatim}
+
+\subsection*{Class Variables and Instance Variables}
+
+
+In the above class \texttt{raise\_amount} is a class variable. It is part of the namespace of the class and is not yet present in the namespace of the instance. An instance recieves it from the class when this variable in the instance is called.
+
+It is important to distinguish between \textbf{class variable} and \textbf{instance variable}. If an instance variable has the same name as a class variable, then it supercedes the class variable.
+
+\vfill\null
+\columnbreak
+
+Eg:\\
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+# Code-2
+e1 = Employee("Sam", "Gamgee", 200)
+e2 = Employee("Frodo", "Baggins", 100)
+
+print(Employee.pay_raise)
+print(e1.pay_raise)
+print(e2.pay_raise)
+print("---")
+
+Employee.pay_raise = 1.5
+print(Employee.pay_raise)
+print(e1.pay_raise)
+print(e2.pay_raise)
+print("---")
+
+e1.pay_raise = 2
+
+'''
+    Now e1.pay_raise is instance variable.
+'''
+
+print(Employee.pay_raise)
+print(e1.pay_raise)
+print(e2.pay_raise)
+print("---")
+
+
+Employee.pay_raise = 3
+'''
+This does not affect e1.pay_raise, 
+because it is now an instance variable.
+However, e2.pay_raise still refers to class variable.
+'''
+print(Employee.pay_raise)
+print(e1.pay_raise)
+print(e2.pay_raise)
+\end{verbatim}
+\end{mdframed}
+
+Output:
+
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta]
+\begin{verbatim}
+1.04
+1.04
+1.04
+---
+1.5
+1.5
+1.5
+---
+1.5
+2
+1.5
+---
+3
+2
+3 
+\end{verbatim}
+\end{mdframed}
+
+\subsection*{Methods}
+
+Three types of methods:
+\begin{itemize}
+    \item \textbf{Regular methods}: Takes first argument as the instance.
+    \item \textbf{Class methods}: Takes the first argumetn as the class.\\
+    Defined using \verb!@classmethod!
+    \item \textbf{Static methods}: Does not take class or the instance as arguments.\\
+    Defined using \verb!@staticmethod!
+\end{itemize}
+
+Examples:
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+# Code-3
+class Employee:
+    # Add __init__ and fulname functions.
+    @classmethod
+    def from_string(cls, s):
+        first, second, pay = s.split('-')
+        return cls(first, second, pay)
+
+    @staticmethod
+    def is_workday(day):
+        if(day.weekday() == 5 or day.weekday() == 6):
+            return False
+        return True
+
+e1 = Employee.from_string('Sam-Gamgee-100')
+print(e1.fullname())
+
+import datetime
+my_date = datetime.date(2023, 2, 18)
+print(e1.is_workday(my_date))
+\end{verbatim}
+\end{mdframed}
+
+Output:
+
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta]
+\begin{verbatim}
+Sam Gamgee
+False 
+\end{verbatim}
+\end{mdframed}
+
+\subsection*{Inheritance}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+class Developer(Employer):
+    pass
+
+dev_1 = Developer('Sam', 'Gamgee', 100)
+\end{verbatim}
+\end{mdframed}
+
+Here \texttt{dev\_1} behaves exactly like an instance of the class \texttt{Employer}.
+Inherited class can use the constructor of parent class as follows.
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+class Developer(Employee):
+    def __init__(self, first last, pay, prog_lang):
+        super().__init__(first, last, pay)
+        self.prog_lang = prog_lang
+\end{verbatim}
+\end{mdframed}
+
+\vfill\null
+\columnbreak
+
+A second way to use parent constructor is as follows:
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+class Developer(Employee):
+    def __init__(self, first, last, pay, prog_lang)
+    Employee.__init__(self, first, last, pay)
+    self.prog_lang = prog_lang
+\end{verbatim}
+\end{mdframed}
+
+This second method is necessary for multiple inheritance. However using \texttt{super()} is better for single inheritance.
+
+\subsubsection*{\texttt{isinstance} and \texttt{issubclass}}
+
+\begin{itemize}
+\item \texttt{isinstance} Tests if something is an instance of a class. 
+\item \texttt{issubclass} Tests if a class inhertis from another.
+\end{itemize}
+
+Eg:\\
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+print(isinstance(emp1, Employee))
+print(isinstance(emp1, Developer))
+print(isinstance(dev1, Employee))
+print(isinstance(dev1, Developer))
+print(issubclass(Developer, Employee))
+print(issubclass(Employee, Developer))
+\end{verbatim}
+\end{mdframed}
+
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta]
+\begin{verbatim}
+True
+False
+True
+True
+True
+False
+\end{verbatim}
+\end{mdframed}
+
+\subsection*{Special Methods}
+
+The methods with double undescore around them are called \textbf{Dunder methods}, for example \texttt{\_\_init\_\_}.
+\subsubsection*{Two important dunder methods}
+
+\begin{itemize}
+\item \texttt{\_\_repr\_\_}: The goal of repr is to be as unambiguous as possible.
+\item \texttt{\_\_str\_\_}: The goal of str is to be readable.
+\end{itemize}
+
+Eg:\\
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+class Employee:
+    # Define all other functions.
+    def __repr__(self):
+        return "Employee('{}', '{}', {})".\
+            format(self.first, self.last, self.pay)
+    
+    def __str__(self):
+        return "{} {}: {}".\
+            format(self.first, self.last, self.email)
+    
+
+print(emp1)
+\end{verbatim}
+\end{mdframed}
+
+\vfill\null
+\columnbreak
+
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta,nobreak=true]
+\begin{verbatim}
+Sam Gamgee: Sam.Gamgee@email.com
+\end{verbatim}
+\end{mdframed}
+
+
+Without \texttt{str} print will default to \texttt{repr}. The output would be:\\
+
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta]
+\begin{verbatim}
+Employee('Sam', 'Gamgee', 100) 
+\end{verbatim}
+\end{mdframed}
+
+
+\subsubsection*{Operator overloading}
+
+Dunder methods can be used to overload operators.
+
+Examples.\\
+
+\begin{itemize}
+\item \texttt{\_\_add\_\_} defines addition operator.
+\item \texttt{\_\_len\_\_} defines \texttt{len()}.
+\end{itemize}
+
+\subsection*{Property Decorators}
+
+\textbf{Example:}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+class Employee:
+    def __init__(self, first, last, pay):
+        self.first = first
+        self.last = last
+        self.pay = pay
+    
+    @property
+    def fullname(self):
+        return '{} {}'.format(self.first, self.last)
+
+    @fullname.setter
+    def fullname(self, name):
+        first, last = name.split(' ')
+        self.first = first
+        self.last = last
+
+    @fullname.deleter
+    def fullname(self):
+        self.first = None
+        self.last = None
+
+emp1 = Employee('Sam', 'Gamgee', '100')
+print(emp1.fullname)
+
+# NOTE: We this is not emp1.fullname()
+emp1.fullname = 'Frodo Baggins'
+print(emp1.fullname)
+
+del emp1.fullname
+print(emp1.fullname)
+\end{verbatim}
+\end{mdframed}
+
+
+\vfill\null
+\columnbreak
+
+\textbf{Output:}
+
+\begin{mdframed}[backgroundcolor=magenta!10,linecolor=magenta]
+\begin{verbatim}
+Sam Gamgee
+Frodo Baggins
+None None
+\end{verbatim}
+\end{mdframed}
+
+\begin{itemize}
+\item \texttt{@property} converts a method to something like an attribute.
+\item \texttt{@methodname.setter} enable to write set value to an attribute/method defined by \texttt{@property}.
+\item \texttt{@fullname.deleter} Clears the values when we delete an attribute/method using \texttt{del}
+\end{itemize}
+
+
+\end{multicols*}
+\end{document}
