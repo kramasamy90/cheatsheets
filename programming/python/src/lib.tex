@@ -1,0 +1,167 @@
+\section{Useful Libraries}
+
+\subsection{Copy}
+
+\texttt{import copy}
+
+\begin{itemize}
+\item \texttt{copy.copy()}. Creates a shallow copy.\\
+        Creates a copy of the original object, 
+        but not of the objects contained within this original object.\\
+\item \texttt{copy.deepcopy()}. Creates new copy of the original object
+        and all the objects within this original object.\\
+\end{itemize}
+
+
+
+\subsection{Datetime}
+
+\begin{center}
+   \large{\texttt{datetime.date}} 
+\end{center}
+Represents date.
+\begin{itemize}
+\item \texttt{datetime.date(Y, M, D)}.\\
+        Eg: \texttt{d = datetime.date(1903, 3, 14)}.\\
+        Individual components:
+        \begin{itemize}
+        \item \texttt{year = d.year}
+        \item \texttt{month = d.month}
+        \item \texttt{day = d.day}
+        \end{itemize}
+\item \texttt{datetime.today()}.\\
+\end{itemize}
+
+\begin{center}
+    \large{\texttt{datetime.time}}
+\end{center}
+Represents time.
+
+\begin{itemize}
+\item \texttt{t = datetime.time(H, m, s)}.\\
+    Eg: \texttt{t = datetime.time(23, 15, 17)}.\\
+    \begin{itemize}
+    \item \texttt{hr = t.hour}\\
+    \item \texttt{min = t.minute}\\
+    \item \texttt{sec = t.second}\\
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+    \large{\texttt{datetime.datetime}}
+\end{center}
+
+Represents both date and time.
+
+\begin{itemize}
+    \item \texttt{today = datetime.datetime.today()}
+    \item \texttt{now = datetime.datetime.now()}.
+    \item \texttt{dt = datetime.combine(d, t)}.
+\end{itemize}
+
+
+\begin{center}
+    \large{\texttt{datetime.timedelta}}
+\end{center}
+
+\begin{itemize}
+\item \texttt{delta = datetime.timedelta(hours = 4)}
+\item \texttt{t2 = t1 + delta}
+\item \texttt{delta = t2 - t2}. \texttt{delta} is an instance of \texttt{timedelta}.\\
+\end{itemize}
+
+\subsubsection{Etc.}
+
+\begin{itemize}
+\item \texttt{d.strftime("\%Y\%m\%d\%H\%M\%S")}
+\item \texttt{d = datetime.strptime(date\_string, "\%Y\%m\%d\%H\%M\%S")}
+\item \texttt{d.replace(year = 2025)}
+\item \texttt{d.weekday()}\\
+        0 $\to$ Monday, 6 $\to$ Sunday.\\
+\end{itemize}  
+
+\columnbreak
+
+\textbf{Formats:}\\
+\vspace{2pt}
+\begin{tabular}{lcl|lcl}
+    \hline
+    \texttt{\%Y}  & - & 2023     &   \texttt{\%H}  & - &    24H\\
+    \texttt{\%y}  & - & 23       &   \texttt{\%I}  & - &    12H\\
+    \texttt{\%m}  & - & 01       &   \texttt{\%M}  & - &    mins\\
+    \texttt{\%-m} & - & 1        &   \texttt{\%S}  & - &    secs\\
+    \texttt{\%d}  & - & 01       &   \texttt{\%f}  & - &    $\mu$s\\
+    \texttt{\%-d} & - & 1        &   \texttt{\%p}  & - &    AM/PM\\
+    \hline
+\end{tabular} 
+
+
+\begin{tabularx}{\linewidth}{lcX}
+    
+\texttt{\%U}    & $\to$ & First sunday of the year is start of week 01.\\
+                &       & Days before that belong to week 00.\\ 
+\texttt{\%W}    & $\to$ & First monday of the year is start of week 01.\\
+                &       & Days before that belong to week 00.\\ 
+\texttt{\%V}    & $\to$ & Week number by ISO system.\\
+
+\end{tabularx}
+
+\subsection*{Regular Expression}
+
+\texttt{import re}\\
+\textbf{Usage for finding patterns:} \texttt{re.<method>(pattern, text)}\\
+
+\textbf{Methods in re.}\\
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{search}         & Return the first match as a match object.\\
+    \texttt{match}          & Match only at the beginning of the string. Returns a match object.\\
+    \texttt{findall}        & Returns a list of all non-overlapping matches.\\
+    \texttt{finditer}       & Returns an iterator to non-overlapping matches.\\
+    \texttt{sub}            & Replace pattern. Usage: \texttt{re.sub(pattern, replacement, text)}.\\
+    \texttt{split}          & Split by pattern. Eg: Split by white spaces.\\
+                            & \texttt{pattern = r"\textbackslash s+"}\\
+                            & \texttt{re.split(pattern, text)}\\
+    \texttt{group}          & Returns the entire match as string.\\
+    \texttt{group(n)}       & Returns the n-th group, n=0 is same as \texttt{.group()}\\
+    \texttt{groups}         & Returns a tuple of all the matching groups.\\
+\end{tabularx}
+
+\textbf{Patterns}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{[]}             & Match characters inside.\\
+    \texttt{.}              & Match any char except newline.\\
+    \texttt{$\wedge$}       & Match beginning of line.\\
+                            & Inside [], it negates the pattern.\\
+    \texttt{\$}             & Match any char except newline.\\
+    \texttt{d}              & Digits.\\
+    \texttt{D}              & Any character other than digits.\\
+    \texttt{w}              & Any alphanumeric.\\
+    \texttt{W}              & Any character other than alphanumeric.\\
+    \texttt{s}              & Any white space character: space, tab, linebreak.\\
+    \texttt{S}              & any non-whitespace character.\\
+    \texttt{*}              & 0 or more repitition.\\
+    \texttt{+}              & 1 or more repitition.\\
+    \texttt{?}              & 0 or 1 repitition.\\
+    \{n\}                   & Exactly n repititions.\\
+    \{m, n\}                & Between m and n repitions.\\
+    ()                      & Group patterns.\\
+\end{tabularx}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+pattern = r"(\d{4})-(\d{2})-(\d{2})"
+text = "2024-08-24"
+
+match = re.match(pattern, text)
+
+if match:
+    print(match.group())  # Output: '2024-08-24'. 
+    print(match.group(1)) # Output: '2024' (first group).
+    print(match.group(2)) # Output: '08' (second group).
+    print(match.group(3)) # Output: '24' (third group).
+    print(match.groups()) # Output: ('2024', '08', '24').
+\end{verbatim}
+\end{mdframed}
+
+\pagebreak

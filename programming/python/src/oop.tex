@@ -291,6 +291,7 @@ Dunder methods can be used to overload operators.
 Examples.\\
 
 \begin{itemize}
+\item \texttt{\_\_get\_item\_\_} \texttt{[]}.
 \item \texttt{\_\_add\_\_} defines addition operator.
 \item \texttt{\_\_len\_\_} defines \texttt{len()}.
 \end{itemize}
@@ -352,6 +353,13 @@ None None
 \item \texttt{@property} converts a method to something like an attribute.
 \item \texttt{@methodname.setter} enable to write set value to an attribute/method defined by \texttt{@property}.
 \item \texttt{@fullname.deleter} Clears the values when we delete an attribute/method using \texttt{del}
+\end{itemize}
+
+\subsubsection{Getting and setting attributes.}
+\begin{itemize}
+\item \texttt{dir(MyClass)}: List all the attributes in a class.
+\item \texttt{f = getattr(obj, 'foo')}.
+\item \texttt{setattr(obj, 'foo', bar)}.
 \end{itemize}
 
 
