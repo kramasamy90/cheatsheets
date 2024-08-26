@@ -1,5 +1,90 @@
 \section{Useful Libraries}
 
+\subsubsection{Serialization}
+
+\begin{center}
+    \large{\texttt{pickle}}\\
+\end{center}
+ 
+\texttt{import pickle as pkl}
+\begin{itemize}
+\item Save an object:\\
+        \texttt{pkl.dump(foo, open('foo.pkl', 'wb'))}.
+\item Load and object:\\
+        \texttt{foo = pkl.load(open('foo.pkl', 'rb'))}.
+\end{itemize}
+
+
+\begin{center}
+    \large{\texttt{yaml}}\\
+\end{center}
+
+Mostly used to store configuration files.\\
+
+\texttt{import yaml}
+
+\begin{itemize}
+\item Read an YAML file.\\ 
+        YAML files are loaded to a dictionary object.\\
+        \texttt{with open('config.yaml', 'r') as file:}\\
+        \hspace{8pt}\texttt{config = yaml.safe\_load(file)}\\
+\item Save an YAML file:\\
+        \texttt{with open('config.yaml', 'r') as file:}\\
+        \hspace{8pt}\texttt{yaml.dump(yaml, file, default\_flow\_style=False)}
+        NOTE: Setting \texttt{default\_flow\_style} to \texttt{False} writes the output in block style and has better readability.\\
+\end{itemize}
+
+\textbf{Examples of YAML files}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+# Comments
+n: 10 # Integer.
+x: 0.1 # Float.
+s: "Hello, World!" # String.
+list_1: [1, 2, 3] # 1D List.
+list_2: [1, 2, 3
+          4, 5, 6] # A list can span multiple lines.
+mat:
+    - [1, 2, 3]
+    - [4, 5, 6]
+    - [7, 8, 9] # A list of list.
+
+inventory: # List of dictionaries.
+    - id: 123
+      desc: apple
+    - id: 124
+      desc: mango
+
+description: |
+  This is a multiline string.
+  Newlines and indentation
+  will be preserved.
+  
+  It can contain empty lines,
+  special characters, etc.
+
+\end{verbatim}
+\end{mdframed}
+
+\columnbreak
+
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+
+description: >
+  This is a multiline string
+  that will be folded into a
+  single line when loaded.
+  
+  Empty lines will be preserved
+  as line breaks.
+\end{verbatim}
+\end{mdframed}
+
+
+
 \subsection{Copy}
 
 \texttt{import copy}
