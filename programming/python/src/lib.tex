@@ -1,6 +1,6 @@
 \section{Useful Libraries}
 
-\subsubsection{Serialization}
+\subsection{Serialization}
 
 \begin{center}
     \large{\texttt{pickle}}\\
@@ -26,8 +26,13 @@ Mostly used to store configuration files.\\
 \begin{itemize}
 \item Read an YAML file.\\ 
         YAML files are loaded to a dictionary object.\\
+        For most cases use \texttt{safe\_loader}.\\
         \texttt{with open('config.yaml', 'r') as file:}\\
         \hspace{8pt}\texttt{config = yaml.safe\_load(file)}\\
+        The following support wider capabilities, but is less secure:\\
+        \texttt{with open('config.yaml', 'r') as file:}\\
+        \hspace{8pt}\texttt{ data = yaml.load(file, Loader=yaml.FullLoader)}\\
+
 \item Save an YAML file:\\
         \texttt{with open('config.yaml', 'r') as file:}\\
         \hspace{8pt}\texttt{yaml.dump(yaml, file, default\_flow\_style=False)}
@@ -56,14 +61,6 @@ inventory: # List of dictionaries.
     - id: 124
       desc: mango
 
-description: |
-  This is a multiline string.
-  Newlines and indentation
-  will be preserved.
-  
-  It can contain empty lines,
-  special characters, etc.
-
 \end{verbatim}
 \end{mdframed}
 
@@ -72,6 +69,13 @@ description: |
 
 \begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
 \begin{verbatim}
+description: |
+  This is a multiline string.
+  Newlines and indentation
+  will be preserved.
+  
+  It can contain empty lines,
+  special characters, etc.
 
 description: >
   This is a multiline string
@@ -165,8 +169,6 @@ Represents both date and time.
         0 $\to$ Monday, 6 $\to$ Sunday.\\
 \end{itemize}  
 
-\columnbreak
-
 \textbf{Formats:}\\
 \vspace{2pt}
 \begin{tabular}{lcl|lcl}
@@ -190,6 +192,10 @@ Represents both date and time.
 \texttt{\%V}    & $\to$ & Week number by ISO system.\\
 
 \end{tabularx}
+
+
+\columnbreak
+
 
 \subsection*{Regular Expression}
 
