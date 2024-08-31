@@ -1,23 +1,42 @@
 \section{Preliminaries}
 
+\subsection{Torch Tensor}
+
 \subsubsection*{Creating a tensor.}
+\texttt{torch.<method>(<options>)}\\
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    \texttt{arange(l, r, s)}        & $(l, l+s, \cdots, l+ks) \ni l+ks < r$ and $k$ is the largest such integer.\\
+                                    & Default: $l = 0$, $s = 1$.\\ 
+    \texttt{linspace(l, r, n)}      & $(l, l+s, \cdots, r(= l + n\times s)) \& s = (r-l)/n$.\\
+    \texttt{ones(<shape>)}          & \\ 
+    \texttt{zeros(<shape>)}         & \\ 
+    \texttt{full(<shape>, k)}       & Constant tensor filled with each element $= k$.\\ 
+    \texttt{randn}                  & \\
+    \hline
+    \texttt{tensor}                 & From NDArray.\\
+                                    & Eg: \texttt{torch.tensor([1, 2, 3])}.\\
+    \hline
+    \texttt{}
+\end{tabularx}
 
-\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
-\begin{verbatim}
-# From a list.
-x = torch.tensor([1, 2, 3], dtype=torch.float32)
+\subsubsection{Tensor Properties \& Operation}
 
-# From a numpy array.
-u = np.array([1, 2, 3], dtype=np.float32)
-x = torch.from_numpy(u) # x inherits dtype from u.
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    \texttt{shape}      & \\
+    \texttt{numel()}    & Number of elements. Eg, a $2 \times 2$ tensor has 4 elements.\\
+    \texttt{reshape()}  & Eg: \texttt{torch.arange(8).reshape(4, 4)}\\
+                        & Eg: \texttt{torch.arange(8).reshape(4, -1)}\\
+                        & \textcolor{blue}{Use $-1$ to automatically infer one of the dimensions.}\\
+    \hline
+    \texttt{cat}        & Concatenate along a dimension. Specify \texttt{dim}.\\
+    \texttt{sum}        & \\
+\end{tabularx}
 
-# 
-x = torch.zeros((3, 3), dtype=torch.float32)
-x = torch.ones((3, 3), dtype=torch.float32)
-x = torch.zeros((3, 3), dtype=torch.float32)
+\textbf{Operations}\\
 
-\end{verbatim}
-\end{mdframed}
+
 
 \subsubsection*{Uncategorized}
 
