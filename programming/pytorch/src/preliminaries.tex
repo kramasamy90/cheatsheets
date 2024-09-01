@@ -16,19 +16,27 @@
     \hline
     \texttt{tensor}                 & From NDArray.\\
                                     & Eg: \texttt{torch.tensor([1, 2, 3])}.\\
+    \texttt{from\_numpy}            & \\
     \hline
-    \texttt{}
 \end{tabularx}
+
+Other related methods: \texttt{zeros\_like}, \texttt{ones\_like}, \texttt{empty\_like}.\\
+Eg: \texttt{y = ones\_like(x)}.\\
 
 \subsubsection{Tensor Properties \& Operation}
 
 \begin{tabularx}{\linewidth}{lX}
     \hline
-    \texttt{shape}      & \\
     \texttt{numel()}    & Number of elements. Eg, a $2 \times 2$ tensor has 4 elements.\\
+    \texttt{dtype}      & \\
+    \texttt{shape}      & \\
     \texttt{reshape()}  & Eg: \texttt{torch.arange(8).reshape(4, 4)}\\
                         & Eg: \texttt{torch.arange(8).reshape(4, -1)}\\
                         & \textcolor{blue}{Use $-1$ to automatically infer one of the dimensions.}\\
+    \texttt{numpy()}    & \\
+    \texttt{item()}     & Can be applied only to a tensor with single element. Returns the element.\\
+                        & Single element tensors can also be coverted as follows:\\
+                        & \texttt{int(x), float(x)}, etc.\\
     \hline
     \texttt{cat}        & Concatenate along a dimension. Specify \texttt{dim}.\\
     \texttt{sum}        & \\

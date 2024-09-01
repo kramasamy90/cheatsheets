@@ -59,6 +59,15 @@ When two modules import from each other it causes unexpected behaviour. Strategi
 \item Use lazy imports: \texttt{importlib.import\_module()}.
 \end{enumerate}
 
+\vspace{4pt}
+\textcolor{red}{NOTE:} \textbf{Memory efficient assignment.}\\
+\vspace{-8pt}
+\begin{verbatim}
+x = [1, 2, 3]  
+x = [4, 5, 6] # x has different address.
+x[:] = [4, 5, 6] # x has the same address.
+\end{verbatim}
+
 
 \subsubsection{List comprehensions}
 \begin{itemize}
