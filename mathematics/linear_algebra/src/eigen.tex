@@ -1,17 +1,25 @@
 \section{Eigen values and eigen vectors}
 
 \subsection{Introduction}
-\begin{center}
-\framebox{Solve: $Ax = \lambda x$}
-\end{center}
+\textbf{Eigenvalues \& Eigenvectors:}
+The scalars $\lambda$ and the vectors $x$ that satisfy $Ax = \lambda x$ are the
+eigenvalues and eigenvectors of the matrix $A$.\\
+$Ax = \lambda x \implies (A - \lambda I)x = 0 \implies 
+\mid A - \lambda I\mid = 0$\\
 
-This give: $(A -\lambda I)x = 0$\\
-For a non-zero solution $x$ must lie in the nullspace of $A - \lambda I$. Therefore $det(A-\lambda I) = 0$\\
-This equation gives rise to a $n$ dimensional polynomial equation in $\lambda$(\textbf{Characteristic equation}). Solving this gives eigen values.\\
-Eigen vectors corresponding to each Eigen value form a vector space.
+Setting $\lambda$ as unkown gives rise to a $n$ dimensional polynomial equation 
+in $\lambda$ called the (\textbf{Characteristic equation}).\\
+Solving this gives eigen values.\\
 
-\textbf{Algebraic multiplicity($M_{\lambda}$):} Order of the eigenvalue in the characteristic  equation.\\
-\textbf{Geometric multiplicity($m_{\lambda}$):} Dimension of the eigenspace corresponding to the eigenvalue $\lambda$.\\ 
+\begin{mdframed}[backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
+    Eigen vectors corresponding to each Eigen value form a vector space.
+\end{mdframed}
+
+
+\textbf{Algebraic multiplicity($M_{\lambda}$):} is the number of times $\lambda$
+occurs as a root in the characteristic equation.\\
+\textbf{Geometric multiplicity($m_{\lambda}$):} Dimension of the eigenspace 
+corresponding to the eigenvalue $\lambda$.\\ 
 $m_{\lambda} \leq M_{\lambda}$
 
 \begin{mdframed}[backgroundcolor=gray!20]

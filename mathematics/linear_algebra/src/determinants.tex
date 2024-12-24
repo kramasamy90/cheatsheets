@@ -1,4 +1,4 @@
-\section{Determinants}
+\section{Determinant \& Trace}
 
 \subsection{Properties of determinants}
 \subsubsection{Three most basic properties of determinants}
@@ -191,4 +191,22 @@ Where, $B_j$ is $A$ with it's j'th column replaced by $b$.\\
 \textbf{Proof:} $x = A^{-1}b = \frac{1}{\det(A)}C^Tb$
 
 \subsubsection{Volume of a box}
-$det(A)$ represents the volume of a box(higher dimensional parellelogram) whose edges are represented by the row vectors of $A$ (or the column vectors of A, I think).
+$det(A)$ represents the volume of a box(higher dimensional parellelogram) whose edges are represented by the row vectors of $A$ (or the column vectors of A).
+
+\subsection{Trace of a Matrix}
+
+\subsubsection*{Basic Properties}
+
+\begin{itemize}
+\item \textbf{Linearity:}
+    \begin{itemize}
+        \item $tr(A + B) = tr(A) + tr(B)$.
+        \item $tr(cA) = c \times tr(A)$
+    \end{itemize}
+\item \textbf{Cyclic properties:}
+    \begin{itemize}
+        \item $tr(AB) = tr(BA)$.
+        \item $tr(ABC) = tr(BCA) = tr(CAB)$.
+    \end{itemize}
+\item If $B = P^{-1}AP$, then $tr(A) = tr(B)$.
+\end{itemize}
