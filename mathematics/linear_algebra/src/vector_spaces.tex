@@ -39,22 +39,37 @@ The existence and number of solutions depends on the rank of $A$ and that of the
 
 \subsection{Linear independence, basis and dimension}
 
-\textbf{Linear indepenedence:} A set of vectors $v_1, v_2, \cdots, v_k$ are said to be linearly independent iff\\
-$c_1v_1 + c_2v_2 + \cdots + c_kv_k$ $\Rightarrow$ $c_1 = c_2 = \cdots = c_k$.
+\textbf{Linear independence:} A set of vectors $v_1, v_2, \cdots, v_k$ are said to be linearly independent iff\\
+$c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0$ $\Rightarrow$ $c_1 = c_2 = \cdots = c_k = 0$.
 
-\vspace{6pt}
+\textbf{Linear Combination:} $LC(v_i) = \{u \mid u = \sum_j c_jv_j\}$
 
-\framebox{Columns of $A$ are linearly independent iff $N(A) = \{\textbf{0}\}$}
 
-\textbf{Spanning a vector space:} $W = \{w_1, w_2, \cdots, w_k\}$ is said to span a vector space $V$, if for all $v \in V$,, $\exists$ $c_1, c_2, \cdots, c_k \in \mathbb{R}$ such that $v = c_1w_1 + c_2w_2 + \cdots + c_kw_k$
+\textbf{Span} of a set of vectors $\{v_1, v_2, \cdots, v_k\} \subset V$ 
+is the smallest subspace $U \subseteq V$ containng these vectors.
 
-\textbf{Basis:} Basis of a vector space is a set of vectors with the following two properties.\\
+\begin{mdframed}[backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
+\textbf{Theorem:} $LC(\{v_i\}) = Span(\{v_i\})$.
+\end{mdframed}
+
+\textbf{Basis:} Basis of a vector space is a set of vectors with the following 
+                two properties.\\
 \begin{itemize}
 	\item The vectors in the set are linearly independent.
 	\item They span the vector space.
 \end{itemize}
 
-\textbf{Dimension of a vector space:} Number of basis vectors.
+\begin{mdframed}[backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
+\textbf{Theorems}
+\begin{itemize}
+\item If $A \subseteq V$ is linearly independent and $B \subseteq V$ is a basis
+        of $V$, then $|A| \leq |B|$.
+\item If $B^i \subseteq V$ and $B^j \subseteq V$ are each a basis of $V$ then 
+        $|B^i| = |B^j|$.
+\end{itemize}
+\end{mdframed}
+
+\textbf{Dimension of a vector space:} Size of the basis of the vector space.
 
 \subsection{Four fundamental subspaces}
 For a matrix $A$ of dimensions $m \times n$ and rank $r$.
@@ -73,12 +88,20 @@ For a matrix $A$ of dimensions $m \times n$ and rank $r$.
 	Dimension of $N(A^T)$ is $m-r$.
 \end{itemize}
 
+\begin{mdframed}[backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
 \textbf{Relationship between the subspaces:}
 \begin{itemize}
 	\item $C(A) \perp N(A^T)$ and $C(A) \cup N(A^T) = \mathbb{R}^m$.
 	\item $R(A) \perp N(A)$ and $R(A) \cup N(A) = \mathbb{R}^n$.
+    \item $C(A)$ and $R(A)$ are isomorphic.
+    \item In otherwords, $A$ is invertible within the domain / co-domain of 
+            $C(A)$ and $R(A)$.
 \end{itemize}
+\textit{Proof outline:} If $x \notin R(A)$, find $x_{\perp} \perp R(A)$ and
+show that $Ax_{\perp} = 0$.
 
+
+\end{mdframed}
 
 \subsection{Linear Transformation}
 
@@ -101,3 +124,23 @@ For a matrix $A$ of dimensions $m \times n$ and rank $r$.
 \textbf{Examples of linear transformation}:\\
 Scaling, Rotation, Reflection, Projection, Differentiation and Integration.\\
 
+
+\subsection{Change of Basis and Similarity Tranform}
+
+$x \rightarrow $ In standard basis.\\
+$x_B \rightarrow$ w.r.t. the basis $B$.\\
+$x_{B^1} \rightarrow$ w.r.t. the basis $B^1$.\\
+$x_{B^2} \rightarrow$ w.r.t. the basis $B^2$.\\
+
+$x_{B^1} = {B^1}^{-1} x$, or, $x = B^1x_{B^1}$\\
+$x_{B^2} = {B^2}^{-1}B^1x_{B^1}$\\
+
+
+\textbf{Similarity Transform:}\\
+
+Give a transformation matrix w.r.t one basis get the equivalent transformation
+another basis. \\
+\textit{Eg: Standard to B:}\\
+Say, $y = Ax$, we want $A'$ such that $y_{B} = A' x_B$.
+$\implies By_b = ABx_b, \forall x \in V$.
+$\implies y_b = B^{-1}ABx_b \implies A' = B^{-1}AB$.

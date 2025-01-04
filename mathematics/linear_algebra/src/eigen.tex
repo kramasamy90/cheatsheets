@@ -1,67 +1,40 @@
 \section{Eigen values and eigen vectors}
 
 \subsection{Introduction}
-\begin{center}
-\framebox{Solve: $Ax = \lambda x$}
-\end{center}
+\textbf{Eigenvalues \& Eigenvectors:}
+The scalars $\lambda$ and the vectors $x$ that satisfy $Ax = \lambda x$ are the
+eigenvalues and eigenvectors of the matrix $A$.\\
+$Ax = \lambda x \implies (A - \lambda I)x = 0 \implies 
+\mid A - \lambda I\mid = 0$\\
 
-This give: $(A -\lambda I)x = 0$\\
-For a non-zero solution $x$ must lie in the nullspace of $A - \lambda I$. Therefore $det(A-\lambda I) = 0$\\
-This equation gives rise to a $n$ dimensional polynomial equation in $\lambda$(\textbf{Characteristic equation}). Solving this gives eigen values.\\
-Eigen vectors corresponding to each Eigen value form a vector space.
+Setting $\lambda$ as unkown gives rise to a $n$ dimensional polynomial equation 
+in $\lambda$ called the (\textbf{Characteristic equation}).\\
+Solving this gives eigen values.\\
 
-\textbf{Algebraic multiplicity($M_{\lambda}$):} Order of the eigenvalue in the characteristic  equation.\\
-\textbf{Geometric multiplicity($m_{\lambda}$):} Dimension of the eigenspace corresponding to the eigenvalue $\lambda$.\\ 
-$m_{\lambda} \leq M_{\lambda}$
+\textbf{Algebraic multiplicity($M_{\lambda}$):} is the number of times $\lambda$
+occurs as a root in the characteristic equation.\\
+\textbf{Geometric multiplicity($m_{\lambda}$):} Dimension of the eigenspace 
+corresponding to the eigenvalue $\lambda$.\\ 
 
-\begin{mdframed}[backgroundcolor=gray!20]
-\textbf{Theorem:}
+\begin{mdframed}[backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
+\textbf{Key Results:}
 \begin{itemize}
 \item $\sum \lambda_i = tr(A)$	
 \item $\prod \lambda_i = det(A)$
 \item For a triangular matrix the Eigen values are along the diagonal.
 \item If $Ax = \lambda x$, then $A^kx = \lambda ^k x$.
+\item Eigen vectors corresponding to each Eigen value form a vector space.
+\item $m_{\lambda} \leq M_{\lambda}$
 \end{itemize}
 \end{mdframed}
+
+\textcolor{red}{TODO: Proof outlines.}
 
 \subsection{Diagonalization}
 
 If a $n \times n$ matrix $A$ has $n$ independent eigen vectors then, it can be written as follows: 
 $$A = S\Lambda S^{-1} $$ 
 where, each column of S is one of the eigenvectors of $A$ ($e_i$)\\
-$S = 
-\begin{bmatrix}
-\vdots & \vdots & \cdots & \vdots\\
-x_1 & x_2 & \cdots & x_n\\
-\vdots & \vdots & \cdots & \vdots\\
-\end{bmatrix}
-$\\
-and $\Lambda$ is a diagonal matrix with corresponding eigen values in the diagonal.\\
-$\Lambda = 
-\begin{bmatrix}
-\lambda_1 & 0 & \cdots & 0\\
-0 & \lambda_2 & \cdots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \cdots & \lambda_n\\
-\end{bmatrix}
-$\\
-
-
-
-\textbf{Proof:}\\
-
-$AS = 
-\begin{bmatrix}
-\lambda_1 x_1 & \cdots & \lambda_n x_n\\	
-\end{bmatrix}
-= S\Lambda
-$\\
-$\implies A = S\Lambda S^{-1}$
-
-\vspace{6pt}
-
-\textbf{Corollary: Powers of $A$}\\
-$A^n = S\Lambda ^n S^{-1}$
 
 \begin{mdframed}[backgroundcolor=blue!10,linecolor=blue]
 \begin{center}
@@ -75,6 +48,7 @@ Substitute $A = S\Lambda S^{-1}$ in $(A -\lambda_1 I)(A - \lambda_2 I)\cdots(A -
 \end{proof}
 \end{theorem}
 \end{mdframed}
+\textcolor{red}{TODO: Proof for case where $A$ is not diagonalizable.}
 
 
 
