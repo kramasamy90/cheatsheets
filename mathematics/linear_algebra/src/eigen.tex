@@ -11,65 +11,30 @@ Setting $\lambda$ as unkown gives rise to a $n$ dimensional polynomial equation
 in $\lambda$ called the (\textbf{Characteristic equation}).\\
 Solving this gives eigen values.\\
 
-\begin{mdframed}[backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
-    Eigen vectors corresponding to each Eigen value form a vector space.
-\end{mdframed}
-
-
 \textbf{Algebraic multiplicity($M_{\lambda}$):} is the number of times $\lambda$
 occurs as a root in the characteristic equation.\\
 \textbf{Geometric multiplicity($m_{\lambda}$):} Dimension of the eigenspace 
 corresponding to the eigenvalue $\lambda$.\\ 
-$m_{\lambda} \leq M_{\lambda}$
 
-\begin{mdframed}[backgroundcolor=gray!20]
-\textbf{Theorem:}
+\begin{mdframed}[backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
+\textbf{Key Results:}
 \begin{itemize}
 \item $\sum \lambda_i = tr(A)$	
 \item $\prod \lambda_i = det(A)$
 \item For a triangular matrix the Eigen values are along the diagonal.
 \item If $Ax = \lambda x$, then $A^kx = \lambda ^k x$.
+\item Eigen vectors corresponding to each Eigen value form a vector space.
+\item $m_{\lambda} \leq M_{\lambda}$
 \end{itemize}
 \end{mdframed}
+
+\textcolor{red}{TODO: Proof outlines.}
 
 \subsection{Diagonalization}
 
 If a $n \times n$ matrix $A$ has $n$ independent eigen vectors then, it can be written as follows: 
 $$A = S\Lambda S^{-1} $$ 
 where, each column of S is one of the eigenvectors of $A$ ($e_i$)\\
-$S = 
-\begin{bmatrix}
-\vdots & \vdots & \cdots & \vdots\\
-x_1 & x_2 & \cdots & x_n\\
-\vdots & \vdots & \cdots & \vdots\\
-\end{bmatrix}
-$\\
-and $\Lambda$ is a diagonal matrix with corresponding eigen values in the diagonal.\\
-$\Lambda = 
-\begin{bmatrix}
-\lambda_1 & 0 & \cdots & 0\\
-0 & \lambda_2 & \cdots & 0\\
-\vdots & \vdots & \ddots & \vdots\\
-0 & 0 & \cdots & \lambda_n\\
-\end{bmatrix}
-$\\
-
-
-
-\textbf{Proof:}\\
-
-$AS = 
-\begin{bmatrix}
-\lambda_1 x_1 & \cdots & \lambda_n x_n\\	
-\end{bmatrix}
-= S\Lambda
-$\\
-$\implies A = S\Lambda S^{-1}$
-
-\vspace{6pt}
-
-\textbf{Corollary: Powers of $A$}\\
-$A^n = S\Lambda ^n S^{-1}$
 
 \begin{mdframed}[backgroundcolor=blue!10,linecolor=blue]
 \begin{center}
@@ -83,6 +48,7 @@ Substitute $A = S\Lambda S^{-1}$ in $(A -\lambda_1 I)(A - \lambda_2 I)\cdots(A -
 \end{proof}
 \end{theorem}
 \end{mdframed}
+\textcolor{red}{TODO: Proof for case where $A$ is not diagonalizable.}
 
 
 
