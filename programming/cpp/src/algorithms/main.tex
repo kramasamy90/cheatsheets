@@ -1,31 +1,119 @@
 \section{Algorithms}
 
+\subsubsection{Sort and search}
+\textbf{Search and sort from C}
+\begin{itemize}
+	\item \texttt{void *bsearch(const void *key, const void *base, \\
+	size\_t n, size\_t size, \\
+	int (*cmp) (const void *keyal, const void *datum))}\\
+	Searches \texttt{base[0]} $\cdots$ \texttt{base[n-1]} for \texttt{key}.\\
+	Comparison function must return negative if its first argument (search key) is less than its second argument (a table entry) and so on. 
 
-\subsection{Heap}
-\textbf{Format:}\\
-\textbf{Constructing a heap:}\\
+	\item \texttt{qsort(void *base, size\_t n, size\_t size, \\
+	int (*cmp)(const *void, const *void))}
+\end{itemize}
+\textbf{Search and sort from C++}\\
 
-\vspace{-6pt}
-
+\begin{mdframed}[backgroundcolor=blue!20]
+\textbf{Compare functions:}
+\vspace{-8pt}
 \begin{verbatim}
-make_heap(iterator f, iterator s);
-make_heap(iterator f, iterator s, comp);
+	bool compare(x, y){
+	    return(x strictly precedes y)
+	}
+\end{verbatim}	
+\end{mdframed}
+
+In all the below, a could be an iterator or a pointer and all of them can use custom  compare functions.\\
+
+\begin{itemize}
+\item y = \texttt{lower\_bound(a, a+n, x)}\\
+Returns an iterator to the first element whose value is $\geq$ x.\\
+\item y = \texttt{upper\_bound(a, a+n, x)}\\
+Returns an iterator to the first element whose value is $>$ x.\\
+\item y = \texttt{equal\_range(a, a+n, x)}\\
+Returns a pair of iterators pointing to the upper bound and lower bound of x.\\
+\item y = \texttt{equal\_range(a, a+n, x, compare\_function)}\\
+Returns a pair of iterators pointing to the upper bound and lower bound of x.\\
+\item \texttt{sort(it1, it2, compare\_function);}
+\item \texttt{stable\_sort(it1, it2, compare\_function);}
+\item \texttt{is\_sorted(it1, it2, compare\_function);}
+\item \texttt{is\_sorted\_until(it1, it2, compare\_function);}\\
+Returns the iterator to the element until which the array is sorted.\\
+\item \texttt{find\_if(start\_it, end\_it, func)}\\
+Returns iterator to the first element in the range \texttt{[start\_it, end\_it)} for which \texttt{func} returns true.
+\item \texttt{find\_if\_not(start\_it, end\_it, func)}\\
+Returns iterator to the first element in the range \texttt{[start\_it, end\_it)} for which \texttt{func} returns false.
+\end{itemize}
+
+
+\subsubsection{Min Max}
+\begin{itemize}
+\item \texttt{max(a, b, comp);} \texttt{min(a, b, comp);}
+\item \texttt{max(\{a1, a2, a3\}, comp);} \texttt{min(\{a1, a2, a3\}, comp);}
+\item \texttt{max\_element(a, a+n, comp);}\\
+Returns the iterator for the largest element in a. If there are multiple largest element, returns the iterator/pointer for the first one.
+\item \texttt{min\_element(a, a+n, comp);}\\
+\end{itemize}
+
+\subsubsection{Merge}
+\begin{itemize}
+\item \texttt{merge(InputIterator F1, InputIterator L1, InputIterator F2, InputIterator L2, OutputIterator R);} \\
+Returns the iterator to the end of output.\\
+NOTE: This operator does not allocate memory. The \texttt{OutputIterator R} should point to a vector with sufficient memory to store the concatenated vector.\\
+\item \texttt{set\_intersection} Arguments and output are the same as that for \texttt{merge}.
+\item \texttt{set\_union} Arguments and output are the same as that for \texttt{merge}.
+\item \texttt{set\_difference} Arguments and output are the same as that for \texttt{merge}.
+\item \texttt{set\_symmetric\_difference} Arguments and output are the same as that for \texttt{merge}.
+\end{itemize}
+
+\subsubsection{Hash Function}
+Can be used for custom types in \texttt{unordered\_map} and \texttt{unordered\_set}.
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+Usage:\\
+\texttt{hash<T> hasher;}\\
+\texttt{size\_t hasvalue = hasher(x);//Where x is an object of type T}\\
+\end{mdframed}
+Eg:
+\begin{verbatim}
+    hash<int> h; size_t x = h(10);
+    hash<string> h; size_t x = h("hello");
 \end{verbatim}
 
-\vspace{-12pt}
+\textbf{Custom hash function.}
 
+% \textbf{Custom hash function.}
+Custom hash function for a user defined type can be defined as follows:
 \begin{verbatim}
-pop_heap(iterator f, iterator s);
-pop_heap(iterator f, iterator s, comp);
+   class CustomHash {
+    public:
+    size_t operator () (const pair<string, string>& p) const {
+        hash<string> hasher;
+        auto h1 = hasher(p.first);
+        auto h2 = hasher(p.second);
+        return h1 ^ h2; // Below for better heuristics.
+    }
+}; 
 \end{verbatim}
 
-\vspace{-12pt}
+\textbf{Heuristics to combine hash values.}\\
+\texttt{h2 = h2 \textasciicircum (h1 << 1);}
+\texttt{h2 \textasciicircum= h2 + 0x9e3779b9 + (h1<<6) + (h1>>2);}\\
+0x9e3779b9 is a prime number.\\
+See: https://stackoverflow.com/a/2595226/5607735\\
 
-\begin{verbatim}
-push_heap(iterator f, iterator s);
-push_heap(iterator f, iterator s, comp);
-\end{verbatim}
 
-NOTE:\\
-\texttt{f} points to the first element and \texttt{s} points next to the second element.\\
-\texttt{f} and \texttt{s} can be pointers when the heap is constructed over a array.
+\subsubsection{Others}
+
+\begin{itemize}
+\item \texttt{swap(T\& a, T\&b);}\\
+\item \texttt{reverse(Iterator first, Iterator last);}
+\item \texttt{next\_permutation(a.begin(), a.end());}\\
+\item \texttt{prev\_permutation(a.begin(), a.end());}\\
+\item \texttt{random\_shuffle(a.begin(), a.end());}\\
+Gives the next permutation for a given vector of integers.
+\end{itemize}
+
+\vfill \null
+\columnbreak 
+

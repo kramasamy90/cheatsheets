@@ -1,6 +1,6 @@
-\section{Input output}
+\subsection{Input output}
 
-\subsection{File Access}
+\subsubsection{File Access}
 
 Format:\\
 
@@ -19,11 +19,11 @@ Allowable modes include:\\
 NOTE: \textcolor{red}{Difference between \texttt{rb} and \texttt{r} etc:}\\
 While using just \texttt{"r"} might work in writing binary files, it might cause trouble due misinterpretation of special characters like LF and CR. See: \url{https://stackoverflow.com/q/2174889/5607735} 
 
-\subsubsection{Standard I/O}
+\textbf{Standard IO}
 Can be treated in the same way as file pointer.\\
 \texttt{stdin}, \texttt{stdout}, \texttt{stderr}\\
 
-\subsection{Reading and writing a file}
+\subsubsection{Reading and writing a file}
 \begin{verbatim}
 size_t fread{const void* ptr, size_t size,/
 size_t count, FILE* stream};
@@ -32,7 +32,7 @@ size_ t fwrite{const void* ptr, size_t size,/
 size_t count, FILE* stream};
 \end{verbatim}
 
-\subsection{Character I/O}
+\subsubsection{Character I/O}
 \begin{tabularx}{\linewidth}{lX}
 \texttt{getchar} & Takes input from standard input.\\
 & \texttt{int getchar()}\\
@@ -45,7 +45,7 @@ size_t count, FILE* stream};
 \texttt{ungetc} & \\
 \end{tabularx}
 
-\subsection{Line I/O}
+\subsubsection{Line I/O}
 \begin{tabularx}{\linewidth}{lX}
 \texttt{gets} & Reads until \texttt{EOF}.\\
 & \texttt{gets} deletes terminal \textbackslash \texttt{n}\\
@@ -64,7 +64,7 @@ size_t count, FILE* stream};
 
 \vfill \null
 
-\subsection{\texttt{printf} and \texttt{scanf}}
+\subsubsection{\texttt{printf} and \texttt{scanf}}
 \subsubsection{Conversion formats for \texttt{printf} and \texttt{scanf}}
 \begin{tabularx}{\linewidth}{c|X}
 \hline 
