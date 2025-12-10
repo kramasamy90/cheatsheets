@@ -2,7 +2,6 @@
 
 \subsubsection{Value Categories}
 
-
 \begin{tabularx}{\linewidth}{lX}
     \texttt{lvalue}     & Has name. Can take address.\\
     \texttt{prvalue}    & Temporary value. No name. \\
@@ -16,12 +15,9 @@
     \texttt{L-value reference} & Refers to an \texttt{lvalue}. Eg: \texttt{int\& ref = var;}\\
     \texttt{R-value reference} & Refers to an \texttt{rvalue}. Eg: \texttt{int\&\& rref = 5;}\\
 \end{tabularx}
-\textcolor{magenta}{Exception: R-value can bind to const l-value reference.}\\
-\quad\quad\quad\quad\quad \texttt{const int\& ref = 5;}\\
-
 
 \begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
-\textbf{Some exceptions:}\\
+\textbf{Exceptions:}\\
 \vspace{-1.5em}
 \begin{itemize}
 \setlength\itemsep{-0.25em}
@@ -30,7 +26,6 @@
     \item String literals are l-values.
 \end{itemize}
 \end{mdframed}
-
 
 \subsubsection{Literals}
 
