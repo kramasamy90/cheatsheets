@@ -1,0 +1,63 @@
+\subsection{Initialization}
+
+\subsubsection{Fundamental Types}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4,nobreak=true]
+\begin{verbatim}
+    int a;     // Garbage value.
+    int a{};   // a = 0.
+    int a{1};  // a = 1;
+    int a = b; // Copy intialization.
+\end{verbatim}
+\end{mdframed}
+
+
+\subsubsection{Array types}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4,nobreak=true]
+\begin{verbatim}
+    int a[3];          // Garbage value.
+    int a[3]{};        // a = {0, 0, 0}
+    int a{3}{1};       // a = {1, 0, 0}
+    int a{3}{1, 2, 3}; // a = {1, 2, 3}
+\end{verbatim}
+\end{mdframed}
+
+\subsubsection{Aggregate Types}
+\textit{Aggregates:} Arrays, "Simple" structs/classes without Ctors.\\
+Consider:
+\begin{verbatim}
+class Foo {
+public:
+    int x;
+    double y;
+};
+\end{verbatim}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4,nobreak=true]
+\begin{verbatim}
+Foo foo;
+Foo foo{};      // foo.x = 0; foo.y = 0.0;
+Foo foo{1};     // foo.x = 1; foo.y = 0.0;
+Foo foo{1, 2};  // foo.x = 1; foo.y = 2.0;
+\end{verbatim}
+\end{mdframed}
+
+
+\subsubsection{Class Types with Constructors}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4,nobreak=true]
+\begin{verbatim}
+Foo foo;         // Default Ctor.
+Foo foo();       // Default Ctor.
+Foo foo{};       // Default Ctor.
+Foo foo{bar};    // Copy Ctor. Not blocked by explicity.
+Foo foo(bar);    // Copy Ctor. Not blocked by explicity.
+Foo foo = bar;   // Copy Ctor. Blocked if explicit.
+Foo foo(1, 2);   // Parameterized Ctor.
+Foo foo{1};      // Ctor with std::initializer_list.
+Foo foo{1, 2};   // Ctor with std::initializer_list.
+Foo foo({1, 2}); // Ctor with std::initializer_list.
+\end{verbatim}
+\end{mdframed}
+

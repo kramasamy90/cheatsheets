@@ -1,0 +1,213 @@
+\subsection{Classes}
+
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+class Point {
+public:
+    Point(int x, int y) : x_(x), y_(y) {}
+private:
+    int x_;
+    int y_;
+};
+\end{verbatim}
+\end{mdframed}
+
+\subsubsection{Inheritance Behaviour}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=SlateGray2!40,linecolor=Firebrick4]
+\textbf{Simple rule}
+\begin{enumerate}
+\item Private members are never inherited.
+\item \texttt{derived-type = min(base-type, inheritance-type)}.
+\end{enumerate}
+\end{mdframed}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Member / Inheritance & Public    & Protected & Private \\ \hline
+Public               & Public    & Protected & Private \\ \hline
+Protected            & Protected & Protected & Private \\ \hline
+Private              & NA        & NA        & NA      \\ \hline 
+\end{tabular}
+
+\subsubsection{Members Variables}
+
+\begin{itemize}
+\item \texttt{this} - pointer to the current object.
+\item \texttt{static} - shared across all objects of the class.
+\end{itemize}
+
+
+
+
+\subsubsection{Member Functions}
+
+\begin{center}
+\textbf{Rule-of-5 members} 
+\end{center}
+
+\textbf{1. Copy Ctor}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+// Pass by ref to avoid recursion.
+Vec::Vec(const Vec &other) { 
+    n_ = other.n_;
+    data_ = new int[n_];
+    for (int i = 0; i < n_; i++) {
+        data_[i] = other.data_[i];
+    }
+}    
+\end{verbatim}
+\end{mdframed}
+
+\textbf{2. Move Ctor}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+Vec::Vec(Vec &&other) noexcept {
+    n_ = other.n_;
+    data_ = other.data_;
+    other.n_ = 0;
+    other.data_ = nullptr;    
+}    
+\end{verbatim}
+\end{mdframed}
+
+\vfill\null
+\columnbreak
+
+
+\textbf{3. Copy Assignment Operator}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+Vec& Vec::operator=(const Vec &other) {
+    if (this != &other) { // Self-assignment check.
+        delete[] data_; // Free existing resource.
+        n_ = other.n_;
+        data_ = new int[n_];
+        // Deep copy.
+        for (int i = 0; i < n_; i++) {
+            data_[i] = other.data_[i];
+        }
+    }    
+    return *this; // To permit chained assignments.
+}
+\end{verbatim}
+\end{mdframed}
+
+
+\textbf{4. Move Assignment Operator}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+Vec& Vec::operator=(Vec &&other) noexcept {
+    if (this != &other) { // Self-assignment check.
+        delete[] data_; // Free existing resource.
+        n_ = other.n_;
+        data_ = other.data_;
+        other.n_ = 0;
+        other.data_ = nullptr;    
+    }    
+    return *this; // To permit chained assignments.    
+}
+\end{verbatim}
+\end{mdframed}
+
+\textbf{5. Destructor}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+Vec::~Vec() {
+    delete[] data_;
+}    
+\end{verbatim}
+\end{mdframed}
+
+\begin{center}
+\textbf{Others}
+\end{center}
+
+\textbf{6. Default Ctor}
+Eg: \texttt{Foo::Foo(){}}
+
+\textbf{7. Converting Ctor}\\
+Ctor with single argument or multiple arguments with default values.\\
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+Say: \texttt{Foo::Foo(const Bar\&);}
+\begin{verbatim}
+Foo f = bar; // Implicit conversion from Bar to Foo.
+\end{verbatim}
+\texttt{explicit Foo(const Bar\&);// Prevents implicit conversion.} 
+\end{mdframed}
+
+\textbf{8. Static methods}\\
+Belong to class, not object.\\
+No \texttt{this} pointer.\\
+
+
+\vfill\null
+\columnbreak
+
+
+\begin{mdframed}[nobreak=true,backgroundcolor=magenta!10,linecolor=magenta]
+Compilers provided default impelementation for 1-6 methods.
+\begin{itemize}
+\item \textbf{\texttt{delete}}: Prevents default generation.
+\item \textbf{\texttt{default}}: Makes the intent clear.\\
+                                 \textcolor{red}{Forces default generation?}
+\item \textbf{\texttt{explicit}}: Prevents implicit conversions for converting ctors.
+\end{itemize}
+\end{mdframed}
+
+
+\subsubsection{Virtual Methods and Abstract Class}
+
+\begin{itemize}
+\item \textbf{Virtual method: } Eg: \texttt{virtual void Animal::speak();}
+\item \textbf{Pure virtual method: } Eg: \texttt{virtual void Animal::speak() = 0;}
+\item \textbf{Abstract class:} Class with at least one pure virtual method.\\
+                               Cannot instantiate objects of abstract class.
+\end{itemize}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=magenta!10,linecolor=magenta]
+\textbf{Virtual vs normal methods:}\\
+\begin{verbatim}
+Animal* a = new Dog();
+a->speak();
+\end{verbatim}
+\begin{itemize}
+\item \texttt{speak} is virtual: Dog's speak() called.
+\item \texttt{speak} is normal: Animal's speak() called.
+\end{itemize}
+\end{mdframed}
+
+
+\subsubsection{override \& final}
+
+Specifiers at the end. Relative order between them doesn't matter.\\
+
+\textbf{\texttt{override}}:\\
+Tells a method is meant to override a base class method. \\
+Compiler error if it doesn't.\\
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\textbf{Base:} \texttt{void Animal::speak() const;}\\
+\textbf{Derived:} \texttt{void Dog::speak(); // Compiles.}\\
+\textbf{Unexpected runtime behaviour:} \\
+\texttt{a->speak(); // Base class speak.}\\
+\textbf{Derived w/ override:} \\
+\texttt{void Dog::speak() override; // Compiler error.}\\
+\end{mdframed}
+
+\textbf{\texttt{final}}:\\
+Method not supposed to be overridden in derived classes.\\
+Compiler error if it is.\\
+
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\textbf{Base:} \texttt{void Dog::speak() override final;}\\
+\textbf{Derived:} \\
+\texttt{void BorderCollie::speak() override; // Compiler error.}
+\end{mdframed}

@@ -1,0 +1,136 @@
+\subsection{Declarations}
+
+\texttt{<delc-type-specifier> <declarator>}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\textbf{Examples:}\\
+\texttt{int x; // <int> <x>}\\
+\texttt{int *x; // <int> <*x>}\\
+\texttt{const int *x; // <const int> <*x>}\\
+\texttt{int *const x; // <int> <const *x>}\\
+\texttt{const int *const x; // <const int> <const *x>}
+\end{mdframed}
+
+\subsubsection{Declarator} 
+Tells the compiler about the name of the variable, its type (pointer, array, function etc).\\
+Could also have cv qualifiers (const, volatile).\\
+Eg: \texttt{int *const p;}\\
+Here \texttt{const} is part of the declarator.
+
+\subsubsection{\texttt{decl-type-specifiers}}
+
+\textbf{Fundamental types}\\
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    \texttt{char}       & \\
+    \texttt{int}        & \\
+    \texttt{float}      & \\
+    \texttt{double}     & \\
+    \texttt{void}       & \\
+    \hline
+Common aliases & \\
+    \hline
+    \texttt{size\_t}     & \\
+    \texttt{char\_t}     & \\
+    \texttt{int8\_t}     & \\
+    \texttt{int64\_t}    & \\
+    \texttt{uint32\_t}   & \\
+    \hline
+\end{tabularx}
+\textcolor{magenta}{NOTE:} \texttt{std::size\_t}, \texttt{int8\_t} are
+preferred over \texttt{size\_t}, \texttt{int8\_t} etc. \textcolor{red}{Why?}
+
+
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    \texttt{register}       & Ignored by modern compilers.\\ 
+    \texttt{mutable}        & Removes const-ness from a const object member variable.\\
+    \texttt{inline}         & Relaxes ODR.\\
+                            & \textcolor{red}{NOTE:} Global linkage.\\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{static}         & Specifies internal linkage.\\
+                            & \textit{Local:} initialized only once, retains value between calls.\\
+                            & \textit{Global:} visible only in the current TU.\\
+                            & \textcolor{red}{Different from \texttt{inline}}.\\
+                            & \textit{See "Class" for static members.}\\
+    \texttt{extern}         & Specifies external linkage.\\
+                            & Eg: \texttt{extern int x; // x is now available in other TUs.}\\
+    \texttt{thread\_local}  & Specifies thread local storage duration.\\
+                            & Eg: \texttt{thread\_local int x;}\\
+    \hline
+\end{tabularx}
+
+\vfill\null
+\columnbreak
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{typedef}        & \texttt{typedef <type> <alias>;}\\
+                            & Eg: \texttt{typedef long long int ll;}\\
+    \texttt{using}          & \texttt{using <alias> = <type>;}\\
+                            & Eg: \texttt{using ll = long long int;}\\
+                            & \texttt{using} supports template aliase, but \texttt{typedef} does not.\\
+    \texttt{namespace}      & Declares a namespace.\\
+                            & Eg: \texttt{namespace Foo \{ ... \}}\\
+                            & Alias: \texttt{namespace Bar = Foo;}\\
+    \hline
+    auto                   & Type deduction based on initializer.\\
+                           & Eg: \texttt{auto x = 10; // x is int}\\
+    decltype               & Deduces type of an expression.\\
+                           & Eg: \texttt{decltype(x) y; // y has same type as x}\\
+                           & \texttt{decltype} is exact, unlike \texttt{auto}.\\
+                           & Eg: \texttt{auto} doesn't preserve references, const, arrays decay to pointers etc.\\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{static\_assert} & Compile time assertion.\\
+                            & \texttt{static\_assert(<bool-constexpr>)}\\
+                            & \texttt{static\_assert(<bool-constexpr>, "<message>")}\\
+    \hline
+\end{tabularx}
+
+\subsubsection{enum, enum class, union}
+
+\textbf{enum}
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+enum Color { RED,       // 0
+             GREEN = 5, // 5
+             BLUE       // 6
+};
+\end{verbatim}
+\end{mdframed}
+
+\begin{itemize}
+\item No scope:Eg: \texttt{Color c = RED;}.
+\item Implicitly converts to int. Eg: \texttt{int x = RED;}.
+\end{itemize}
+
+\textbf{enum class (scoped enum)}
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+enum class Color {
+    Red,        // 0
+    Green = 3,  // 3
+    Blue        // 4
+};
+\end{verbatim}
+\end{mdframed}
+
+Eg usage: \texttt{Color c = Color::Red;}.\\
+
+\textbf{Union}
+
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+union Data {
+    int i;
+    float f;
+};
+\end{verbatim}
+\end{mdframed}
