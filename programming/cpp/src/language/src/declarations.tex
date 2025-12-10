@@ -1,6 +1,6 @@
 \subsection{Declarations}
 
-\texttt{<delc-type-specifier> <declarator>}
+\texttt{<decl-type-specifier> <declarator>}
 \begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
 \textbf{Examples:}\\
 \texttt{int x; // <int> <x>}\\
@@ -10,11 +10,10 @@
 \texttt{const int *const x; // <const int> <const *x>}
 \end{mdframed}
 
-\subsubsection{Declarator} 
-Tells the compiler about the name of the variable, its type (pointer, array, function etc).\\
-Could also have cv qualifiers (const, volatile).\\
-Eg: \texttt{int *const p;}\\
-Here \texttt{const} is part of the declarator.
+\subsubsection{Declarator}
+Specifies the name being declared and modifies the base type via operators (\texttt{*}, \texttt{\&}, \texttt{[]}, \texttt{()}, etc.). May include cv-qualifiers (\texttt{const}, \texttt{volatile}) in certain positions.
+
+Eg: \texttt{int *const p;} --- \texttt{const} is part of the declarator, yielding "const pointer to int".
 
 \subsubsection{\texttt{decl-type-specifiers}}
 
@@ -75,9 +74,9 @@ preferred over \texttt{size\_t}, \texttt{int8\_t} etc. \textcolor{red}{Why?}
                             & Eg: \texttt{namespace Foo \{ ... \}}\\
                             & Alias: \texttt{namespace Bar = Foo;}\\
     \hline
-    auto                   & Type deduction based on initializer.\\
+    \texttt{auto}          & Type deduction based on initializer.\\
                            & Eg: \texttt{auto x = 10; // x is int}\\
-    decltype               & Deduces type of an expression.\\
+    \texttt{decltype}      & Deduces type of an expression.\\
                            & Eg: \texttt{decltype(x) y; // y has same type as x}\\
                            & \texttt{decltype} is exact, unlike \texttt{auto}.\\
                            & Eg: \texttt{auto} doesn't preserve references, const, arrays decay to pointers etc.\\
