@@ -1,0 +1,71 @@
+\subsection{Pre-processor}
+
+\begin{minipage}{\linewidth}
+
+\textbf{File Inclusion:}
+\begin{itemize}
+    \setlength{\itemsep}{-0.5em}
+    \item \texttt{\#include <filename>} --- Search system include paths.
+    \item \texttt{\#include "filename"} --- Search current directory first, then system paths.
+\end{itemize}
+
+\textbf{Macro Definitions:}
+\begin{itemize}
+    \setlength{\itemsep}{-0.5em}
+    \item \texttt{\#define NAME \textit{replacement}}
+    \item \texttt{\#define FUNC(arg1, arg2) \textit{expression}}\\
+            Eg: \texttt{\#define MAX(A,B) ((A) > (B) ? (A) : (B))}
+    \item \texttt{\#undef NAME} --- Remove definition of \texttt{NAME}.
+\end{itemize}
+
+\textbf{Macro Operators:}
+\begin{itemize}
+    \setlength{\itemsep}{-0.5em}
+    \item \texttt{\#} (stringification) --- Converts argument to string literal. \\
+    Eg: \texttt{\#define STR(x) \#x} $\Rightarrow$ \texttt{STR(hello)} expands to \texttt{"hello"}
+
+    \item \texttt{\#\#} (token pasting) --- Concatenates tokens. \\
+    Eg: \texttt{\#define CONCAT(a,b) a\#\#b} $\Rightarrow$ \texttt{CONCAT(x,y)} expands to \texttt{xy}
+\end{itemize}
+
+\textbf{Conditional Compilation:}
+\begin{itemize}
+    \setlength{\itemsep}{-0.5em}
+    \item \texttt{\#if \textit{constant-expression}} / \texttt{\#elif} / \texttt{\#else} / \texttt{\#endif}
+    \item \texttt{\#ifdef NAME} --- True if \texttt{NAME} is defined.
+    \item \texttt{\#ifndef NAME} --- True if \texttt{NAME} is not defined.
+    \item \texttt{defined(NAME)} --- Can be used in \texttt{\#if} expressions.
+
+    Example header guard:
+    \begin{verbatim}
+    #ifndef HEADER_FILE_H
+    #define HEADER_FILE_H
+    // ... declarations ...
+    #endif
+    \end{verbatim}
+
+    \item \texttt{\#pragma once} --- Modern single-inclusion guard (non-standard but widely supported).
+\end{itemize}
+
+\textbf{Diagnostics:}
+\begin{itemize}
+    \setlength{\itemsep}{-0.5em}
+    \item \texttt{\#error "\textit{message}"} --- Emit compile-time error.
+    \item \texttt{\#warning "\textit{message}"} --- Emit warning (compiler extension).
+    \item \texttt{\#line N "\textit{file}"} --- Change reported line number and filename in diagnostics.
+\end{itemize}
+
+\textbf{Predefined Macros:}
+
+\vspace{0.3em}
+\begin{tabularx}{\linewidth}{lX}
+\verb|__FILE__|         & Current source file name (string). \\
+\verb|__LINE__|         & Current line number (integer). \\
+\verb|__DATE__|         & Compilation date as \texttt{"Mmm dd yyyy"}. \\
+\verb|__TIME__|         & Compilation time as \texttt{"hh:mm:ss"}. \\
+\verb|__cplusplus|      & C++ standard version (e.g., \texttt{201703L} for C++17). \\
+\verb|__func__|         & Current function name (C++11, not technically a macro). \\
+\verb|__STDC_HOSTED__| & \texttt{1} if hosted implementation, \texttt{0} if freestanding.
+\end{tabularx}
+
+\end{minipage}
