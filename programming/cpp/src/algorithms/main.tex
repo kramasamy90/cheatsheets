@@ -1,0 +1,31 @@
+\section{Algorithms}
+
+
+\subsection{Heap}
+\textbf{Format:}\\
+\textbf{Constructing a heap:}\\
+
+\vspace{-6pt}
+
+\begin{verbatim}
+make_heap(iterator f, iterator s);
+make_heap(iterator f, iterator s, comp);
+\end{verbatim}
+
+\vspace{-12pt}
+
+\begin{verbatim}
+pop_heap(iterator f, iterator s);
+pop_heap(iterator f, iterator s, comp);
+\end{verbatim}
+
+\vspace{-12pt}
+
+\begin{verbatim}
+push_heap(iterator f, iterator s);
+push_heap(iterator f, iterator s, comp);
+\end{verbatim}
+
+NOTE:\\
+\texttt{f} points to the first element and \texttt{s} points next to the second element.\\
+\texttt{f} and \texttt{s} can be pointers when the heap is constructed over a array.
