@@ -98,7 +98,7 @@ class Pair<T*, U*> { /*...*/ };
                 & \texttt{int... Ns}\\
     \hline
     Expansion & \texttt{Args...} expands to \texttt{T1, T2, T3, ...}\\
-              & \texttt{func(Args...)...} expands to \texttt{func(T1), func(T2), ...}\\
+              & \texttt{func(args)...} expands to \texttt{func(a1), func(a2), ...}\\
               & \texttt{sizeof...(Args)} gives pack size.\\
     \hline
 \end{tabularx}
