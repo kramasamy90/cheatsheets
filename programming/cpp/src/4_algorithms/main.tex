@@ -1,0 +1,195 @@
+\section{Algorithms}
+\texttt{\#include <algorithm>}, \texttt{\#include <numeric>}\\
+All algorithms work on iterator ranges \texttt{[first, last)}. Optional \texttt{comp} is a binary predicate; \texttt{pred} is a unary predicate.
+
+\subsection{Non-Mutating Algorithms}
+
+\subsubsection{Finding Elements}
+\begin{itemize}
+\item \texttt{It find(first, last, val)} -- Returns iterator to first element equal to \texttt{val}, or \texttt{last} if not found.
+\item \texttt{It find\_if(first, last, pred)} -- Returns iterator to first element where \texttt{pred} returns true, or \texttt{last}.
+\item \texttt{It find\_if\_not(first, last, pred)} -- Returns iterator to first element where \texttt{pred} returns false, or \texttt{last}.
+\item \texttt{It adjacent\_find(first, last, comp)} -- Returns iterator to first of two consecutive equal elements, or \texttt{last}.
+\end{itemize}
+
+\subsubsection{Counting}
+\begin{itemize}
+\item \texttt{size\_t count(first, last, val)} -- Returns number of elements equal to \texttt{val}.
+\item \texttt{size\_t count\_if(first, last, pred)} -- Returns number of elements where \texttt{pred} is true.
+\end{itemize}
+
+\subsubsection{Comparing Ranges}
+\begin{itemize}
+\item \texttt{bool equal(f1, l1, f2, comp)} -- Returns true if all elements in both ranges are equal.
+\item \texttt{pair<It,It> mismatch(f1, l1, f2, comp)} -- Returns pair of iterators to first mismatching elements in both ranges.
+\end{itemize}
+
+\subsubsection{Searching}
+\begin{itemize}
+\item \texttt{It search(f1, l1, f2, l2, comp)} -- Returns iterator to start of first occurrence of subsequence \texttt{[f2,l2)}, or \texttt{l1}.
+\item \texttt{It search\_n(first, last, n, val, comp)} -- Returns iterator to start of first sequence of \texttt{n} consecutive elements equal to \texttt{val}, or \texttt{last}.
+\item \texttt{It find\_end(f1, l1, f2, l2, comp)} -- Returns iterator to start of \textit{last} occurrence of subsequence, or \texttt{l1}.
+\item \texttt{It find\_first\_of(f1, l1, f2, l2, comp)} -- Returns iterator to first element in \texttt{[f1,l1)} matching any in \texttt{[f2,l2)}, or \texttt{l1}.
+\end{itemize}
+
+\subsubsection{Binary Search (sorted ranges)}
+\begin{itemize}
+\item \texttt{bool binary\_search(first, last, val, comp)} -- Returns true if \texttt{val} exists in sorted range.
+\item \texttt{It lower\_bound(first, last, val, comp)} -- Returns iterator to first element $\geq$ \texttt{val}, or \texttt{last}.
+\item \texttt{It upper\_bound(first, last, val, comp)} -- Returns iterator to first element $>$ \texttt{val}, or \texttt{last}.
+\item \texttt{pair<It,It> equal\_range(first, last, val, comp)} -- Returns pair: \texttt{(lower\_bound, upper\_bound)}.
+\end{itemize}
+
+\subsubsection{Min/Max}
+\begin{itemize}
+\item \texttt{It min\_element(first, last, comp)} -- Returns iterator to smallest element, or \texttt{last} if empty.
+\item \texttt{It max\_element(first, last, comp)} -- Returns iterator to largest element, or \texttt{last} if empty.
+\item \texttt{pair<It,It> minmax\_element(first, last, comp)} -- Returns pair: \texttt{(min\_element, max\_element)}.
+\end{itemize}
+
+\subsubsection{Predicates on Ranges}
+\begin{itemize}
+\item \texttt{bool all\_of(first, last, pred)} -- Returns true if \texttt{pred} is true for all elements (or range is empty).
+\item \texttt{bool any\_of(first, last, pred)} -- Returns true if \texttt{pred} is true for at least one element.
+\item \texttt{bool none\_of(first, last, pred)} -- Returns true if \texttt{pred} is false for all elements (or range is empty).
+\end{itemize}
+
+\subsubsection{Iteration}
+\begin{itemize}
+\item \texttt{Func for\_each(first, last, func)} -- Applies \texttt{func} to each element. Returns \texttt{func} (useful for stateful functors).
+\end{itemize}
+
+\subsection{Mutating Algorithms}
+
+\subsubsection{Copying}
+\begin{itemize}
+\item \texttt{It copy(first, last, dest)} -- Copies range to \texttt{dest}. Returns iterator past last copied element in destination.
+\item \texttt{It copy\_if(first, last, dest, pred)} -- Copies elements where \texttt{pred} is true. Returns iterator past last copied element.
+\item \texttt{It copy\_n(first, n, dest)} -- Copies \texttt{n} elements. Returns iterator past last copied element in destination.
+\item \texttt{It copy\_backward(first, last, dest\_last)} -- Copies range backward ending at \texttt{dest\_last}. Returns iterator to first copied element.
+\item \texttt{It move(first, last, dest)} -- Move-assigns elements to \texttt{dest}. Returns iterator past last moved element.
+\end{itemize}
+
+\subsubsection{Filling \& Generating}
+\begin{itemize}
+\item \texttt{void fill(first, last, val)} -- Assigns \texttt{val} to all elements. Returns nothing.
+\item \texttt{It fill\_n(first, n, val)} -- Assigns \texttt{val} to first \texttt{n} elements. Returns iterator past last filled element.
+\item \texttt{void generate(first, last, gen)} -- Assigns result of calling \texttt{gen()} to each element. Returns nothing.
+\item \texttt{It generate\_n(first, n, gen)} -- Assigns \texttt{gen()} to first \texttt{n} elements. Returns iterator past last assigned element.
+\end{itemize}
+
+\subsubsection{Transforming}
+\begin{itemize}
+\item \texttt{It transform(first, last, dest, op)} -- Applies \texttt{op} to each element, stores result in \texttt{dest}. Returns iterator past last transformed element.
+\item \texttt{It transform(f1, l1, f2, dest, binop)} -- Applies \texttt{binop} to pairs from two ranges. Returns iterator past last transformed element.
+\end{itemize}
+
+\subsubsection{Replacing}
+\begin{itemize}
+\item \texttt{void replace(first, last, old, new)} -- Replaces all elements equal to \texttt{old} with \texttt{new}. Returns nothing.
+\item \texttt{void replace\_if(first, last, pred, new)} -- Replaces elements where \texttt{pred} is true. Returns nothing.
+\end{itemize}
+
+\subsubsection{Removing}
+\begin{itemize}
+\item \texttt{It remove(first, last, val)} -- Moves elements $\neq$ \texttt{val} to front. Returns iterator to new logical end.
+\item \texttt{It remove\_if(first, last, pred)} -- Moves elements where \texttt{pred} is false to front. Returns iterator to new logical end.
+\item \texttt{It unique(first, last, comp)} -- Removes consecutive duplicates. Returns iterator to new logical end.
+\end{itemize}
+\textit{Note:} These don't resize; use erase-remove idiom: \texttt{v.erase(remove(...), v.end());}
+
+\subsubsection{Reordering}
+\begin{itemize}
+\item \texttt{void reverse(first, last)} -- Reverses elements in range. Returns nothing.
+\item \texttt{It reverse\_copy(first, last, dest)} -- Copies reversed range to \texttt{dest}. Returns iterator past last copied element.
+\item \texttt{It rotate(first, middle, last)} -- Rotates so \texttt{middle} becomes first. Returns iterator to original first element's new position.
+\item \texttt{void shuffle(first, last, rng)} -- Randomly shuffles using random generator \texttt{rng}. Returns nothing.
+\end{itemize}
+
+\subsubsection{Swapping}
+\begin{itemize}
+\item \texttt{void swap(a, b)} -- Swaps values of \texttt{a} and \texttt{b}. Returns nothing.
+\item \texttt{void iter\_swap(it1, it2)} -- Swaps elements pointed to by iterators. Returns nothing.
+\item \texttt{It swap\_ranges(f1, l1, f2)} -- Swaps elements in two ranges. Returns iterator past last swapped element in second range.
+\end{itemize}
+
+
+\subsection{Sorting \& Set Operations}
+
+\subsubsection{Sorting}
+\begin{itemize}
+\item \texttt{void sort(first, last, comp)} -- Sorts in ascending order; $O(n \log n)$. Returns nothing.
+\item \texttt{void stable\_sort(first, last, comp)} -- Stable sort; preserves order of equal elements. Returns nothing.
+\item \texttt{void partial\_sort(first, middle, last, comp)} -- Sorts smallest elements into \texttt{[first, middle)}. Returns nothing.
+\item \texttt{void nth\_element(first, nth, last, comp)} -- Partitions so element at \texttt{nth} is in sorted position. Returns nothing.
+\item \texttt{bool is\_sorted(first, last, comp)} -- Returns true if range is sorted.
+\item \texttt{It is\_sorted\_until(first, last, comp)} -- Returns iterator to first element that breaks sorted order, or \texttt{last}.
+\end{itemize}
+
+\subsubsection{Partitioning}
+\begin{itemize}
+\item \texttt{It partition(first, last, pred)} -- Reorders so elements satisfying \texttt{pred} come first. Returns iterator to first element of second group.
+\item \texttt{It stable\_partition(first, last, pred)} -- Stable partition. Returns iterator to first element of second group.
+\item \texttt{bool is\_partitioned(first, last, pred)} -- Returns true if all elements satisfying \texttt{pred} precede those that don't.
+\item \texttt{It partition\_point(first, last, pred)} -- Returns iterator to first element where \texttt{pred} is false (range must be partitioned).
+\end{itemize}
+
+\subsubsection{Merging (sorted ranges)}
+\begin{itemize}
+\item \texttt{It merge(f1, l1, f2, l2, dest, comp)} -- Merges two sorted ranges into \texttt{dest}. Returns iterator past last merged element.
+\item \texttt{void inplace\_merge(first, mid, last, comp)} -- Merges two consecutive sorted ranges in-place. Returns nothing.
+\end{itemize}
+
+\subsubsection{Set Operations (sorted ranges)}
+Destination must have sufficient space allocated.
+\begin{itemize}
+\item \texttt{It set\_union(f1, l1, f2, l2, dest, comp)} -- Elements in either range. Returns iterator past last written element.
+\item \texttt{It set\_intersection(f1, l1, f2, l2, dest, comp)} -- Elements in both ranges. Returns iterator past last written element.
+\item \texttt{It set\_difference(f1, l1, f2, l2, dest, comp)} -- Elements in first but not second. Returns iterator past last written element.
+\item \texttt{It set\_symmetric\_difference(..., comp)} -- Elements in exactly one range. Returns iterator past last written element.
+\item \texttt{bool includes(f1, l1, f2, l2, comp)} -- Returns true if second range is a subset of first.
+\end{itemize}
+
+\subsubsection{Permutations}
+\begin{itemize}
+\item \texttt{bool next\_permutation(first, last, comp)} -- Transforms to next lexicographic permutation. Returns false if wrapped to first permutation.
+\item \texttt{bool prev\_permutation(first, last, comp)} -- Transforms to previous permutation. Returns false if wrapped to last permutation.
+\end{itemize}
+
+\subsubsection{Heap Operations}
+\begin{itemize}
+\item \texttt{void make\_heap(first, last, comp)} -- Converts range to max-heap. Returns nothing.
+\item \texttt{void push\_heap(first, last, comp)} -- Inserts element at \texttt{last-1} into heap \texttt{[first, last-1)}. Returns nothing.
+\item \texttt{void pop\_heap(first, last, comp)} -- Moves max element to \texttt{last-1}, shrinks heap. Returns nothing.
+\item \texttt{void sort\_heap(first, last, comp)} -- Sorts a heap into ascending order. Returns nothing.
+\item \texttt{bool is\_heap(first, last, comp)} -- Returns true if range is a valid max-heap.
+\end{itemize}
+
+
+\subsection{Numeric Algorithms}
+\texttt{\#include <numeric>}
+
+\begin{itemize}
+\item \texttt{T accumulate(first, last, init, binop)} -- Returns \texttt{init op a[0] op a[1] op ...} (default op is \texttt{+}).
+\item \texttt{It partial\_sum(first, last, dest, binop)} -- Writes prefix sums: \texttt{dest[i] = a[0] + ... + a[i]}. Returns iterator past last written element.
+\item \texttt{T inner\_product(f1, l1, f2, init, add\_op, mult\_op)} -- Returns $init + a_0 \cdot b_0 + a_1 \cdot b_1 + \ldots$
+\item \texttt{It adjacent\_difference(first, last, dest, binop)} -- Writes differences: \texttt{dest[i] = a[i] - a[i-1]}. Returns iterator past last written element.
+\item \texttt{void iota(first, last, val)} -- Fills with \texttt{val, val+1, val+2, ...} Returns nothing.
+\item \texttt{T reduce(first, last, init, binop)} -- Parallel-friendly \texttt{accumulate} (C++17). Returns reduced value.
+\item \texttt{It inclusive\_scan(first, last, dest, binop, init)} -- Parallel-friendly \texttt{partial\_sum} (C++17). Returns iterator past last written element.
+\item \texttt{It exclusive\_scan(first, last, dest, init, binop)} -- Like inclusive but excludes current element. Returns iterator past last written element.
+\end{itemize}
+
+\subsection{Compare Function}
+\begin{mdframed}[backgroundcolor=blue!20]
+\textbf{Custom comparator:}
+\vspace{-8pt}
+\begin{verbatim}
+bool comp(const T& a, const T& b) {
+    return a < b;  // true if a should come before b
+}
+\end{verbatim}
+\end{mdframed}
+
+\vfill \null
+\columnbreak
