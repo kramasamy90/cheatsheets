@@ -1,0 +1,132 @@
+\subsection{Expressions}
+
+\subsubsection{Value Categories}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{lvalue}     & Has name. Can take address.\\
+    \texttt{prvalue}    & Temporary value. No name. \\
+                        & \textcolor{magenta}{Guaranteed copy elision.} \\
+    \texttt{xvalue}     & Expiring. Eg: \texttt{std::move(x)}.\\
+    \texttt{glvalue}    & \texttt{lvalue} $\cup$ \texttt{xvalue}.\\
+    \texttt{rvalue}     & \texttt{prvalue} $\cup$ \texttt{xvalue}.\\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{L-value reference} & Refers to an \texttt{lvalue}. Eg: \texttt{int\& ref = var;}\\
+    \texttt{R-value reference} & Refers to an \texttt{rvalue}. Eg: \texttt{int\&\& rref = 5;}\\
+\end{tabularx}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\textbf{Exceptions:}\\
+\vspace{-1.5em}
+\begin{itemize}
+\setlength\itemsep{-0.25em}
+    \item R-value can bind to const l-value reference.\\
+            Eg: \texttt{const int\& x = 42;}
+    \item String literals are l-values.
+\end{itemize}
+\end{mdframed}
+
+\subsubsection{Literals}
+
+\begin{tabularx}{\linewidth}{llX}
+    \texttt{Boolean}    & \texttt{true}                  & \\
+                        & \texttt{false}                 & \\
+    \texttt{Integer}    & \texttt{42}                    & Decimal. \\ 
+                        & \texttt{4'200'000}             & Decimal with separators.\\
+                        & \texttt{0b101010}              & Binary.\\
+                        & \texttt{052}                   & Octal.\\
+                        & \texttt{0x2a}                  & Hexadecimal.\\ 
+    \texttt{Float}      & \texttt{3.14}                  & Double.\\
+                        & \texttt{3.14f}                 & Float.\\ 
+                        & \texttt{6.626e-34}             & \texttt{xey} $\to x\times 10^y$\\
+    \texttt{Character}  & \texttt{'a'}                   & Ordinary literal.\\
+                        & \texttt{'\textbackslash n'}    & Using escape seq.\\
+                        & \texttt{'\textbackslash 13'}   & \\
+                        & \texttt{u8'a'}                 & UTF-8.\\
+    \texttt{String}     & \texttt{"Hello"}               & String literal.\\ 
+    \texttt{Pointer}    & \texttt{nullptr}.              & \\   
+\end{tabularx}
+NOTE: \texttt{Literals are prvalues.}\\
+\textcolor{magenta}{Exception: \texttt{String literals are lvalues.}}\\
+
+\subsubsection{\texttt{std::initializer\_list}}
+Constructed automatically from braced-init-list.\\
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+Foo foo({1, 2, 3});
+print_list({1, 2, 3});
+\end{verbatim}
+\end{mdframed}
+
+Passed as argument to functions.\\
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+void print\_list(std::initializer_list<int> list); 
+Foo(std::initializer_list<int> list);
+\end{verbatim}
+\end{mdframed}
+
+Access elements using iterators or range-based for loop.\\
+
+
+\vfill\null
+\columnbreak
+
+\subsubsection{Arithemetic and logical operation}
+
+    \begin{tabularx}{\linewidth}{l|lX}
+        \hline\\
+        & Operators & Associativity \\
+        \hline \\
+        1 & \texttt{() [] -$>$} \textbf{.} & left to right\\
+        2 & \texttt{! $\tilde{}$ ++ -- + - * \& (type) sizeof} & right to left\\
+        3 & \texttt{* / \%}(reminder) & left to right\\
+        4 & \texttt{+ -} & left to right \\
+        5 & \texttt{$<<$ $>>$} & left to right \\
+        6 & \texttt{$<$ $<=$ $>$ $>=$}  & left to right\\
+        7 & \texttt{== !=} & left to right\\
+        8 & \texttt{\&} & left to right \\
+        9 & \texttt{\^} & left to right \\
+        10 & \texttt{|} & left to right\\
+        11 & \texttt{\&\&} & left to right\\
+        12 & \texttt{||} & left to right \\
+        13 & \texttt{?:} & left to right \\
+        14 & \texttt{= += -= *= /= \%= \&= \^{}= |= $<<$= $>>$=} & right to left\\
+        15 & \texttt{,} & left to right\\
+        \hline
+    \end{tabularx}
+
+
+    \textbf{Selected operators}\\
+    \begin{tabularx}{\linewidth}{lX}
+        \texttt{>>}             & Bitwise right shift operator.\\
+                                & \texttt{a = b >> 1} equivalent to dividing \texttt{b} by 2.\\
+        \texttt{<<}             & Bitwise left shift operator.\\
+                                & \texttt{a = b << 1} equivalent to multiplying \texttt{b} by 2.\\
+        \texttt{?:}             & Ternary conditional operator.\\
+                                & \texttt{x = (condition)? expr1: expr2;}\\
+                                & \texttt{expr1} $\to$ \texttt{condition == true}.\\
+                                & \texttt{expr2} $\to$ \texttt{condition == false}.\\
+        \texttt{$\tilde{}$}     & Bitwise negation.\\
+        \texttt{\^}             & Bitwise XOR.\\
+    \end{tabularx}
+
+
+\subsubsection{Type casting}
+
+    \begin{tabularx}{\linewidth}{lX}
+        \texttt{const\_cast}            & Modifies \texttt{const}/\texttt{volatile} qualifiers.\\
+                                        & Modifying a \texttt{const} object leads to UB.\\
+        \texttt{static\_cast}           & Compile-time downcast.\\
+                                        & Not safe.\\
+        \texttt{dynamic\_cast}          & Safe downcast.\\
+                                        & Eg: \texttt{Base* b = static\_cast<Base*>d;} \\
+                                        & when invalid \texttt{b} is \texttt{nullptr}.\\
+                                        & Eg: \texttt{Base\& b = static\_cast<Base\&>d;} \\
+                                        & when invalid throws \texttt{std::bad\_cast}.\\
+        \texttt{reinterpret\_cast}      & \\
+    \end{tabularx}
+

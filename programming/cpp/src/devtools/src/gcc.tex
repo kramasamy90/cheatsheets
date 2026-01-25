@@ -1,0 +1,18 @@
+\subsection{G++}
+Usage:\\
+\texttt{g++ \textit{option} hello.cpp -o hello}\\
+\texttt{g++ hello.cpp -o hello}\\
+\texttt{g++ -O3 hello.cpp -o hello}\\
+Options:\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{-o} & Output file name.\\
+\texttt{-I} & Include additional directories in the search path. Eg:\\
+& \texttt{g++ -I /home/user/libs foo.cpp}\\
+\texttt{-O\textit{<level>}} & Optimization level, starts from 0. Eg: \texttt{-O3}\\
+\texttt{-g} & Creates breakpoints for debugging using GDB.\\
+\texttt{-lm} & Missing link. Used to link certain libraries like \texttt{math.h}.\\
+\texttt{-E} & Output preprocessed but uncompiled code.\\
+\texttt{-S} & Compile but do not assemble.\\
+\texttt{-c} & Compile and assembly, but do not link.\\
+\end{tabularx}
+

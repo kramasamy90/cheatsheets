@@ -1,0 +1,135 @@
+\subsection{Templates}
+
+\subsubsection{Template Parameter Kinds}
+
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    Type & \texttt{typename T} or \texttt{class T}\\
+         & Accepts any type as argument.\\
+    \hline
+    Non-type & \texttt{int N}, \texttt{size\_t N}, \texttt{auto N}, etc.\\
+             & Accepts compile-time constant values.\\
+             & Types: integral, pointers, references, \texttt{nullptr\_t}, enums, float (C++20).\\
+    \hline
+    Template template & \texttt{template <typename> class C}\\
+                      & \texttt{template <typename> typename C} (C++17+)\\
+                      & Accepts template as argument.\\
+    \hline
+\end{tabularx}
+
+\subsubsection{Template Parameter Syntax}
+
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    Basic & \texttt{typename T}\\
+          & \texttt{int N}\\
+          & \texttt{template <typename> class C}\\
+    \hline
+    With default & \texttt{typename T = int}\\
+                 & \texttt{int N = 10}\\
+                 & \texttt{template <typename> class C = std::vector}\\
+    \hline
+    Variadic & \texttt{typename... Args}\\
+             & \texttt{int... Ns}\\
+             & \texttt{template <typename> class... Containers}\\
+    \hline
+\end{tabularx}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=magenta!10,linecolor=magenta]
+\textcolor{magenta}{\textbf{NOTE:}} \texttt{typename} vs \texttt{class} for type parameters are interchangeable. \texttt{typename} is preferred (more explicit). Also, \texttt{typename} has another use: disambiguating dependent types. Eg: \texttt{typename T::value\_type x;}
+\end{mdframed}
+
+\subsubsection{Template Specialization}
+
+\textbf{Full/Explicit Specialization}\\
+Provide custom implementation for specific type(s).
+
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+// Primary template
+template <typename T>
+class MyClass { /*...*/ };
+
+// Full specialization for bool
+template <>
+class MyClass<bool> { /*...*/ };
+\end{verbatim}
+\end{mdframed}
+
+\textbf{Partial Specialization}\\
+Specialize for a subset of types. \textcolor{red}{Only for class templates, not functions.}
+
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+// Primary template
+template <typename T, typename U>
+class Pair { /*...*/ };
+
+// Partial specialization: both types same
+template <typename T>
+class Pair<T, T> { /*...*/ };
+
+// Partial specialization: pointer types
+template <typename T, typename U>
+class Pair<T*, U*> { /*...*/ };
+\end{verbatim}
+\end{mdframed}
+
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    Full specialization & \texttt{template <> class C<int> \{...\}}\\
+                        & All parameters specified.\\
+                        & Works for classes and functions.\\
+    \hline
+    Partial specialization & \texttt{template <typename T> class C<T*> \{...\}}\\
+                           & Some parameters remain generic.\\
+                           & \textcolor{red}{Only for class templates.}\\
+    \hline
+\end{tabularx}
+
+\subsubsection{Parameter Packs}
+
+\textbf{Syntax}\\
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+    Declaration & \texttt{typename... Args}\\
+                & \texttt{int... Ns}\\
+    \hline
+    Expansion & \texttt{Args...} expands to \texttt{T1, T2, T3, ...}\\
+              & \texttt{func(args)...} expands to \texttt{func(a1), func(a2), ...}\\
+              & \texttt{sizeof...(Args)} gives pack size.\\
+    \hline
+\end{tabularx}
+
+\textbf{Example: Compile-time Fibonacci sequence}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+// Fibonacci calculation
+template <int N>
+struct Fib {
+    static constexpr int value =
+        Fib<N-1>::value + Fib<N-2>::value;
+};
+template <>
+struct Fib<0> { static constexpr int value = 0; };
+template <> 
+struct Fib<1> { static constexpr int value = 1; };
+
+// Variadic template to hold sequence
+template <int... Ns>
+struct FibSeq {
+    static constexpr int values[] = { Fib<Ns>::value... };
+};
+
+// Usage
+constexpr int fibs[] = FibSeq<0, 1, 2, 3, 4, 5>::values;
+// fibs = {0, 1, 1, 2, 3, 5}
+\end{verbatim}
+\end{mdframed}
+
+\textcolor{blue}{Pack expansion} \texttt{Fib<Ns>::value...} expands to\\
+\texttt{Fib<0>::value, Fib<1>::value, ..., Fib<5>::value}
+

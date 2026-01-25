@@ -1,0 +1,90 @@
+\subsection{Functions}
+
+\begin{itemize}
+\item \textbf{Definition :} \texttt{T foo(args) \{...\}}.\\
+\item \textbf{Declaration : } \texttt{T foo(args);}.\\
+\item \textbf{Variadic Arguments:} \texttt{T foo(int n, ...)}.\\
+                                    C-style. Not safe. Use variadic templates.\\
+\end{itemize}
+
+\subsubsection{The main() function}
+
+\texttt{main(int argc, char *argv[])} \texttt{\{}\\
+\qquad \texttt{$\cdots$}\\
+\texttt{\}}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{argc} & No. of args including the program name. \\
+\texttt{argv[0]} & Pointer to executable name.\\
+\texttt{argv[i]} & Pointer to i$^{th}$ argument.\\
+\end{tabularx}
+
+
+\subsubsection{Lambda function}
+Usage: \texttt{[<capture>](<params>)-><return-type>\{<body>\}}\\
+
+\begin{tabularx}{\linewidth}{lX}
+   \texttt{<capture>}   &  Specifics\\
+   \texttt{[]}          & No variables captured.\\
+    \texttt{[=]}        & All variables captured by value.\\
+    \texttt{[\&]}       & All variables captured by reference.\\
+    \texttt{[x, \&y]}   & x captured by value, y by reference.\\
+    \texttt{[=, \&y]}   & All variables except y by value, y by reference.\\
+\end{tabularx}
+
+NOTE: Not specifying return type is not compile time error and ofter compiler can deduce it.
+But, it is good practice to specify it, especially for complex lambdas.
+
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+// Sort descending using lambda
+sort(nums.begin(), nums.end(), [](int a, int b) -> bool {
+    return a > b;
+});
+\end{verbatim}
+\end{mdframed}
+
+\subsubsection{Passing functions as arguments}
+\textbf{1. Function pointers.}\\
+Eg:
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+int foo(int a, int b, int (*bar)(int, int)) {
+    return bar(a, b);
+} 
+// Function call.
+foo(5, 3, add);
+\end{verbatim}
+\end{mdframed}
+
+\textcolor{blue}{Doesn't work with lambdas with captures.}
+
+\textbf{2. std::function}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+int foo(int a, int b, std::function<int(int, int)> bar) {
+    return bar(a, b);
+} 
+// Function call.
+foo(5, 3, add);
+\end{verbatim}
+\end{mdframed}
+
+\vfill\null
+\columnbreak
+
+\textbf{3. Templates}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+template <typename bar>    
+int foo(int a, int b, bar bar) {
+    return bar(a, b);
+}
+// Function call.
+foo(5, 3, add);
+\end{verbatim}
+\end{mdframed}
+
+\textcolor{blue}{Zero overhead}

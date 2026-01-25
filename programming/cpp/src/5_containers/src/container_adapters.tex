@@ -1,0 +1,36 @@
+\subsection{Container Adapters}
+
+\subsubsection{Queue}
+Eg: \texttt{queue<int> q;}\\
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{q.push(5)} & Adds element to the end.\\
+\texttt{q.pop()} & Removes first element.\\
+\texttt{q.front()} & Returns first element.\\
+\end{tabularx}
+
+\subsubsection{Stack}
+Eg: \texttt{stack<int> s;}\\
+
+\begin{tabularx}{\linewidth}{lX}
+s.push(5) & \\
+s.top() & \\
+s.pop() & \\
+\end{tabularx}
+
+
+\subsubsection{Priority queue}
+\textbf{Format:}\\
+\texttt{priority\_queue(type, vector<type>, compare)}\\
+\textbf{Max priority queue [Default]}\\
+Eg: \texttt{priority\_queue<int> q;}\\
+\textbf{Min priority queue}\\
+\texttt{priority\_queue<int, vector<int>, greater<int>> q;}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{q.push(3)} & \\
+\texttt{q.top()} & Returns the largest element.\\
+\texttt{q.pop()} & Removes the largest element.
+\end{tabularx}
+
+\vspace{6pt}

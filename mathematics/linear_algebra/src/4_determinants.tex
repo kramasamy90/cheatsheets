@@ -1,7 +1,10 @@
 \section{Determinant \& Trace}
 
-\subsection{Properties of determinants}
-\subsubsection{Three most basic properties of determinants}
+\subsection{Definition of Determinant}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\textbf{Determinant: }\\
+Any function $f(A): \mathbb{R}^{n\times n} \to \mathbb{R}$ satisfying the following three basic properties.
+
 
 \begin{enumerate}
 \item det I = 1.
@@ -40,6 +43,8 @@ $$
  
 \end{enumerate}
 
+\end{mdframed}
+
 \subsubsection{Derivative properties of determinants}
 \begin{enumerate}
 	\setcounter{enumi}{3}
@@ -58,10 +63,9 @@ $$
 	If $A$ is invertible, elimination leads to non-zero pivots. $detA = \prod \text{pivots} \neq 0$.
 	\item $det(AB) = det(A)\times det(B)$\\
 	Proof:\\
-	For a diagonal matrix $D$, $det(DB) = det(D)det(B)$\\
-	$A$ can be converted to a diagonal matrix $D$ by row operations.\\
-	Using the exact same row operation as above $AB$ can be converted to $DB$\\
-	\textit{For another proof see book.}
+    Say $A = E_1\cdots E_k U$, then $AB = E_1\cdots E_k UB$\\
+    For a simple row operation matrix $E_i$, $\det(AB) = \det(UB)$\\
+    $\det(UB) = \prod_iu_{ii}det(B)$ and $\det(A) = \prod_{i}u_{ii}$.
 	\item $det(A^T) = det(A)$.\\
 	Proof:\\ 
 	$PA = LDU$ and $det(PA) = det(LDU)$\\

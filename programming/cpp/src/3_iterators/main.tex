@@ -1,0 +1,82 @@
+\section{Iterators}
+
+\subsection{Iterator Categories}
+
+\subsubsection{Input Iterator}
+Read-only, single-pass, forward-moving.\\
+Supports: \texttt{*it} (read), \texttt{++it}, \texttt{it++}, \texttt{==}, \texttt{!=}.\\
+Example: \texttt{istream\_iterator}.
+
+\subsubsection{Output Iterator}
+Write-only, single-pass, forward-moving.\\
+Supports: \texttt{*it = val}, \texttt{++it}, \texttt{it++}.\\
+Example: \texttt{ostream\_iterator}, \texttt{back\_inserter}.
+
+\subsubsection{Forward Iterator}
+Multi-pass, forward-moving, read/write.\\
+Supports: All input iterator ops + can traverse multiple times.\\
+Example: \texttt{forward\_list::iterator}.
+
+\subsubsection{Bidirectional Iterator}
+Like forward iterator but can move backward.\\
+Supports: All forward iterator ops + \texttt{--it}, \texttt{it--}.\\
+Example: \texttt{list::iterator}, \texttt{set::iterator}, \texttt{map::iterator}.
+
+\subsubsection{Random Access Iterator}
+Full pointer-like arithmetic.\\
+Supports: All bidirectional ops + \texttt{it[n]}, \texttt{it + n}, \texttt{it - n}, \texttt{it += n}, \texttt{it -= n}, \texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=}.\\
+Example: \texttt{vector::iterator}, \texttt{deque::iterator}, raw pointers.\\
+
+\textbf{Random Access Examples}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{v.begin() + 5} & Iterator to 6th element.\\
+\texttt{it[3]} & Access element 3 positions ahead.\\
+\texttt{it2 - it1} & Distance between iterators.\\
+\texttt{it1 < it2} & Compare positions.\\
+\end{tabularx}
+
+\subsection{Reverse Iterators}
+
+Traverse containers backward. Available on bidirectional+ containers.\\
+
+\textbf{Getting Reverse Iterators}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{c.rbegin()} & Reverse iterator to last element.\\
+\texttt{c.rend()} & Reverse iterator before first element.\\
+\texttt{c.crbegin()} & Const reverse begin.\\
+\texttt{c.crend()} & Const reverse end.\\
+\end{tabularx}
+
+\textbf{Usage Example}\\
+\begin{verbatim}
+vector<int> v = {1, 2, 3, 4, 5};
+for (auto it = v.rbegin(); it != v.rend(); ++it)
+    cout << *it; // prints: 54321
+\end{verbatim}
+
+\textbf{Base Iterator}\\
+\texttt{rit.base()} returns forward iterator pointing one past \texttt{rit}.\\
+If \texttt{rit} points to element at position $i$, \texttt{rit.base()} points to $i+1$.
+
+\subsection{Iterator Utilities}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{advance(it, n)} & Move iterator by n positions. Works on all iterators.\\
+\texttt{distance(first, last)} & Number of increments from first to last.\\
+\texttt{next(it, n=1)} & Return iterator n positions ahead (C++11).\\
+\texttt{prev(it, n=1)} & Return iterator n positions back (C++11).\\
+\texttt{begin(c)} / \texttt{end(c)} & Free functions for any container or array.\\
+\texttt{cbegin(c)} / \texttt{cend(c)} & Const versions (C++14).\\
+\end{tabularx}
+
+\subsection{Iterator Adaptors}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{back\_inserter(c)} & Output iterator that calls \texttt{push\_back}.\\
+\texttt{front\_inserter(c)} & Output iterator that calls \texttt{push\_front}.\\
+\texttt{inserter(c, it)} & Output iterator that calls \texttt{insert} at position.\\
+\texttt{make\_reverse\_iterator(it)} & Create reverse iterator from forward (C++14).\\
+\texttt{make\_move\_iterator(it)} & Iterator that moves instead of copies (C++11).\\
+\end{tabularx}
+
+\vfill\null\columnbreak

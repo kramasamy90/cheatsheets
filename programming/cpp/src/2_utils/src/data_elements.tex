@@ -1,0 +1,38 @@
+\subsection{Data Elements}
+
+\subsubsection{Pair}
+Eg: \texttt{pair<int, int> x = {1,2};}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{x.first} & Returns 1. \\
+\texttt{x.second} & Returns 2.
+\end{tabularx}
+
+\subsubsection{Tuple}
+Fixed length collection of heterogenous values.\\
+Eg: \texttt{tuple<int, string, double> t;}\\
+
+\textbf{Operations related to tuple}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{get<i>} & Return $i^th$ value of t. Eg: \texttt{get<0>(t);}.\\
+\texttt{make\_tuple()} & Returns tuple out of individual values.\\
+& Eg: \texttt{make\_tuple(5, "Paul", 23.4)}.\\
+\texttt{tie()} & Unpacking tuple.\\
+& Eg: \\
+& \texttt{tie(n, s, x) = t;}\\
+& \texttt{tie(n, std::ignore, x) = t;}\\
+\end{tabularx}
+
+\subsubsection{Bit set}
+
+\textbf{Definiton}\\
+\texttt{bitset<size> s;}\\
+Examples:\\
+\texttt{bitset<5> s;}
+\texttt{bitset<5> s(string("1100110"));}\\
+\textbf{Operations on Bit set:}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{a \& b} & Bitwise AND.\\
+\texttt{a | b} & Bitwise OR.\\
+\texttt{a \^ b} & Bitwise EXOR.\\
+\texttt{~a} & Bitwise negation.\\
+\end{tabularx}

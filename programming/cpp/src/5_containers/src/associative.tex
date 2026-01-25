@@ -1,0 +1,45 @@
+\subsection{Associative Containers}
+
+\subsubsection{Set}
+\textbf{Definition}\\
+\texttt{set<type> s;}\\
+\texttt{multiset<type> s;}\\
+\texttt{unordered\_set<type> s;}\\
+\texttt{unordered\_multiset<type, hasher> s;}\\
+\texttt{hasher}: Refer Custom Hash Function.\\
+
+
+\textbf{Set operations}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{s.insert(item);} & \\
+\texttt{s.erase(item);} & \\
+\texttt{s.count(item);} & \\
+\texttt{s.find(item);} & Returns the iterator that points to \texttt{item}.\\
+\texttt{s.insert()} & Inserts elements in s.\\
+& Eg: Insert elements from t to s.\\
+& \texttt{v.insert(v.end(), u.begin(), u.end());}\\
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{s.lower\_bound(x)} & Returns iterator to the smallest element that is larger than or equal to x.\\
+\texttt{s.upper\_bound(x)} & Returns iterator to the smallest element that is larger than x.\\
+\end{tabularx}
+
+\textcolor{red}{NOTE: erase method remove all instances of the item in the multiset.}
+
+\subsubsection{Map}
+
+\texttt{map} : Balanced binary tree.\\
+\texttt{unordered\_map}: Hash list.\\
+
+\textbf{Definition:}\\
+\texttt{map<type1, type2> m;}\\
+Eg: \texttt{map<string, int> m;}\\
+\texttt{unordered\_map<type1, type2, hasher> m;}\\
+\texttt{hasher}: Refer Custom Hash Function.\\
+
+\textbf{Operations on map}\\
+\begin{tabularx}{\linewidth}{lX}
+\texttt{m["banana"]} & Retrive value associated with \texttt{banana}.\\
+\texttt{m.count("banana")} & Return 1 if the key is present else 0.\\
+\end{tabularx}

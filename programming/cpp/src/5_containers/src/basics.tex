@@ -1,0 +1,33 @@
+\subsection{Common Methods}
+
+These methods are common across most STL containers.
+
+\textbf{Iterators}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{c.begin()} & Returns iterator to the first element.\\
+\texttt{c.end()} & Returns iterator to one past the last element.\\
+\texttt{c.rbegin()} & Returns reverse iterator to the last element.\\
+\texttt{c.rend()} & Returns reverse iterator to one before the first element.\\
+\texttt{c.cbegin()} & Returns const iterator to the first element.\\
+\texttt{c.cend()} & Returns const iterator to one past the last element.\\
+\end{tabularx}
+
+\textbf{Capacity}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{c.size()} & Returns the number of elements.\\
+\texttt{c.max\_size()} & Returns the maximum possible number of elements.\\
+\texttt{c.empty()} & Returns true if the container is empty.\\
+\texttt{c.capacity()} & Current allocated storage (vector, string only).\\
+\texttt{c.reserve(n)} & Reserve storage for at least n elements (vector, string only).\\
+\texttt{c.shrink\_to\_fit()} & Reduce capacity to fit size (vector, deque, string).\\
+\end{tabularx}
+
+\textbf{Modifiers}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{c.clear()} & Removes all elements from the container.\\
+\texttt{c.swap(other)} & Swaps contents with another container.\\
+\end{tabularx}
+

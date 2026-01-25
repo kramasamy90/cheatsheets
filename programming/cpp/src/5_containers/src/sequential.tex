@@ -1,0 +1,76 @@
+\subsection{Sequential Containers}
+
+\subsubsection{Element Access}
+
+\begin{tabularx}{\linewidth}{l|c|c|c|c}
+& \textbf{array} & \textbf{vector} & \textbf{deque} & \textbf{list} \\
+\hline
+\texttt{[]} & \checkmark & \checkmark & \checkmark & $\times$ \\
+\texttt{at()} & \checkmark & \checkmark & \checkmark & $\times$ \\
+\texttt{front()} & \checkmark & \checkmark & \checkmark & \checkmark \\
+\texttt{back()} & \checkmark & \checkmark & \checkmark & \checkmark \\
+\texttt{data()} & \checkmark & \checkmark & $\times$ & $\times$ \\
+\end{tabularx}
+
+\subsubsection{Array}
+
+\textbf{Definition:}\\
+\texttt{array<T, N> a;}\\
+
+Fixed-size container. Size must be known at compile time.
+
+\textbf{Modifiers}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{a.fill(value)} & Fill array with value.\\
+\end{tabularx}
+
+\subsubsection{Vector}
+
+\textbf{Definition:}\\
+\texttt{vector<T> v;}
+
+Dynamic array with automatic resizing. Supports all array methods plus:
+
+\textbf{Additional Modifiers}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{v.push\_back(x)} & Add element to the end.\\
+\texttt{v.pop\_back()} & Remove last element.\\
+\texttt{v.emplace\_back(args)} & Construct element in place at the end.\\
+\texttt{v.insert(pos, x)} & Insert element at iterator position.\\
+\texttt{v.emplace(pos, args)} & Construct element in place at position.\\
+\texttt{v.erase(pos)} & Remove element at iterator position.\\
+\end{tabularx}
+
+\textbf{Capacity Management}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{v.capacity()} & Current allocated storage.\\
+\texttt{v.reserve(n)} & Reserve storage for n elements.\\
+\texttt{v.shrink\_to\_fit()} & Reduce capacity to fit size.\\
+\end{tabularx}
+
+\vspace*{8pt}
+\texttt{tie} can be used to unpack a vector.\\
+\textit{Example:} \texttt{tie(a, b, c) = v;}
+
+
+\vfill \null
+\columnbreak
+
+
+\subsubsection{Deque}
+
+\textbf{Definition:}\\
+\texttt{deque<T> d;}
+
+Double-ended queue. Supports all array element access (except \texttt{data()}) and all vector modifiers (except capacity management), plus:
+
+\textbf{Additional Front Operations}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{d.push\_front(x)} & Add element to the front.\\
+\texttt{d.pop\_front()} & Remove first element.\\
+\texttt{d.emplace\_front(args)} & Construct element in place at the front.\\
+\end{tabularx}

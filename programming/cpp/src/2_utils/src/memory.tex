@@ -1,0 +1,9 @@
+\subsection{Memory management in C++}
+\begin{itemize}
+\item \texttt{void* operator new(size)}	\\
+Eg: \texttt{myClass* p1 = new myClass;} \\
+\texttt{myClass* p1 = new(sizeof(myClass));}\\
+\item \texttt{void delete(void* ptr)}\\
+Eg: \texttt{delete p1;} 
+\texttt{delete(p1);} 
+\end{itemize}
