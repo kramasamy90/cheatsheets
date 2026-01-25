@@ -102,6 +102,28 @@ description: >
 \end{itemize}
 
 
+\subsection{HDF5}
+
+\texttt{import h5py}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{File}                       & \texttt{h5py} File object.\\
+                                    & Like a regular file object.\\
+                                    & \texttt{f = h5py.File("foo.h5")}.\\
+\texttt{h5py.\_hl.files.File}       & File object type, i.e. \texttt{type(f)}.\\
+                                    & Behaves like a dictionary.\\
+\texttt{h5py.\_hl.group.Group}      & Behaves like a dictionary.\\
+                                    & File object inherits from \texttt{Group}
+                                        \textcolor{red}{Verify}.\\
+\texttt{h5py.\_hl.dataset.Dataset}  & Behaves like an np array.\\
+\texttt{h5py.\_hl.attrs.AttribureManager} & Behaves like a dict.\\
+\end{tabularx}
+
+\texttt{}
+
+
+
+
 
 \subsection{Datetime}
 
@@ -197,7 +219,7 @@ Represents both date and time.
 \columnbreak
 
 
-\subsection*{Regular Expression}
+\subsection{Regular Expression}
 
 \texttt{import re}\\
 \textbf{Usage for finding patterns:} \texttt{re.<method>(pattern, text)}\\
