@@ -21,129 +21,286 @@ Ramasamy Kandasamy\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section*{DeviceManagement}
+\section*{Function Qualifiers}
 
-\begin{itemize}
-	\item \texttt{cudaDeviceSynchronize()}: \\
-    Tells CPU to wait for GPU code execution.
-    \item \texttt{cudaGetDeviceProperty(cudaDeviceProp* prop, int Device)}\\
-    \texttt{Device}: Device number, eg: \texttt{0}. Store device property in the structure pointed by \texttt{prop}. 
-\end{itemize}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\_\_global\_\_}               & Kernel func. Returns void. \\
+\texttt{\_\_device\_\_}               & Function callable only from device. \\
+\texttt{\_\_host\_\_}                 & Function callable from host (default). \\
+\texttt{\_\_host\_\_ \_\_device\_\_}  & Compiled for both host and device.\\
+\end{tabularx}
+
+\textbf{Kernel Launch:} \texttt{}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+kernel<<<gridDim, blockDim, sharedMem, stream>>>(args);
+\end{verbatim}
+\end{mdframed}
+
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{gridDim}        & Grid size (int or dim3). \\
+\texttt{blockDim}       & Block size (int or dim3). \\
+\texttt{sharedMem}      & Dynamic shared memory bytes (optional). \\
+\texttt{stream}         & CUDA stream (optional). \\
+\end{tabularx}
+
+\begin{mdframed}[nobreak=true,backgroundcolor=magenta!10,linecolor=magenta]
+\texttt{\_\_device\_\_} To declare global variable in the device.
+\end{mdframed}
+
+\section*{Built-in Variables}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{gridDim}      & Dimensions of the grid (\texttt{dim3}). \\
+\texttt{gridDim.x/y/z}  & Number of blocks in each dimension. \\
+\texttt{blockDim}     & Dimensions of each block (\texttt{dim3}). \\
+\texttt{blockDim.x/y/z} & Number of threads in each dimension. \\
+\texttt{blockIdx}     & Block index within the grid (\texttt{uint3}). \\
+\texttt{blockIdx.x/y/z} & Current block's index in each dimension. \\
+\texttt{threadIdx}    & Thread index within the block (\texttt{uint3}). \\
+\texttt{threadIdx.x/y/z} & Current thread's index in each dimension. \\
+\texttt{warpSize}     & Threads per warp (constant = 32). \\
+\end{tabularx}
+
+\textbf{Global Thread ID:}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+int tid = blockIdx.x * blockDim.x + threadIdx.x; // 1D
+int col = blockIdx.x * blockDim.x + threadIdx.x; // 2D
+int row = blockIdx.y * blockDim.y + threadIdx.y;
+\end{verbatim}
+\end{mdframed}
+
 
 \section*{Memory Management}
 
-\begin{itemize}
-	\item \texttt{cudaMalloc(void** (\&dp), size\_t sz)}:\\
-    Allocates a memory of size \texttt{sz} and store the pointer value at \texttt{dp}, where dp is a pointer.
-    \item \texttt{cudaMemset(void* da, char v, size\_t sz)}:\\
-    This function copies the byte-sized value \texttt{v}, starting from the memory location \texttt{da} \textbf{byte-by-byte} upto \texttt{sz} bytes.\\
-    textcolor{red}{IMPORTANT:} The following will give unexpected results:\\
-    \textcolor{red}{\texttt{cudaMemset(da, 0, sizeof(int))}}
-    \item \texttt{cudaMemcpy(void* da, void* ha, size\_t sz, cudaMemcpyHostToDevice)}\\
-    \item \texttt{cudaMemcpy(void* ha, void* da, size\_t sz, cudaMemcpyDeviceToHost)}\\
-\end{itemize}
+% Memory allocation.
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{cudaMalloc(\&ptr, size)} & Allocate device memory. \\
+                                 & \textcolor{red}{NOTE: ptr to ptr.}\\
+\texttt{cudaFree(ptr)} & Free device memory. \\
+\hline
+\end{tabularx}
 
-\section*{Kernels}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{cudaHostAlloc(\&ptr, size, flags)} & Pinned host memory (faster transfers) \\
+\texttt{cudaFreeHost(ptr)} & Free pinned host memory \\
+\texttt{cudaMallocManaged(\&ptr, size)} & Unified memory (host \& device accessible) \\
+\hline
+\end{tabularx}
 
-\subsubsection*{Types of functions}
+% Memory transfer.
+\begin{tabularx}{\linewidth}{lX}
+\texttt{cudaMemcpy(dst, src, size, kind)} &  \\
+\end{tabularx}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{dst}                              & Pointers.\\
+\texttt{src}                              & \\
+\textit{kind}                             &  \texttt{cudaMemcpyHostToDevice}.\\
+                                          &  \texttt{cudaMemcpyDeviceToHost}.\\
+                                          &  \texttt{cudaMemcpyDeviceToDevice}.\\
+\texttt{size}                             &  Eg: \texttt{n * sizeof(int)}.\\
+\hline
+\end{tabularx}
 
-\begin{itemize}
-	\item \texttt{\_\_global\_\_}: Can be called from CPU/GPU(?), runs on GPU.
-	\item \texttt{\_\_device\_\_}: Can be called only from GPU, runs on GPU. 
-	\item \texttt{\_\_host\_\_}: Can be called only from CPU, runs on CPU.
-\end{itemize}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{cudaMemcpyAsync(..., stream)} & Async copy. Requires pinned memory \\
+\hline
+\end{tabularx}
 
-If a function is decorated by both \texttt{\_\_host\_\_} and \texttt{\_\_device\_\_}, then two instances of the function are created, one for the device and another for host.\\
-However if a function in device is to be called by host it should be decorated by \texttt{\_\_global\_\_}.\\
-\textcolor{red}{NOTE:} Functions decorated by \texttt{\_\_global\_\_} should only return \texttt{void}.
 
-\subsubsection*{Grids and Blocks}
+\subsubsection*{Memory Types}
 
-\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{tabularx}{\linewidth}{llX}
+\hline
+\textbf{Type} & \textbf{Scope} & \textbf{Description} \\
+\hline
+Registers     & Thread   & Fastest; automatic allocation. \\
+Local         & Thread   & Spills from registers; stored in global memory. \\
+Shared        & Block    & Fast; \texttt{\_\_shared\_\_} qualifier. \\
+Global        & Grid     & Slowest; \texttt{cudaMalloc} or \texttt{\_\_device\_\_}. \\
+Constant      & Grid     & Read-only; cached; \texttt{\_\_constant\_\_} (64KB max). \\
+Texture       & Grid     & Read-only; cached; optimized for 2D spatial locality. \\
+\hline
+\end{tabularx}
+
+
+\section*{Synchronization}
+
+\subsection*{Synchronization Primitives}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\textbf{Function} & \textbf{Description} \\
+\hline
+\texttt{\_\_syncthreads()}       & Block-level barrier; all threads in block must reach. \\
+\texttt{\_\_syncwarp(mask)}      & Warp-level sync; mask specifies participating threads. \\
+\texttt{cudaDeviceSynchronize()} & Host waits for all device work to complete. \\
+\texttt{cudaStreamSynchronize(s)} & Host waits for all work in stream \texttt{s}. \\
+\texttt{cudaEventSynchronize(e)} & Host waits for event \texttt{e} to complete. \\
+\hline
+\end{tabularx}
+
+\subsubsection*{Memory Fences}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{\_\_threadfence\_block()} & Ensures writes visible to block threads. \\
+\texttt{\_\_threadfence()}        & Ensures writes visible to all device threads. \\
+\texttt{\_\_threadfence\_system()} & Ensures writes visible to host and device. \\
+\end{tabularx}
+
+\subsection*{Atomic Operations}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\textbf{Function} & \textbf{Operation} \\
+\hline
+\texttt{atomicAdd(addr, val)}  & \texttt{*addr += val}; returns old value. \\
+\texttt{atomicSub(addr, val)}  & \texttt{*addr -= val}; returns old value. \\
+\texttt{atomicExch(addr, val)} & \texttt{*addr = val}; returns old value. \\
+\texttt{atomicMin(addr, val)}  & \texttt{*addr = min(*addr, val)}. \\
+\texttt{atomicMax(addr, val)}  & \texttt{*addr = max(*addr, val)}. \\
+\texttt{atomicInc(addr, val)}  & \texttt{*addr = (*addr >= val) ? 0 : *addr+1}. \\
+\texttt{atomicDec(addr, val)}  & \texttt{*addr = (*addr==0 || *addr>val) ? val : *addr-1}. \\
+\texttt{atomicCAS(addr, cmp, val)} & If \texttt{*addr == cmp}, set \texttt{*addr = val}; returns old. \\
+\hline
+\end{tabularx}
+
+\subsubsection*{Bitwise Atomics}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{atomicAnd(addr, val)} & \texttt{*addr \&= val}. \\
+\texttt{atomicOr(addr, val)}  & \texttt{*addr |= val}. \\
+\texttt{atomicXor(addr, val)} & \texttt{*addr \^{}= val}. \\
+\end{tabularx}
+
+
+\section*{Streams}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{cudaStream\_t}         & Stream handle type. \\
+\texttt{cudaStreamCreate(\&s)} & Create a stream. \\
+\texttt{cudaStreamDestroy(s)}  & Destroy a stream. \\
+\hline
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{cudaStreamCreateWithFlags(\&s, flags)} & \\
+\quad \texttt{cudaStreamDefault}      & Default stream behavior. \\
+\quad \texttt{cudaStreamNonBlocking}  & No implicit sync with default stream. \\
+\hline
+\end{tabularx}
+
+\textbf{Kernel launch on stream:}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
 \begin{verbatim}
-dkernel<<<1, 1>>>(); // One block with one thread. 
-dkernel<<<1, M>>>(); // One block with M threads. 
-dkernel<<<N, 1>>>(); // N blocks with one thread each.
-dkernel<<<N, M>>>(); // N blocks with M threads each.
+kernel<<<grid, block, sharedMem, stream>>>(args);
 \end{verbatim}
 \end{mdframed}
 
-\textbf{Grids} contain \textbf{blocks} which contain \textbf{threads.}.\\
-\textbf{}
+\begin{tabularx}{\linewidth}{lX}
+\texttt{cudaStreamQuery(s)}       & Returns \texttt{cudaSuccess} if stream idle. \\
+\texttt{cudaStreamSynchronize(s)} & Host blocks until stream completes. \\
+\texttt{cudaStreamWaitEvent(s, e, 0)} & Stream waits for event \texttt{e}. \\
+\end{tabularx}
 
-\subsubsection*{Advanced}
+\subsection*{Events}
 
-\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
-	\begin{verbatim}
-		dim3 block(x, y); // Contains x * y threads.
-		dim3 block(x, y, z); // Contains x * y * z threads.
-		dim3 grid(a, b);  // Contains x * y blocks.
-		dim3 grid(a, b, c);  // Contains x * y * z blocks.
-		dkernel<<<grid, block>>>(da);
-	\end{verbatim}
-	Here, the above kernel will run a * b * c * x * y * z threads.
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{cudaEvent\_t}            & Event handle type. \\
+\texttt{cudaEventCreate(\&e)}    & Create an event. \\
+\texttt{cudaEventDestroy(e)}     & Destroy an event. \\
+\texttt{cudaEventRecord(e, s)}   & Record event in stream \texttt{s}. \\
+\texttt{cudaEventSynchronize(e)} & Host blocks until event completes. \\
+\texttt{cudaEventQuery(e)}       & Returns \texttt{cudaSuccess} if event complete. \\
+\hline
+\end{tabularx}
+
+\textbf{Timing with events:}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+cudaEventRecord(start, stream);
+kernel<<<...>>>();
+cudaEventRecord(stop, stream);
+cudaEventSynchronize(stop);
+float ms;
+cudaEventElapsedTime(&ms, start, stop);
+\end{verbatim}
 \end{mdframed}
-\textbf{Attributes}\\
-\begin{itemize}
-	\item \texttt{threadIdx.x}, \texttt{threadIdx.y} and \texttt{threadIdx.z}
-	\item \texttt{blockIdx.x}, \texttt{blockIdx.y} and \texttt{blockIdx.z}
-	\item \texttt{blockDim.x}, \texttt{blockDim.y} and \texttt{blockDim.z}.
-	\item \texttt{gridDim.x}, \texttt{gridDim.y} and \texttt{gridDim.z}.
+
+\subsection*{Stream Priorities}
+
+\begin{tabularx}{\linewidth}{lX}
+\texttt{cudaDeviceGetStreamPriorityRange(\&lo, \&hi)} & Get priority range. \\
+\texttt{cudaStreamCreateWithPriority(\&s, flags, pri)} & Create with priority. \\
+\end{tabularx}
+
+\begin{itemize}[leftmargin=*,nosep]
+\item Lower number = higher priority.
+\item Work from higher-priority streams may preempt lower.
 \end{itemize}
 
-\vfill\null
-\columnbreak
+\newpage
 
- 
+\section*{Support}
 
+\subsection*{Error Handling}
 
-\vfill\null
-\columnbreak
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\texttt{cudaError\_t}        & Error type returned by CUDA calls. \\
+\texttt{cudaSuccess}         & No error (value 0). \\
+\texttt{cudaGetLastError()}  & Returns and resets last error. \\
+\texttt{cudaPeekAtLastError()} & Returns last error without reset. \\
+\texttt{cudaGetErrorString(err)} & Error code to string. \\
+\texttt{cudaGetErrorName(err)}   & Error code to name. \\
+\hline
+\end{tabularx}
 
-\section*{Errors}
-\subsection*{Detecting error in CUDA}
-
-\textbf{Ref:}\\
-https://stackoverflow.com/a/14038590/5607735
-
+\textbf{Error checking pattern:}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
 \begin{verbatim}
-#define gpuErrchk(ans){gpuAssert((ans), __FILE__, __LINE__);}
-inline void gpuAssert(cudaError_t code, char *file,
-            int line, bool abort=true)
-{
-   if (code != cudaSuccess)
-   {
-      fprintf(stderr,"GPUassert: %s %s %d\n",
-       cudaGetErrorString(code), file, line);
-      if (abort) exit(code);
-   }
-} 
-\end{verbatim}
-
-\subsection*{Notable errors in CUDA}
-\subsubsection*{1. Incomplete output}
-
-\begin{verbatim}
-__global__ void per_row_AB_kernel(long int m, long int n){
-    long int K = blockIdx.x * 1024 + threadIdx.x;
-    if(K >= (m * n)) return;
-    printf("%ld \n", K);	
+cudaError_t err = cudaMalloc(&ptr, size);
+if (err != cudaSuccess) {
+    printf("Error: %s\n", cudaGetErrorString(err));
 }
-
-int main(){
-    long int m, n;
-    scanf("%ld", &m);
-    scanf("%ld", &n);
-    
-    dim3 grid_1((m * n)/1024 + 1, 1, 1);
-    dim3 block_1(1024, 1, 1);
-    
-    per_row_AB_kernel<<<grid_1, block_1>>>(m, n);
-    cudaDeviceSynchronize();                                                           
-}	
+// After kernel launch (async, doesn't return error):
+kernel<<<grid, block>>>();
+err = cudaGetLastError();       // Check launch error
+err = cudaDeviceSynchronize();  // Check execution error
 \end{verbatim}
+\end{mdframed}
 
-In the above code for large values of \texttt{m} and \texttt{n} not all values of \texttt{K} will be printed. This is because there is limited space for in output buffer. It is intended for small scale debug style output not large scale output.\\
-\textbf{Source:} https://stackoverflow.com/a/15421935/5607735
+\subsection*{NVCC Compiler Options}
+
+\begin{tabularx}{\linewidth}{lX}
+\hline
+\textbf{Option} & \textbf{Description} \\
+\hline
+\texttt{-arch=sm\_XX}        & Target GPU architecture (e.g., \texttt{sm\_86}). \\
+\texttt{-gencode=arch=compute\_XX,code=sm\_XX} & Generate code for specific arch. \\
+\texttt{-G}                  & Debug mode; disables optimizations. \\
+\texttt{-lineinfo}           & Include line info for profiling. \\
+\texttt{-O0/-O1/-O2/-O3}     & Optimization level. \\
+\texttt{-Xptxas -v}          & Print register/memory usage per kernel. \\
+\texttt{-maxrregcount=N}     & Limit registers per thread. \\
+\texttt{--ptxas-options=-v}  & Verbose PTX assembler output. \\
+\texttt{-res-usage}          & Report resource usage. \\
+\texttt{-Xcompiler "opts"}   & Pass options to host compiler. \\
+\hline
+\end{tabularx}
+
+\textbf{Example compilation:}
+\begin{mdframed}[nobreak=true,backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+nvcc -arch=sm_86 -O3 -Xptxas -v -o prog prog.cu
+\end{verbatim}
+\end{mdframed}
+
+
 \end{multicols*}
 \end{document}
