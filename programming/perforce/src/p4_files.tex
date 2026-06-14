@@ -1,0 +1,116 @@
+\section{p4 --- Working with Files}
+
+\textit{Note:} \texttt{...} is a recursive wildcard matching all
+files under a path (eg.\ \texttt{p4 revert ...} = everything under
+cwd).
+
+\subsubsection*{Sync}
+
+\texttt{p4 sync [path...]}\\
+Updates the workspace to match the depot, per the client view
+(like \texttt{git pull} for files). With no path, acts on the
+subtree under cwd.
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{path\#<rev>}     & Sync to a specific revision.\\
+    \texttt{path@<cl/label>} & Sync to the state as of a
+                                 changelist, label, or date.\\
+\hline
+    \texttt{-f} & Force: re-transfer files even if already at that
+                    revision (eg.\ to repair local edits made
+                    outside p4).\\
+    \texttt{-n} & Preview only --- no files transferred.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Open for Change}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 edit <file>} & Open an existing depot file for edit
+                                (checkout).\\
+    \texttt{p4 add <file>}  & Mark a new (untracked) file for add.\\
+\hline
+    \texttt{-c <cl>}        & Open in pending changelist
+                                \texttt{<cl>} instead of
+                                \texttt{default}. Applies to
+                                \texttt{edit}, \texttt{add},
+                                \texttt{revert}, \texttt{reopen},
+                                \texttt{shelve}, \texttt{unshelve},
+                                \texttt{submit}.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Reconcile}
+
+\texttt{p4 reconcile [-a] [-e] [-d] [-c <cl>] [path...]}\\
+Detects changes made outside \texttt{p4} and opens files
+accordingly. No flags = all of \texttt{-a -e -d}.
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{-a} & Open files added on disk \texttt{for add}.\\
+    \texttt{-e} & Open modified files \texttt{for edit}.\\
+    \texttt{-d} & Open missing files \texttt{for delete}.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Revert / Reopen}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 revert [-a] [-c <cl>] <file>}
+                & Discard pending changes, restore depot version.\\
+    \texttt{-a} & Only revert files \textit{unchanged} from depot
+                    (safe revert).\\
+\hline
+    \texttt{p4 reopen -c <cl> <file>}
+                & Move opened file(s) to a different pending
+                    changelist.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Shelve / Unshelve}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 shelve -c <cl> [file]}
+                & Save files opened in \texttt{<cl>} to the server
+                    without submitting.\\
+    \texttt{-d} & With \texttt{shelve}: discard the shelved
+                    file(s) from \texttt{<cl>}.\\
+\hline
+    \texttt{p4 unshelve -s <cl> [-c <cl2>] [file]}
+                & Restore shelved files from \texttt{<cl>}
+                    (\texttt{-s}) into changelist \texttt{<cl2>}
+                    (\texttt{-c}, default \texttt{default}).\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Submit}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 submit -c <cl>} & Submit pending changelist
+                                    \texttt{<cl>} to the depot.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Inspecting}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 opened [-c <cl>] [-u <user>]}
+                & List opened (checked-out) files. \texttt{-c}:
+                    by changelist. \texttt{-u}: by user.\\
+\hline
+    \texttt{p4 filelog <file>}
+                & Show a file's revision history.\\
+\hline
+    \texttt{p4 changes [-u <user>] [-m <n>] [-s <status>]}
+                & List changelists. \texttt{-u}: by user.
+                    \texttt{-m <n>}: limit to \texttt{n}.
+                    \texttt{-s}: \texttt{pending} /
+                    \texttt{submitted} / \texttt{shelved}.\\
+\hline
+\end{tabularx}

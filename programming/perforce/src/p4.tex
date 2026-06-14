@@ -1,0 +1,67 @@
+\section{p4 --- The Client}
+
+\subsubsection*{Configuration: Env Vars}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{P4PORT}     & \texttt{host:port} of the \texttt{p4d}
+                            server. Eg: \texttt{localhost:1666}.\\
+    \texttt{P4USER}     & Perforce username.\\
+    \texttt{P4CLIENT}   & Name of the workspace (client) to use.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{.p4config files}
+
+\texttt{P4CONFIG} names a config file (eg.\ \texttt{.p4config}).
+\texttt{p4} searches \textbf{upward} from the current directory for
+a file with that name and loads \texttt{KEY=VALUE} settings from the
+first one found. Lets each directory tree pin its own
+port/user/client.
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+# .p4config
+P4PORT=localhost:1666
+P4USER=bob
+P4CLIENT=bob-ws
+\end{verbatim}
+\end{mdframed}
+
+
+\subsubsection*{Loading P4CONFIG}
+
+\begin{tabularx}{\linewidth}{lX}
+    bash    & \texttt{export P4CONFIG=.p4config}\\
+            & Add to \texttt{\textasciitilde{}/.bashrc} to persist.\\
+\hline
+    PowerShell
+            & \texttt{\$env:P4CONFIG = ".p4config"}\\
+            & Persist: \texttt{notepad \$PROFILE}.\\
+            & \texttt{[Environment]::SetEnvironmentVariable(}\\
+            & \texttt{~~"P4CONFIG", ".p4config", "User")}\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{p4 info}
+
+Shows the current connection / workspace state. Key fields to check:
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{Client name}       & Workspace in use (\texttt{P4CLIENT}).\\
+    \texttt{Client root}       & Local directory the client maps to.\\
+    \texttt{Current directory} & \texttt{cwd} that \texttt{p4} sees.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Scope of Commands}
+
+\begin{itemize}
+\item Commands like \texttt{p4 status} (no path args) only act on
+        the \textbf{subtree rooted at the current directory}.\\
+\item The current directory must be \textbf{inside the client
+        root}. If \texttt{cwd} is outside the client root, these
+        commands find nothing / fail.\\
+\end{itemize}

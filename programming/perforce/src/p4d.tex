@@ -1,0 +1,49 @@
+\section{Perforce (Helix Core)}
+
+\subsubsection*{p4d --- The Server}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4d}        & Start the server.\\
+                        & \texttt{p4d -r <root> -p <port> -d}\\
+    \texttt{-r <root>}  & Server root directory (\texttt{P4ROOT}):
+                            holds metadata (\texttt{db.*}) and
+                            versioned depot files.\\
+    \texttt{-p <port>}  & Port to listen on, eg.\ \texttt{1666}.\\
+    \texttt{-d}         & Run as a daemon (background).\\
+\hline
+\end{tabularx}
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+$ mkdir -p ~/perforce/root
+$ p4d -r ~/perforce/root -p 1666 -d
+\end{verbatim}
+\end{mdframed}
+
+
+\subsubsection*{Initial Admin Setup}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 passwd}  & Set the admin (super user) password.
+                            \textit{Run this first: with no
+                            protections table yet, the connecting
+                            user is implicitly super.}\\
+\hline
+    \texttt{p4admin}    & Admin console --- add users, create
+                            depots, set protections, etc.\\
+\hline
+\end{tabularx}
+
+
+\subsubsection*{Depots}
+
+A \textbf{depot} is the top-level container for versioned files on
+the server --- the closest equivalent to a Git ``repo''.
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{local}  & \textit{Default} type. Plain versioned files,
+                        addressed as \texttt{//depot/...}.\\
+    \texttt{stream} & Files organized under Streams (managed
+                        branching / merging).\\
+\hline
+\end{tabularx}
