@@ -53,31 +53,38 @@
 
 \begin{tabularx}{\linewidth}{lX}
 
-    \texttt{tar}            & Tape archive\\
-    \texttt{-cf}            & To make tar file form a directory \texttt{tar -cf dir.tar dir}.\\
-    \texttt{-xf}            & extract.\\
-    \texttt{-tf}            & View contents of an archive.\\
-    \texttt{-tvf}           & View contents, verbose.\\
+    \texttt{tar}            & Tape archive. Combine with a compression flag to handle \texttt{.tar.gz}/\texttt{.tgz}, \texttt{.tar.bz2}, \texttt{.tar.xz}.\\
+    \texttt{-c}             & Create archive.\\
+    \texttt{-x}             & Extract archive.\\
+    \texttt{-t}             & List contents.\\
+    \texttt{-v}             & Verbose.\\
+    \texttt{-f}             & Use archive file (must be last flag, followed by filename).\\
+    \texttt{-z}             & Filter through \texttt{gzip}, for \texttt{.tar.gz} / \texttt{.tgz}.\\
+    \texttt{-j}             & Filter through \texttt{bzip2}, for \texttt{.tar.bz2}.\\
+    \texttt{-J}             & Filter through \texttt{xz}, for \texttt{.tar.xz}.\\
     \hline
+\end{tabularx}
 
+\begin{tabularx}{\linewidth}{lX}
     \texttt{zip -r}         & Compress. \texttt{zip -r file.zip dir}\\
     \texttt{unzip -l}       & View contents. \texttt{unzip -l file.zip}\\
     \texttt{unzip}          & Decompress. \texttt{unzip file.zip}\\
-    \hline
-
-    \texttt{gzip}           & Eg: \texttt{gzip filename}. \texttt{gzip} can only compress a file and not a directory. To compress a directory first make a .tar file and then compress that.\\
-    \texttt{gunzip}         & To unzip .gz files.\\
-    \texttt{-c}             & Output to standard output. \\
-                            & Eg: \texttt{gzip -c file1 >  file.gz}. Eg: \texttt{gzip -c file2 >> file.gz}. and \texttt{gunzip -c}.\\
-    \texttt{bzip2}          & Works like gzip. Higher compression, but slow. File extension \texttt{.bz2}\\
-    \hline
-
 \end{tabularx}
 
+\begin{tabularx}{\linewidth}{lX}
+    \hline
 
-\textcolor{red}{TODO: chown, chgrp.}\\
-\textcolor{red}{\texttt{compress}/\texttt{uncompress}.\\ 
-Also: \texttt{zgrep}, \texttt{zcat}, \texttt{zless}, \texttt{zdiff}}\\
+    \texttt{gzip} / \texttt{gunzip}         &    Compress a single file to \texttt{.gz}, \texttt{.bz2}, \texttt{.xz} resp. \\
+    \texttt{bzip2} / \texttt{bunzip2}       &    (\texttt{tar} a directory first). \\
+    \texttt{xz} / \texttt{unxz}             & \texttt{gzip foo.tar} $\to$ \texttt{foo.tar.gz} (replaces file).\\
+                                            & \texttt{gzip -c foo.tar > foo.tar.gz}.\\
+                                            & \texttt{gunzip foo.tar.gz} $\to$ \texttt{foo.tar}.\\
+    \hline
+
+
+\end{tabularx}
+    
+\textcolor{red}{TODO: chown, chgrp, (un)compress, zgrep, zcat, zless, zdiff.}\\
 
 \subsubsection{Process Execution}
 
