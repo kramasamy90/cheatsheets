@@ -40,13 +40,17 @@
                                     & z = \texttt{r} : read, \texttt{w} : write, \texttt{x} : execute.\\
     \hline
 
-    % Disk usage. 
-    \texttt{du -h \textit{dir}}     & Gives size of all directories in \texttt{\textit{dir}}\\
-    \texttt{du -sh \textit{dir}}    & Gives size of \texttt{\textit{dir}}.\\
+    % Disk usage.
+    \texttt{du}                     & Disk usage, i.e., size of blocks allocated.\\ 
+    \texttt{-s}                     & Summarize, show total only.\\
+    \texttt{-h}                     & Human-readable sizes.\\
+    \texttt{-b}                     & Actual file size in bytes.\\
+                                    & \texttt{--apparent-size} like \texttt{-b}, but output in Kib and not bytes.\\
     \texttt{df -h}                  & Gives information about disk usage.\\
     \hline
 
 \end{tabularx}
+
 
 \subsubsection{File compression}
 
@@ -64,6 +68,11 @@
     \texttt{-J}             & Filter through \texttt{xz}, for \texttt{.tar.xz}.\\
     \hline
 \end{tabularx}
+
+
+
+\vfill\null
+\columnbreak
 
 \begin{tabularx}{\linewidth}{lX}
     \texttt{zip -r}         & Compress. \texttt{zip -r file.zip dir}\\
@@ -140,6 +149,9 @@
 \end{tabularx}
 
 
+\vfill\null
+\columnbreak
+
 \subsubsection{Process mangement}
 
 \begin{tabularx}{\linewidth}{lX}
@@ -159,9 +171,6 @@
     \hline
 \end{tabularx}
 
-\vfill\null
-\columnbreak
-
 
 \subsubsection{Terminal customization}
 
@@ -179,6 +188,9 @@ Generally included in the \texttt{.bashrc} file.
 \item \textbf{Run a script at the beginning}\\
         Eg: \texttt{source /home/user/catkin\_wc/devel/setup.bash}\\
 \end{itemize}
+
+\vfill\null
+\columnbreak
 
 \subsubsection{Etc}
 
