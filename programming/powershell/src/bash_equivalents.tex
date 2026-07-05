@@ -1,0 +1,29 @@
+\section{Bash equivalents}
+
+Many bash names exist as \emph{aliases} of cmdlets (list them with \texttt{Get-Alias}), but flags differ: \texttt{ls -la} does \emph{not} work; use the cmdlet's parameters.\\
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{cd} & \texttt{Set-Location} (aliases: \texttt{cd}, \texttt{sl}). \texttt{cd -} works in PS 6+. \texttt{Get-Location} (\texttt{pwd}) shows the current dir. \texttt{Push-Location}/\texttt{Pop-Location} = \texttt{pushd}/\texttt{popd}.\\
+    \texttt{mkdir} & \texttt{New-Item -ItemType Directory d} or just \texttt{mkdir d} (creates parents automatically, like \texttt{mkdir -p}).\\
+    \texttt{touch} & No direct equivalent. Create: \texttt{New-Item f.txt}. Update timestamp: \texttt{(Get-Item f).LastWriteTime = Get-Date}.\\
+    \texttt{tree} & \texttt{tree} (cmd tool; \texttt{/f} to also list files). Or \texttt{Get-ChildItem -Recurse}.\\
+    \texttt{cat} & \texttt{Get-Content f} (aliases: \texttt{cat}, \texttt{gc}). \texttt{-TotalCount n} = \texttt{head}, \texttt{-Tail n} = \texttt{tail}, \texttt{-Wait} = \texttt{tail -f}. Set content: \texttt{Set-Content}.\\
+    \texttt{xargs} & Not needed: the pipeline already passes objects. \texttt{gci *.log | Remove-Item}. For per-item commands use \texttt{ForEach-Object \{ cmd \$\_ \}}.\\
+    \texttt{sed} & \texttt{-replace} operator: \texttt{(Get-Content f) -replace 'old','new' | Set-Content f}.\\
+    \texttt{grep} & \texttt{Select-String "pattern" f}. On command output: \texttt{cmd | Select-String "x"} (text) or better, filter objects: \texttt{cmd | where Name -match "x"}.\\
+    \hline
+    \texttt{cp, mv} & \texttt{Copy-Item} (\texttt{-Recurse} for dirs), \texttt{Move-Item} (also renames, like \texttt{mv}).\\
+    \texttt{rm} & \texttt{Remove-Item} (see above).\\
+    \texttt{ls} & \texttt{Get-ChildItem} (see above).\\
+    \texttt{echo} & \texttt{Write-Output}.\\
+    \texttt{which} & \texttt{Get-Command name}.\\
+    \texttt{man} & \texttt{Get-Help cmdlet -Examples} / \texttt{-Full}.\\
+    \texttt{history} & \texttt{Get-History}; \texttt{r n} re-runs entry \texttt{n}.\\
+    \texttt{wc -l} & \texttt{(Get-Content f | Measure-Object -Line).Lines}.\\
+    \texttt{sort, uniq} & \texttt{Sort-Object} (\texttt{-Unique}, \texttt{-Descending}), \texttt{Group-Object} for counting like \texttt{uniq -c}.\\
+    \texttt{less} & \texttt{cmd | Out-Host -Paging} or \texttt{more}.\\
+    \texttt{find} & \texttt{Get-ChildItem -Recurse -Filter "*.txt"}.\\
+    \texttt{ln -s} & \texttt{New-Item -ItemType SymbolicLink -Path link -Target file}.\\
+    \texttt{df, du} & \texttt{Get-PSDrive}; \texttt{gci -Recurse | Measure-Object Length -Sum}.\\
+    \hline
+\end{tabularx}

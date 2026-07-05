@@ -1,0 +1,85 @@
+\section{Core Cmdlets}
+
+Cmdlets are named \texttt{Verb-Noun}. Case-insensitive. Discover with \texttt{Get-Command} and \texttt{Get-Help <cmdlet> -Examples}.\\
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{Get-ChildItem} & List items in a location (like \texttt{ls}). Aliases: \texttt{gci}, \texttt{ls}, \texttt{dir}. Emits \texttt{FileInfo}/\texttt{DirectoryInfo} objects.\\
+    \texttt{-Recurse} & Recurse into subdirectories.\\
+    \texttt{-Filter *.txt} & Filter by wildcard pattern (fast, done by provider).\\
+    \texttt{-File, -Directory} & Only files / only directories.\\
+    \texttt{-Force} & Include hidden and system items (like \texttt{ls -a}).\\
+    \texttt{-Name} & Output only names (strings), not objects.\\
+    \texttt{-Depth n} & Limit recursion depth.\\
+    \hline
+    \texttt{Where-Object} & Filter objects by a condition. Alias: \texttt{where}, \texttt{?}.\\
+    & \texttt{gci | Where-Object \{\$\_.Length -gt 1MB\}}\\
+    & Simplified syntax: \texttt{gci | where Length -gt 1MB}.\\
+    \hline
+    \texttt{ForEach-Object} & Run a script block for each pipeline object (like a loop body). Alias: \texttt{foreach}, \texttt{\%}.\\
+    & \texttt{gci | ForEach-Object \{\$\_.Name.ToUpper()\}}\\
+    & \texttt{-Begin \{\} -Process \{\} -End \{\}} blocks like awk's \texttt{BEGIN/END}.\\
+    \hline
+    \texttt{Select-Object} & Select properties of objects, or a subset of objects. Alias: \texttt{select}.\\
+    \texttt{-Property a,b} & Keep only listed properties. Eg: \texttt{gci | select Name,Length}.\\
+    \texttt{-First n, -Last n} & Like \texttt{head -n} / \texttt{tail -n}.\\
+    \texttt{-Unique} & Drop duplicates (like \texttt{uniq}).\\
+    \texttt{-ExpandProperty x} & Output the raw property values instead of objects with one property.\\
+    \hline
+    \texttt{Select-String} & Search text in files/strings with regex (like \texttt{grep}). Alias: \texttt{sls}.\\
+    & \texttt{Select-String "pattern" *.log}\\
+    \texttt{-Pattern} & Regex pattern (default parameter).\\
+    \texttt{-SimpleMatch} & Literal match, no regex (like \texttt{grep -F}).\\
+    \texttt{-CaseSensitive} & Match is case-insensitive by default.\\
+    \texttt{-NotMatch} & Non-matching lines (like \texttt{grep -v}).\\
+    \texttt{-Context 1,2} & Lines of context before,after (like \texttt{grep -B1 -A2}).\\
+    & Output objects have \texttt{Line}, \texttt{LineNumber}, \texttt{Filename}, \texttt{Matches} properties.\\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{Get-Content} & Read a file and output it line by line (like \texttt{cat}). Aliases: \texttt{gc}, \texttt{cat}, \texttt{type}. Each line is a string object, so the result can be indexed: \texttt{(gc f.txt)[0]}.\\
+    \texttt{-TotalCount n} & First n lines (like \texttt{head -n}).\\
+    \texttt{-Tail n} & Last n lines (like \texttt{tail -n}).\\
+    \texttt{-Wait} & Keep watching the file (like \texttt{tail -f}).\\
+    \texttt{-Raw} & Whole file as one single string, not an array of lines.\\
+    \hline
+    \texttt{Write-Output} & Write objects to the pipeline / stdout (like \texttt{echo}). Alias: \texttt{write}, \texttt{echo}. Usually implicit: a bare expression is output automatically.\\
+    \texttt{Write-Host} & Print directly to console (colors possible), bypassing the pipeline.\\
+    \hline
+    \texttt{Out-File} & Send output to a file. Eg: \texttt{gci | Out-File list.txt}. \texttt{>} is shorthand for it.\\
+    \texttt{-Append} & Append instead of overwrite (\texttt{>>}).\\
+    \texttt{-Encoding utf8} & Set encoding.\\
+    \texttt{-NoClobber} & Do not overwrite an existing file.\\
+    \hline
+    \texttt{New-Item} & Create a file/directory/link. Alias: \texttt{ni}.\\
+    & \texttt{New-Item f.txt} (file by default)\\
+    & \texttt{New-Item -ItemType Directory d}\\
+    \texttt{-Force} & Create intermediate directories; overwrite existing.\\
+    \texttt{-Value "text"} & Create the file with initial content.\\
+    \hline
+    \texttt{Remove-Item} & Delete items (like \texttt{rm}). Aliases: \texttt{ri}, \texttt{rm}, \texttt{del}.\\
+    \texttt{-Recurse} & Delete directories with contents (\texttt{rm -r}).\\
+    \texttt{-Force} & Also hidden/read-only items (\texttt{rm -f}).\\
+    \texttt{-WhatIf} & Dry run: show what would be deleted. Works on most cmdlets.\\
+    \texttt{-Confirm} & Prompt before each deletion.\\
+    \hline
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{Sort-Object} & Sort objects by property value (like \texttt{sort}). Alias: \texttt{sort}.\\
+    & \texttt{gci | Sort-Object Length}\\
+    \texttt{-Descending} & Reverse order (like \texttt{sort -r}).\\
+    \texttt{-Unique} & Drop duplicates after sorting (like \texttt{sort -u}).\\
+    \texttt{-Property a,b} & Sort by \texttt{a}, break ties by \texttt{b}. Numbers sort numerically, not as text.\\
+    \hline
+    \texttt{Measure-Object} & Compute statistics over pipeline objects (like \texttt{wc}). Alias: \texttt{measure}. Default: count only.\\
+    & \texttt{gci | measure Length -Sum -Average}\\
+    \texttt{-Sum, -Average} & Sum / mean of a numeric property.\\
+    \texttt{-Minimum, -Maximum} & Min / max of a property.\\
+    \texttt{-Line -Word -Character} & Count lines/words/chars of text (like \texttt{wc}): \texttt{gc f | measure -Line}.\\
+    & Output is an object: get numbers via \texttt{(...).Sum}, \texttt{(...).Lines}, etc.\\
+    \hline
+\end{tabularx}
+
+\vfill\null
+\columnbreak

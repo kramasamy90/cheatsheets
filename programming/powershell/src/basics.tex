@@ -1,0 +1,60 @@
+\section{PowerShell Basics}
+
+\subsection{Profile ({\normalfont\texttt{\~{}/.bashrc}} equivalent)}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{\$PROFILE} & Automatic variable holding the path of the profile script. It is run at every startup, like \texttt{\~{}/.bashrc}. Typically \texttt{...\textbackslash Documents\textbackslash PowerShell \textbackslash Microsoft.PowerShell\_profile.ps1}.\\
+    \texttt{\$PROFILE | Select-Object *} & Show all profile paths (AllUsers / CurrentUser $\times$ AllHosts / CurrentHost).\\
+    \texttt{Test-Path \$PROFILE} & Check whether the profile file exists.\\
+    \texttt{New-Item -Type File \$PROFILE -Force} & Create the profile file (with parent dirs).\\
+    \texttt{notepad \$PROFILE} & Edit it. Put aliases, functions, prompt customization etc.\ here.\\
+    \texttt{. \$PROFILE} & Dot-source (reload) the profile in the current session, like \texttt{source \~{}/.bashrc}.\\
+    \hline
+\end{tabularx}
+
+\textbf{Note:} Running scripts may be disabled by default. Allow with: \texttt{Set-ExecutionPolicy -Scope CurrentUser RemoteSigned}.
+
+\begin{tabularx}{\linewidth}{lX}
+    \hline
+\end{tabularx}
+
+\subsection{Everything is an object}
+
+Unlike bash, where commands pass \emph{text} through pipes, PowerShell commands pass \emph{objects}. Each object has properties (attributes) and methods. Eg: \texttt{Get-ChildItem} emits \texttt{FileInfo}/\texttt{DirectoryInfo} objects with properties like \texttt{Name}, \texttt{FullName}, \texttt{Length}, \texttt{LastWriteTime}, \texttt{Extension}.\\
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{cmd | Get-Member} & List the type, properties and methods of the objects a command outputs.\\
+    \texttt{(Get-Item f.txt).Length} & Access a property directly.\\
+    \texttt{"abc".ToUpper()} & Call a method.\\
+    \texttt{cmd | Format-List *} & Show all properties with their values.\\
+    \hline
+\end{tabularx}
+
+\subsection{Script blocks, special variables, \$()}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{\{ ... \}} & Script block: a chunk of code passed as an argument, like an anonymous function. Used with \texttt{Where-Object}, \texttt{ForEach-Object}, etc.\\
+    \texttt{\$\_} & The current object coming through the pipeline (inside a script block). Alias: \texttt{\$PSItem}.\\
+    \texttt{\$\_.Name} & Property of the current pipeline object. Eg: \texttt{\$\_.FullName}, \texttt{\$\_.Length}.\\
+    \texttt{\$( ... )} & Subexpression: evaluate expression and use the result, mainly inside double-quoted strings. Eg: \texttt{"Size: \$(\$f.Length)"}. Like \texttt{\$( )} in bash but evaluates PowerShell code, not a subshell.\\
+    \texttt{@( ... )} & Array subexpression: force the result to be an array.\\
+    \texttt{\$env:PATH} & Environment variables live on the \texttt{env:} drive. Eg: \texttt{\$env:HOME}, \texttt{\$env:USERPROFILE}.\\
+    \texttt{\$null, \$true, \$false} & Automatic constants.\\
+    \texttt{\$?} & \texttt{\$true} if the last command succeeded.\\
+    \hline
+\end{tabularx}
+
+\subsection{Pipes and connecting commands}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{|} & Pipe. Passes \emph{objects} (not text) to the next command. Eg: \texttt{Get-ChildItem | Where-Object \{\$\_.Length -gt 1MB\}}.\\
+    \texttt{;} & Run commands in sequence on one line (same as bash).\\
+    \texttt{\&\&, ||} & Run next command only on success / failure (PowerShell 7+).\\
+    \texttt{`} & Backtick at end of line: continue command on next line (like \texttt{\textbackslash} in bash). A line ending in \texttt{|} also continues.\\
+    \texttt{>, >>} & Redirect to file / append to file. \texttt{2>} redirects errors; \texttt{*>} redirects all streams.\\
+    \texttt{\& "prog.exe"} & Call operator: run a command whose name is a string/variable.\\
+    \hline
+\end{tabularx}
+
+\vfill\null
+\columnbreak

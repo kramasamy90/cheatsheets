@@ -1,0 +1,30 @@
+\section{Operators}
+
+\subsection{Comparison operators}
+
+Bash-style \texttt{==}, \texttt{>} etc.\ are \emph{not} comparison operators (\texttt{>} redirects!). String comparisons are case-insensitive by default; prefix \texttt{c} for case-sensitive (\texttt{-ceq, -clike, -cmatch, ...}), \texttt{i} for explicit case-insensitive (\texttt{-ieq, ...}).\\
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{-eq, -ne} & Equal, not equal. Eg: \texttt{5 -eq 5}, \texttt{\$\_.Name -ne "tmp"}.\\
+    \texttt{-gt, -ge} & Greater than, greater or equal.\\
+    \texttt{-lt, -le} & Less than, less or equal.\\
+    \texttt{-in, -notin} & Value contained in a collection: \texttt{3 -in 1,2,3}.\\
+    \texttt{-contains} & Collection contains value: \texttt{1,2,3 -contains 3}.\\
+    \texttt{-and, -or, -not, !} & Logical operators. Eg: \texttt{(\$a -gt 1) -and (\$a -lt 9)}.\\
+    \hline
+\end{tabularx}
+
+When applied to a collection, a comparison \emph{filters} it: \texttt{1,2,3,4 -gt 2} gives \texttt{3,4}.
+
+\subsection{String matching}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{-like} & Wildcard match: \texttt{*} any chars, \texttt{?} one char, \texttt{[a-z]} range. Eg: \texttt{\$\_.Name -like "*.txt"}.\\
+    \texttt{-notlike} & Negated wildcard match.\\
+    \texttt{-match} & Regex match: \texttt{"abc123" -match "\textbackslash d+"}. Captures go to the automatic \texttt{\$Matches} hashtable (\texttt{\$Matches[0]}, \texttt{\$Matches[1]}, ...).\\
+    \texttt{-notmatch} & Negated regex match.\\
+    \texttt{-replace} & Regex replace (like \texttt{sed}): \texttt{"a-b" -replace "-", ":"}. Supports groups: \texttt{-replace '(\textbackslash w+)@', '\$1 AT '}.\\
+    \texttt{-split} & Split by regex: \texttt{"a,b,c" -split ","}.\\
+    \texttt{-join} & Join collection: \texttt{1,2,3 -join "-"} gives \texttt{1-2-3}.\\
+    \hline
+\end{tabularx}

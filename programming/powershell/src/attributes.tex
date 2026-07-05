@@ -1,0 +1,39 @@
+\section{File attributes \& permissions}
+
+Windows has no \texttt{rwx} mode bits. Instead: \emph{attributes} (ReadOnly, Hidden, System, Archive) and \emph{ACLs} (access control lists) for per-user permissions.\\
+
+\subsection{attrib (cmd tool, chmod-like)}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{attrib file} & Show attributes of a file.\\
+    \texttt{attrib +r file} & Set read-only. \texttt{-r} clears it (closest to \texttt{chmod -w/+w}).\\
+    \texttt{attrib +h file} & Hide file. \texttt{-h} unhides.\\
+    \texttt{+s, -s} & Set/clear system attribute.\\
+    \texttt{+a, -a} & Set/clear archive attribute.\\
+    \texttt{/s /d} & Apply recursively (\texttt{/s}), include directories (\texttt{/d}).\\
+    \hline
+\end{tabularx}
+
+\subsection{PowerShell native}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{(Get-Item f).Attributes} & Read attributes as a property.\\
+    \texttt{Set-ItemProperty f -Name IsReadOnly -Value \$true} & Make read-only.\\
+    \texttt{Get-Acl f} & Show owner and access rules (like \texttt{ls -l} for permissions).\\
+    \texttt{Get-Acl f | Format-List} & Readable full listing.\\
+    \texttt{Set-Acl} & Apply a (modified) ACL to a file.\\
+    \hline
+\end{tabularx}
+
+\subsection{icacls (ACLs, chmod/chown-like)}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{icacls file} & Show permissions.\\
+    \texttt{icacls f /grant user:F} & Grant rights: \texttt{F} full, \texttt{M} modify, \texttt{RX} read+execute, \texttt{R} read, \texttt{W} write.\\
+    \texttt{icacls f /deny user:W} & Deny writing.\\
+    \texttt{icacls f /remove user} & Remove user's entries.\\
+    \texttt{/t} & Recurse into subdirectories.\\
+    \hline
+\end{tabularx}
+
+\textbf{Note:} In PowerShell 7 on Linux, \texttt{chmod} etc.\ work as usual.
