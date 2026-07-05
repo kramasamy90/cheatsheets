@@ -80,10 +80,12 @@ accordingly. No flags = all of \texttt{-a -e -d}.
     \texttt{-d} & With \texttt{shelve}: discard the shelved
                     file(s) from \texttt{<cl>}.\\
 \hline
-    \texttt{p4 unshelve -s <cl> [-c <cl2>] [file]}
-                & Restore shelved files from \texttt{<cl>}
-                    (\texttt{-s}) into changelist \texttt{<cl2>}
-                    (\texttt{-c}, default \texttt{default}).\\
+    \texttt{p4 unshelve [file]}
+                & Restore shelved files into a pending
+                    changelist.\\
+    \texttt{-s <cl>}  & Source: changelist to unshelve from.\\
+    \texttt{-c <cl2>} & Target: changelist to receive the files
+                          (default \texttt{default}).\\
 \hline
 \end{tabularx}
 
@@ -97,20 +99,82 @@ accordingly. No flags = all of \texttt{-a -e -d}.
 \end{tabularx}
 
 
+\subsubsection*{Diff}
+
+\texttt{p4 diff [file...]}\\
+Compare the file \textbf{on disk} against a depot revision. Runs
+\texttt{P4DIFF} (eg.\ \texttt{vimdiff}) if set. Default: opened
+files vs the synced (\texttt{have}) revision.
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 diff file}      & Disk vs have revision.\\
+    \texttt{p4 diff file\#2}   & Disk vs revision \texttt{\#2}.\\
+    \texttt{p4 diff file@<cl>} & Disk vs the file as of changelist
+                                   \texttt{<cl>}.\\
+    \texttt{-f} & Diff files not opened for edit.\\
+\hline
+\end{tabularx}
+
+\texttt{p4 diff2 <f1> <f2>}\\
+Diff two \textbf{depot} revisions. Runs \textbf{on the server}, so
+\texttt{P4DIFF} is ignored --- output is a plain text diff.
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 diff2 f\#1 f\#4} & Between two revisions of a
+                                    file.\\
+    \texttt{p4 diff2 f@<cl1> f@<cl2>}
+                                & Same file across two
+                                    changelists.\\
+    \texttt{p4 diff2 f1 f2}     & Two different depot files.\\
+    \texttt{-u} & Unified diff format.\\
+    \texttt{-q} & Quiet: omit identical-file messages.\\
+\hline
+\end{tabularx}
+
+To use \texttt{vimdiff} on two depot revisions, print them to
+temp files:
+
+\begin{mdframed}[backgroundcolor=gray!10,linecolor=Firebrick4]
+\begin{verbatim}
+$ p4 print -q file#1 > /tmp/a
+$ p4 print -q file#4 > /tmp/b
+$ vimdiff /tmp/a /tmp/b
+\end{verbatim}
+\end{mdframed}
+
+
+\subsubsection*{Revision Specifiers}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{file\#<n>}  & Revision \texttt{n}.\\
+    \texttt{file\#head} & Latest depot revision.\\
+    \texttt{file\#have} & Revision last synced into the
+                            workspace.\\
+    \texttt{file@<cl>}  & Revision as of changelist \texttt{<cl>}
+                            (also takes a label or date).\\
+    \texttt{file@=<cl>} & Revision shelved or submitted in exactly
+                            \texttt{<cl>}.\\
+\hline
+\end{tabularx}
+
+
 \subsubsection*{Inspecting}
 
 \begin{tabularx}{\linewidth}{lX}
-    \texttt{p4 opened [-c <cl>] [-u <user>]}
-                & List opened (checked-out) files. \texttt{-c}:
-                    by changelist. \texttt{-u}: by user.\\
+    \texttt{p4 opened}
+                & List opened (checked-out) files.\\
+    \texttt{-c <cl>}   & Filter by changelist.\\
+    \texttt{-u <user>} & Filter by user.\\
 \hline
     \texttt{p4 filelog <file>}
                 & Show a file's revision history.\\
 \hline
-    \texttt{p4 changes [-u <user>] [-m <n>] [-s <status>]}
-                & List changelists. \texttt{-u}: by user.
-                    \texttt{-m <n>}: limit to \texttt{n}.
-                    \texttt{-s}: \texttt{pending} /
-                    \texttt{submitted} / \texttt{shelved}.\\
+    \texttt{p4 changes}
+                & List changelists.\\
+    \texttt{-u <user>}   & Filter by user.\\
+    \texttt{-m <n>}      & Limit output to \texttt{n} changelists.\\
+    \texttt{-s <status>} & Filter by status: \texttt{pending} /
+                             \texttt{submitted} /
+                             \texttt{shelved}.\\
 \hline
 \end{tabularx}

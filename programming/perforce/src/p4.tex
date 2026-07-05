@@ -7,6 +7,12 @@
                             server. Eg: \texttt{localhost:1666}.\\
     \texttt{P4USER}     & Perforce username.\\
     \texttt{P4CLIENT}   & Name of the workspace (client) to use.\\
+    \texttt{P4EDITOR}   & Editor used for forms (\texttt{submit},
+                            \texttt{change}, \texttt{client},
+                            \ldots). Eg: \texttt{vim}.\\
+    \texttt{P4DIFF}     & External diff program used by
+                            \texttt{p4 diff}. Eg:
+                            \texttt{vimdiff}.\\
 \hline
 \end{tabularx}
 
@@ -25,6 +31,8 @@ port/user/client.
 P4PORT=localhost:1666
 P4USER=bob
 P4CLIENT=bob-ws
+P4EDITOR=vim
+P4DIFF=vimdiff
 \end{verbatim}
 \end{mdframed}
 
@@ -42,6 +50,25 @@ P4CLIENT=bob-ws
             & \texttt{~~"P4CONFIG", ".p4config", "User")}\\
 \hline
 \end{tabularx}
+
+
+\subsubsection*{p4 set}
+
+\begin{tabularx}{\linewidth}{lX}
+    \texttt{p4 set} & List all settings and where each one comes
+                        from.\\
+    \texttt{p4 set <VAR>=<val>}
+                    & Persist a setting in the \texttt{P4ENVIRO}
+                        file
+                        (\texttt{\textasciitilde{}/.p4enviro};
+                        registry on Windows).\\
+    \texttt{p4 set <VAR>=} & Unset a setting.\\
+\hline
+\end{tabularx}
+
+Precedence (highest first): command-line flags $>$
+\texttt{P4CONFIG} file $>$ env vars $>$ \texttt{p4 set}
+(\texttt{P4ENVIRO}) $>$ defaults.
 
 
 \subsubsection*{p4 info}
