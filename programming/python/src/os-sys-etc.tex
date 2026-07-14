@@ -51,6 +51,13 @@
                              & Eg: \texttt{os.path.abspath('foo')}.\\
     \texttt{realpath()}      & Real path Resolves any symlinks along the way.\\
     \hline
+    \texttt{expanduser()}    & Expand \texttt{\char`~} and \texttt{\char`~user} to the user's home directory.\\
+                             & Eg: \texttt{os.path.expanduser('\char`~/foo')}\\
+                             & $\rightarrow$ \texttt{/home/user/foo}.\\
+    \texttt{expandvars()}    & Expand environment variables like \texttt{\$HOME}.\\
+                             & Eg: \texttt{os.path.expandvars('\$HOME/foo')}\\
+                             & $\rightarrow$ \texttt{/home/user/foo}.\\
+    \hline
 \end{tabularx}
 
 \begin{center}
